@@ -1,0 +1,71 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Automaticcallouts
+ * @copyright  Copyright (c) 2008-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+
+<?php if($this->getItems()): ?>
+<div>
+	<div class="head">
+		<h4><?php echo $this->getCalloutText() ?></h4>
+	</div>
+
+	<div>
+		<ol class="ac-grid">
+		<?php
+			foreach($this->getItems() as $key => $_product):
+			$_item = Mage::getModel('catalog/product')->load($_product->getProductId());
+		?>
+			<li class="item" style="width:<?php echo $this->getGridItemWidth() ?>px; height:<?php echo $this->getGridItemHeight() ?>px">
+				<a class="product-image" href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($this->getImageLabel($_item, 'small_image')) ?>">
+					<img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->resize($this->getGridItemWidth(), null); ?>" width="<?php echo $this->getGridItemWidth() ?>" alt="<?php echo $this->htmlEscape($this->getImageLabel($_item, 'small_image')) ?>" title="<?php echo $this->htmlEscape($this->getImageLabel($_item, 'small_image')) ?>" />
+				</a>
+				<h5><a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a></h5>
+
+				<?php Mage::getModel('review/review')->getEntitySummary($_item, Mage::app()->getStore()->getId());?>
+
+				<?php
+					if($_item->getRatingSummary())
+						echo $this->getReviewsSummaryHtml($_item, 'short');
+					echo $this->getPriceHtml($_item, true);
+				?>
+				<?php if ($this->addCartButtonEnabled()): ?>
+					<?php if($_item->isSaleable()): ?>
+							<button type="button" class="ac-button" onclick="setLocation('<?php echo $this->getAddToCartUrl($_item) ?>')">
+								<span class="ac-cart"><?php echo $this->__('Add to Cart') ?></span>
+							</button>
+					<?php else: ?>
+							<div class="ac-out-of-stock"><?php echo $this->__('Out of stock') ?></div>
+					<?php endif; ?>
+				<?php endif ?>
+				<p class="add-to">
+					<?php if ($this->helper('wishlist')->isAllow()) : ?>
+						<a href="<?php echo $this->helper('wishlist')->getAddUrl($_item) ?>" class="link-cart"><?php echo $this->__('Add to Wishlist') ?></a>
+					<?php endif; ?>
+					<?php if($_compareUrl=$this->getAddToCompareUrl($_item)): ?><br/>
+						<a href="<?php echo $_compareUrl ?>"><?php echo $this->__('Add to Compare') ?></a>
+					<?php endif; ?>
+				</p>
+			</li>
+
+			<?php
+				endforeach;
+			?>
+
+		</ol>
+		<div style="clear:both"></div>
+	</div>
+</div>
+<?php endif ?>

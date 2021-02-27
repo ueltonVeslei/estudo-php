@@ -1,0 +1,23 @@
+<?php if (Mage::getStoreConfig("easy_navigation/right/visibility")): ?>
+<?php 
+$type = Mage::getStoreConfig("easy_navigation/right/type"); 
+$id = current(explode('.', 'right')) . '-nav';
+?>
+<div class="box base-mini mini-navigation">
+    <div class="head">
+        <h4 class="title"><?php echo $this->__('Category Navigation:') ?></h4>
+    </div>
+    <div class="content">
+        <ul id="<?php echo $id ?>" class="easynavigation nav-<?php echo $type ?>">
+        <?php foreach ($this->getStoreCategories() as $_category): ?>
+            <?php echo $this->drawItem($_category) ?>
+        <?php endforeach ?>
+        </ul>
+    </div>
+</div>
+<?php if ($type == 'accordionjs'): ?>
+<script type="text/javascript">
+new accordion('<?php echo $id ?>');
+</script>
+<?php endif ?>
+<?php endif ?>

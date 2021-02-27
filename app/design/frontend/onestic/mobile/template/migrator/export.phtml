@@ -1,0 +1,25 @@
+<h1>Mage Migrator - Exportar dados</h1>
+<?php if($this->getMessage()){?>
+	<p class="error-msg"><?php echo $this->getMessage();?></p>
+<?php }?>
+<fieldset> 
+	<form action="<?php echo Mage::getUrl('migrator/index/export')?>" method="post" >
+	
+	<dl>
+	
+		<dt>Setor a ser exportado:</dt>
+		<dd> 
+			<select name="setors[]" multiple="multiple" size="5" style="padding: 5px; width: 400px; height: 100px;"> 
+				<?php foreach($this->getSetors() as $setor):?>
+					<option value="<?php echo $setor['value']?>"><?php echo $setor['name'];?></option>	
+				<?php endforeach;?>
+			</select>
+		</dd>
+		
+		<dt></dt>
+		<dd><input type="submit" value="Enviar" style="padding: 5px;"/></dd>
+		
+	</dl>
+	
+	</form>
+</fieldset>

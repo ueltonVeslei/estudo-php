@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Av5_AdminLogger>
+		   <active>true</active>
+		   <codePool>local</codePool>
+		</Av5_AdminLogger>
+	</modules>
+</config>

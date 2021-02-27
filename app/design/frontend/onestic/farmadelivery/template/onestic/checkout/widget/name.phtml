@@ -1,0 +1,99 @@
+<?php
+
+/**
+ *
+ * @category   Onestic
+ * @package    Onestic_Checkout
+ * @author     Suporte <suporte@onestic.com>
+ */
+?>
+
+<?php if ($this->showPrefix()): ?>
+  <div class="short name-prefix">
+    <label for="<?php echo $this->getFieldId('prefix')?>"
+      <?php if ($this->isPrefixRequired()) echo ' class="required"' ?>>
+      <?php echo $this->__('Prefix'); ?>
+      <?php if (!$this->isPrefixRequired()) echo '(Opcional)'; ?>
+    </label>
+    <div class="input-box">
+      <?php if ($this->getPrefixOptions()===false): ?>
+        <input type="text" id="<?php echo $this->getFieldId('prefix')?>" 
+        name="<?php echo $this->getFieldName('prefix')?>" 
+        value="<?php echo $this->htmlEscape($this->getObject()->getPrefix()) ?>" 
+        title="<?php echo $this->__('Prefix') ?>" 
+        class="t1<?php if ($this->isPrefixRequired()):?> required-entry<?php endif; ?>" 
+        <?php echo $this->getFieldParams() ?> />
+      <?php else: ?>
+        <select id="<?php echo $this->getFieldId('prefix')?>" 
+          name="<?php echo $this->getFieldName('prefix')?>" 
+          title="<?php echo $this->__('Prefix') ?>"
+          <?php if ($this->isPrefixRequired()):?> class="required-entry"<?php endif; ?> 
+          <?php echo $this->getFieldParams() ?>>
+          <?php foreach ($this->getPrefixOptions() as $_option): ?>
+            <option value="<?php echo $_option?>"
+              <?php if ($this->getObject()->getPrefix()==$_option):?> selected="selected"<?php endif; ?>>
+              <?php echo $this->__($_option)?>
+            </option>
+          <?php endforeach ?>
+        </select>
+      <?php endif; ?>
+    </div>
+  </div>
+<?php endif; ?>
+<div class="short name-firstname col-md-6" style="margin-right: 35px !important;">
+  <label for="<?php echo $this->getFieldId('firstname')?>" id="label_firstname" class="required">
+   <?php echo $this->__('First Name') ?><em>*</em>
+ </label>
+ <div class="input-box">
+  <input placeholder="Ex: João" type="text" id="<?php echo $this->getFieldId('firstname')?>"
+  name="<?php echo $this->getFieldName('firstname')?>" 
+  value="<?php echo $this->htmlEscape($this->getObject()->getFirstname()) ?>" 
+  title="<?php echo $this->__('First Name') ?>" 
+  class="form-control required-entry" 
+  <?php echo $this->getFieldParams() ?> />
+</div>
+</div>
+<?php if ($this->showMiddlename()): ?>
+  <div class="short name-middlename col-md-6">
+    <label for="<?php echo $this->getFieldId('middlename')?>"><?php echo $this->__('M.I.') ?></label><em>*</em>
+    <div class="input-box">
+      <input type="text" id="<?php echo $this->getFieldId('middlename')?>" 
+      name="<?php echo $this->getFieldName('middlename')?>" 
+      value="<?php echo $this->htmlEscape($this->getObject()->getMiddlename()) ?>" 
+      title="<?php echo $this->__('M.I.') ?>" 
+      class="form-control" 
+      <?php echo $this->getFieldParams() ?> />
+    </div>
+  </div>
+<?php endif; ?>
+<div class="short name-lastname col-md-6">
+  <label for="<?php echo $this->getFieldId('lastname')?>" id="label_lastname" class="required">
+   <?php echo $this->__('Last Name') ?><em>*</em>
+ </label>
+ <div class="input-box">
+  <input placeholder="Ex: Silva" type="text" id="<?php echo $this->getFieldId('lastname')?>"
+  name="<?php echo $this->getFieldName('lastname')?>" 
+  value="<?php echo $this->htmlEscape($this->getObject()->getLastname()) ?>" 
+  title="<?php echo $this->__('Last Name') ?>" 
+  class="form-control required-entry" 
+  <?php echo $this->getFieldParams() ?> />
+</div>
+</div>
+<?php if ($this->showSuffix()): ?>
+  <div class="short name-suffix col-md-6">
+    <label for="<?php echo $this->getFieldId('suffix')?>"<?php if ($this->isSuffixRequired()) echo ' class="required"' ?>>
+     <?php echo $this->__('Suffix') ?> <?php if (!$this->isSuffixRequired()) echo '(Opcional)'; ?>
+   </label>
+   <div class="input-box">
+    <?php if ($this->getSuffixOptions()===false): ?>
+      <input type="text" id="<?php echo $this->getFieldId('suffix')?>" name="<?php echo $this->getFieldName('suffix')?>" value="<?php echo $this->htmlEscape($this->getObject()->getSuffix()) ?>" title="<?php echo $this->__('Suffix') ?>" class="t1<?php if ($this->isSuffixRequired()):?> required-entry<?php endif; ?>" <?php echo $this->getFieldParams() ?> />
+    <?php else: ?>
+      <select id="<?php echo $this->getFieldId('suffix')?>" name="<?php echo $this->getFieldName('suffix')?>" title="<?php echo $this->__('Suffix') ?>"<?php if ($this->isSuffixRequired()):?> class="required-entry"<?php endif; ?> <?php echo $this->getFieldParams() ?>>
+        <?php foreach ($this->getSuffixOptions() as $_option): ?>
+          <option value="<?php echo $_option?>"<?php if ($this->getObject()->getSuffix()==$_option):?> selected="selected"<?php endif; ?>><?php echo $this->__($_option)?></option>
+        <?php endforeach ?>
+      </select>
+    <?php endif; ?>
+  </div>
+</div>
+<?php endif; ?>

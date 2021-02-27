@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Onestic_Recaptcha>
+            <version>0.1.8</version>
+        </Onestic_Recaptcha>
+    </modules>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <onestic_recaptchaAdmin before="Mage_Adminhtml">Onestic_Recaptcha</onestic_recaptchaAdmin>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <global>
+        <blocks>
+            <onestic_recaptcha>
+                <class>Onestic_Recaptcha_Block</class>
+            </onestic_recaptcha>
+        </blocks>
+        <helpers>
+            <onestic_recaptcha>
+                <class>Onestic_Recaptcha_Helper</class>
+            </onestic_recaptcha>
+        </helpers>
+        <models>
+            <onestic_recaptcha>
+                <class>Onestic_Recaptcha_Model</class>
+            </onestic_recaptcha>
+        </models>
+    </global>
+
+    <frontend>
+        <layout>
+            <updates>
+                <onestic_recaptcha module="Onestic_Recaptcha">
+                    <file>onestic/recaptcha.xml</file>
+                </onestic_recaptcha>
+            </updates>
+        </layout>
+    </frontend>
+
+    <default>
+        <onestic_recaptcha>
+            <general>
+                <location_id>div.buttons-set</location_id>
+                <location_type>before</location_type>
+                <captcha_id>g-recaptcha</captcha_id>
+            </general>
+        </onestic_recaptcha>
+    </default>
+
+    <frontend>
+        <events>
+            <controller_action_predispatch_contacts_index_post>
+                <observers>
+                    <controller_action_after>
+                        <class>onestic_recaptcha/observer</class>
+                        <method>checkCaptchaContact</method>
+                    </controller_action_after>
+                </observers>
+            </controller_action_predispatch_contacts_index_post>
+            <controller_action_predispatch_customer_account_createpost>
+                <observers>
+                    <controller_action_after>
+                        <class>onestic_recaptcha/observer</class>
+                        <method>checkCaptchaCreateAccount</method>
+                    </controller_action_after>
+                </observers>
+            </controller_action_predispatch_customer_account_createpost>
+            <controller_action_predispatch_customer_account_forgotpasswordpost>
+                <observers>
+                    <controller_action_after>
+                        <class>onestic_recaptcha/observer</class>
+                        <method>checkCaptchaForgotPass</method>
+                    </controller_action_after>
+                </observers>
+            </controller_action_predispatch_customer_account_forgotpasswordpost>
+        </events>
+        <translate>
+            <modules>
+                <onestic_recaptcha>
+                    <files>
+                        <default>Onestic_Recaptcha.csv</default>
+                    </files>
+                </onestic_recaptcha>
+            </modules>
+        </translate>
+    </frontend>
+
+</config>

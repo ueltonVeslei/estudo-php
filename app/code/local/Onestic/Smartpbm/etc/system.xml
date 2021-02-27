@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Av5 Clearsale Module
+ *
+ * @title      Magento -> Payment Modules (Brazil)
+ * @category   Sales Configuration
+ * @package    Av5_Clearsale
+ * @author     Anderson Vincoletto -> desenvolvimento [at] Av5 [dot] com  [dot] br
+ * @copyright  Copyright (c) 2009 Av5
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+	<tabs>
+        <onestic>
+            <label>Onestic</label>
+            <sort_order>200</sort_order>
+        </onestic>
+    </tabs>
+	<sections>
+      	<smartpbm translate="label" module="smartpbm">
+      		<label>Smart PBMs</label>
+            <tab>onestic</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <config translate="label" module="smartpbm">
+                    <label>Configurações</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Ativado</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+					</fields>
+				</config>
+				<funcional translate="label" module="smartpbm">
+                    <label>Funcional</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Ativado</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <environment translate="label">
+                            <label>Ambiente</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>smartpbm/source_environments</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Ambiente de integração.]]></comment>
+                        </environment>
+                        <login translate="label">
+                            <label>Login</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Login de integração Funcional.]]></comment>
+                        </login>
+                        <password translate="label">
+                            <label>Senha</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Senha de integração Funcional.]]></comment>
+                        </password>
+                        <cnpj translate="label">
+                            <label>CNPJ</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[CNPJ do Estabelecimento]]></comment>
+                        </cnpj>
+					</fields>
+				</funcional>
+				<sevenpdv translate="label" module="smartpbm">
+                    <label>Seven PDV</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Ativado</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <cnpj translate="label">
+                            <label>CNPJ do Estabelecimento</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cnpj>
+                        <sistema translate="label">
+                            <label>Código do Sistema</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Código de integração do sistema.]]></comment>
+                        </sistema>
+                        <chave translate="label">
+                            <label>Chave de Sessão</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Chave de sessão de integração.]]></comment>
+                        </chave>
+                        <tabela translate="label">
+                            <label>Versão da Tabela</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Versão da tabela.]]></comment>
+                        </tabela>
+                        <interface translate="label">
+                            <label>Versão da Interface</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Versão da interface.]]></comment>
+                        </interface>
+					</fields>
+				</sevenpdv>
+				<vidalink translate="label" module="smartpbm">
+                    <label>Vidalink</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Ativado</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <cnpj translate="label">
+                            <label>CNPJ do Estabelecimento</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cnpj>
+					</fields>
+				</vidalink>
+            </groups>
+        </smartpbm>
+	</sections>
+</config>

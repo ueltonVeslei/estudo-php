@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+<acl>
+    <resources>
+        <all>
+            <title>Permitir Tudo</title>
+        </all>
+        <admin>
+            <children>
+                <Onestic_Autocrossupsells>
+                    <title>Módulo de Cross-sell e Up-sell Automático</title>
+                    <sort_order>10</sort_order>
+                </Onestic_Autocrossupsells>
+                <system>
+                    <children>
+                        <config>
+                            <children>
+                                <autocrossupsells translate="title" module="onestic_autocrossupsells">
+                                    <title>Configurações do módulo Cross-sell e Up-sell Automático</title>
+                                    <sort_order>50</sort_order>
+                                </autocrossupsells>
+                            </children>
+                        </config>
+                    </children>
+                </system>
+            </children>
+        </admin>
+    </resources>
+</acl>
+</config>

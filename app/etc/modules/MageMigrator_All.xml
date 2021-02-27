@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- 
+## @author Bruno A. Hoffmann	
+## @desc Configura os modulos na aplicação	
+-->
+<config>
+	
+	<modules>
+		
+		<MageMigrator_Migrator>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migrator>
+		
+		<MageMigrator_Migcategory>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migcategory>
+		
+		<MageMigrator_Migproduct>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migproduct>
+		
+		<MageMigrator_Migcustomer>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migcustomer>
+		
+		<MageMigrator_Migstore>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migstore>
+		
+		<MageMigrator_Migcms>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migcms>
+		
+		<MageMigrator_Migrule>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migrule>
+		
+		<MageMigrator_Migcatalogsearch>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migcatalogsearch>
+		
+		<MageMigrator_Migurlrewrite>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Migurlrewrite>
+		
+		<MageMigrator_Mignewsletter>
+			<active>true</active>
+			<codePool>local</codePool>
+		</MageMigrator_Mignewsletter>
+		
+	</modules>
+	
+</config>

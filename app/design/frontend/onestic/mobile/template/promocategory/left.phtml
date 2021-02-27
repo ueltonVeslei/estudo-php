@@ -1,0 +1,31 @@
+<?php
+
+$isHome = (Mage::getSingleton('cms/page')->getIdentifier() == 'home')? true: false;
+
+if(!$isHome){
+	// pega as categorias patrocinadas;
+	$categories = $this->getCategories($this->getId());
+	
+	foreach ($categories as $categoryId):
+	    $category = Mage::getModel('catalog/category')->load($categoryId);
+	    $background = $category->getData('promocategory_color_bg');
+	    $background2 = $category->getData('promocategory_color_bg2');
+	    $image = $category->getData('promocategory_img');
+?>
+	    <div id="blocopatrocinado" style="background:<?php echo $background; ?>;">
+	        <?php if ($image != ''): ?>
+	            <img class="imagempatrocinada" src="<?php echo Mage::getUrl() . 'media/catalog/category/' . $image; ?>" />
+	        <?php endif; ?>
+	        <h4 style="background:<?php echo $background2; ?>;"><?php echo $category->getData('name') ?></h4>
+	        <div class="menupatrocinado">
+	            <ul>
+	                <?php foreach ($category->getChildrenCategories() as $categoria): ?>
+	                    <li>
+	                        <a href="<?php echo $categoria->getUrl(); ?>" <?php echo ($categoria->getId() == $this->getActive())? 'class="active"' :null;?>><?php echo $categoria->getName(); ?></a>
+	                    </li>
+	                <?php endforeach; ?>
+	            </ul>
+	        </div>
+	    </div>
+	<?php endforeach; ?>
+<?php }?>

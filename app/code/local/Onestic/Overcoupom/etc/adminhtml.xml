@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <menu>
+        <promo>
+            <children>
+                <onestic_overcoupom translate="title" module="onestic_overcoupom">
+                    <sort_order>10</sort_order>
+                    <title>Relatório Cupons</title>
+                    <action>adminhtml/sales/</action>
+                </onestic_overcoupom>
+            </children>
+        </promo>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <promo>
+                        <children>
+                            <onestic_overcoupom translate="title" module="onestic_overcoupom">
+                                <title>Relatório Cupons</title>
+                            </onestic_overcoupom>
+                        </children>
+                    </promo>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

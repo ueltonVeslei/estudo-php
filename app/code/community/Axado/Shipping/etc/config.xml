@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Axado_Shipping>
+            <version>2.0.2</version>
+        </Axado_Shipping>
+    </modules>
+
+    <global>
+
+        <models>
+            <axado_shipping>
+                <class>Axado_Shipping_Model</class>
+            </axado_shipping>
+            <sales>
+                <rewrite>
+                    <quote_address_rate>Axado_Shipping_Model_Quote_Address_Rate</quote_address_rate>
+                </rewrite>
+            </sales>
+        </models>
+
+        <helpers>
+            <axado_shipping>
+                <class>Axado_Shipping_Helper</class>
+            </axado_shipping>
+        </helpers>
+
+        <resources>
+            <axado_setup>
+                <setup>
+                    <module>Axado_Shipping</module>
+                </setup>
+                <connection>
+                    <use>directory_setup</use>
+                </connection>
+            </axado_setup>
+        </resources>
+
+        <sales>
+            <shipping>
+                <carriers>
+                    <axado>
+                        <class>Axado_Shipping_Model_Carrier_Quote</class>
+                    </axado>
+                </carriers>
+            </shipping>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <volume_altura/>
+                        <volume_comprimento/>
+                        <volume_largura/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
+
+        <events>
+            <sales_order_payment_pay>
+                <observers>
+                    <axado_shipping>
+                        <type>singleton</type>
+                        <class>Axado_Shipping_Model_Carrier_Status</class>
+                        <method>notifySaleEvent</method>
+                    </axado_shipping>
+                </observers>
+            </sales_order_payment_pay>
+        </events>
+
+    </global>
+
+    <default>
+        <carriers>
+            <axado>
+                <active>1</active>
+                <model>Axado_Shipping_Model_Carrier_Quote</model>
+                <name>Axado</name>
+                <title>Axado</title>
+            </axado>
+        </carriers>
+    </default>
+</config>

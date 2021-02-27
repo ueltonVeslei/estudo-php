@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <onestic>
+            <label>Onestic</label>
+            <sort_order>200</sort_order>
+        </onestic>
+    </tabs>
+    <sections>
+        <apiserver translate="label" module="onestic_apiserver">
+            <label>APIServer</label>
+            <tab>onestic</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <geral translate="label" module="core">
+                    <label>Geral</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+                        <url translate="label">
+                            <label>URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe a url de acesso</comment>
+                        </url>
+                        <login translate="label">
+                            <label>Usuário</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o login de acesso</comment>
+                        </login>
+                        <senha translate="label">
+                            <label>Chave da API</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Chave da API</comment>
+                        </senha>
+                    </fields>
+                </geral>
+            </groups>
+        </apiserver>
+    </sections>
+</config>

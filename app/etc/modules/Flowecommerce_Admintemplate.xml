@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Flowecommerce_Admintemplate>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Flowecommerce_Admintemplate>
+    </modules>
+</config>

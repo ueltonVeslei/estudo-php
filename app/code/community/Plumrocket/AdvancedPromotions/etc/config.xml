@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_AdvancedPromotions
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+-->
+<config>
+    <modules>
+        <Plumrocket_AdvancedPromotions>
+            <wiki>http://wiki.plumrocket.com/wiki/Advanced_Promotions_v1.x</wiki>
+            <version>1.0.2</version>
+        </Plumrocket_AdvancedPromotions>
+    </modules>
+    <global>
+        <helpers>
+            <pradvancedpromotions>
+                <class>Plumrocket_AdvancedPromotions_Helper</class>
+            </pradvancedpromotions>
+        </helpers>
+        <models>
+            <pradvancedpromotions>
+                <class>Plumrocket_AdvancedPromotions_Model</class>
+                <resourceModel>pradvancedpromotions_mysql4</resourceModel>
+            </pradvancedpromotions>
+            <pradvancedpromotions_mysql4>
+                <class>Plumrocket_AdvancedPromotions_Model_Mysql4</class>
+                <entities>
+                    <index>
+                        <table>pradvancedpromotions_index</table>
+                    </index>
+                </entities>
+            </pradvancedpromotions_mysql4>
+        </models>
+
+        <resources>
+            <pradvancedpromotions_setup>
+                <setup>
+                    <module>Plumrocket_AdvancedPromotions</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </pradvancedpromotions_setup>
+        </resources>
+        <blocks>
+            <pradvancedpromotions>
+                <class>Plumrocket_AdvancedPromotions_Block</class>
+            </pradvancedpromotions>
+            <!-- Catalog (catalog price rules) -->
+            <adminhtml>
+                <rewrite>
+                    <promo_catalog_edit>Plumrocket_AdvancedPromotions_Block_Adminhtml_Catalog_Edit</promo_catalog_edit>
+                </rewrite>
+            </adminhtml>
+            <adminhtml>
+                <rewrite>
+                    <promo_catalog_grid>Plumrocket_AdvancedPromotions_Block_Adminhtml_Catalog_Grid</promo_catalog_grid>
+                </rewrite>
+            </adminhtml>
+            <adminhtml>
+                <rewrite>
+                    <promo_catalog>Plumrocket_AdvancedPromotions_Block_Adminhtml_Catalog</promo_catalog>
+                </rewrite>
+            </adminhtml>
+
+            <!-- Quote (shopping cart price rules) -->
+            <adminhtml>
+                <rewrite>
+                    <promo_quote_edit>Plumrocket_AdvancedPromotions_Block_Adminhtml_Quote_Edit</promo_quote_edit>
+                </rewrite>
+            </adminhtml>
+            <adminhtml>
+                <rewrite>
+                    <promo_quote_grid>Plumrocket_AdvancedPromotions_Block_Adminhtml_Quote_Grid</promo_quote_grid>
+                </rewrite>
+            </adminhtml>
+            <adminhtml>
+                <rewrite>
+                    <promo_quote>Plumrocket_AdvancedPromotions_Block_Adminhtml_Quote</promo_quote>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+    </global>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <pradvancedpromotions>
+                    <file>pradvancedpromotions.xml</file>
+                </pradvancedpromotions>
+            </updates>
+        </layout>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Plumrocket_AdvancedPromotions_Adminhtml before="Mage_Adminhtml">Plumrocket_AdvancedPromotions_Adminhtml</Plumrocket_AdvancedPromotions_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <!--crontab>
+        <jobs>
+            <pradvancedpromotions_reindex>
+                <schedule>
+                    <cron_expr>15 6 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>pradvancedpromotions/cron::reindex</model>
+                </run>
+            </pradvancedpromotions_reindex>
+        </jobs>
+    </crontab-->
+</config>

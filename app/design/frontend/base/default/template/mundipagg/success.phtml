@@ -1,0 +1,251 @@
+<!-- Mundi success base Handles:
+<?php var_dump(Mage::app()->getLayout()->getUpdate()->getHandles()); ?>
+-->
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_blank
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php
+$baseUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);
+$walletUrl = Mage::getModel('wallet/api')->getWalletUrl();
+?>
+
+<script>
+    /*LoadScript("https://carteira.stelo.com.br/static/js/stelo-lightbox/stelo-lightbox-min.js", function() {
+        LightBoxStelo._chamaLightboxPorFuncao("<?php echo $walletUrl ; ?>", true);
+    });*/
+    // jQuery.featherlight( jQuery('<iframe width="950" height="600" src="<?php echo $walletUrl."&indLightbox=true";  ?>"/>') );
+</script>
+
+<?php
+$order_id = $this->getOrderId();
+$order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
+$total_data = $order->getData();
+$subtotal = $order->getGrandTotal() - $order->getShippingAmount();
+$total = $order->getGrandTotal();
+
+foreach ($order->getAllItems() as $item) {
+
+    $productArray[] = array(
+        "product_sku" => $item->getSku(),
+        "product_magento_id" => $item->getProductId(),
+        "product_name" => $item->getName(),
+        "product_qty" => $item->getQtyOrdered(),
+        "product_price" => $item->getPrice(),
+        "product_discount_amount" => $item->getDiscountAmount(),
+        "product_row_price" => $item->getPrice() - $item->getDiscountAmount(),
+    );
+}
+
+$address = Mage::getModel('sales/order_address')->load($order->shipping_address_id);
+$addr_data = $address->getData();
+?>
+
+<div class="step a-item" id="checkout-step-review">
+    <!-- Titulo -->
+    <h4 class="step-title radius5">Confirmação de pedido</h4>
+    <!-- Mensagem de feedback -->
+    <div class="sucesso">
+        <?php if ($order->getPayment()->getMethod() == "adyen_boleto"): ?>
+            <span class="mensagem">
+                Seu pedido foi efetuado com sucesso. A partir de agora ele será tratado por nosso operador logístico FARMACLUB DROGARIAS LTDA.<br />
+                <small>Para imprimir seu boleto acesse o e-mail de confirmação do pedido que acabamos de lhe enviar, verifique o campo Forma Pagamento, Boleto e clique em Download. Um arquivo boleto.pdf será baixado em seu computador. Abra-o e imprima-o se necessário. Confronte os dados e no caso de qualquer divergência ou dúvida entre em contato conosco no (11) 4972-8277 ou e-mail <a href="mailto:sac@farmaclub.com.br" title="sac@farmaclub.com.br">sac@farmaclub.com.br</a></small>
+            </span>
+        <?php elseif($order->getPayment()->getMethod() == "braspagboleto"): ?>
+            <span class="mensagem">
+                Seu pedido foi efetuado com sucesso. A partir de agora ele será tratado por nosso operador logístico FARMACLUB DROGARIAS LTDA.<br />
+                <small>Você já pode imprimir seu boleto clicando no botão Imprimir boleto bancário (abaixo). Para sua segurança confira os dados nele impressos.Passe o mouse sobre a numeração da linha digitável do código de barras que um balão surgirá com os dados corretos. Confronte os dados e no caso de qualquer divergência entre em contato conosco.</small>
+            </span>
+        <?php else: ?>
+            <span class="mensagem">
+                Seu pedido foi efetuado com sucesso.<br />
+                <small>A partir de agora ele será tratado por nosso operador logístico FARMACLUB DROGARIAS LTDA.</small>
+            </span>
+        <?php endif; ?>
+
+
+        <span class="numero">
+            Número do pedido:
+            <!-- Acho que se separar o numero fica mais facil para estilizar -->
+            <strong><?php echo $order_id; ?></strong>
+        </span>
+        <span class="prazo">
+            Forma de envio e prazo de entrega:
+            <small><?php echo $total_data['shipping_description']; ?></small>
+        </span>
+        <div class="clear"></div>
+    </div>
+
+    <div class="informacoes">
+        <h5>Informações do pedido</h5>
+        <ul>
+            <li>
+                <strong>Nome: <small><?php echo $addr_data['firstname']; ?> <?php echo $addr_data['lastname']; ?></small></strong>
+                <!-- <strong>CPF:<small>974.323.858-38</small></strong> -->
+            </li>
+            <?php if ($order->getPayment()->getMethod() == "braspagboleto"): ?>
+                <li>
+                    <strong>Forma de pagamento: <small>Boleto Bancário</small></strong><br />
+                    <br />
+                    <strong><a href="https://www.pagador.com.br/pagador/reenvia.asp?id_loja={849AF5DE-6966-6C50-070C-AE11139A8720}&VENDAID=<?php echo $order_id;  ?>" id="btnimprimirboleto" target="_blank">Clique aqui para imprimir o boleto bancário</a></strong>
+                    <br />
+                    <br />
+                </li>
+            <?php endif; ?>
+
+
+            <?php if ($order->getPayment()->getMethod() == "adyen_boleto"): ?>
+                <li>
+                    <strong>Forma de pagamento: <small>Boleto Bancário</small></strong><br />
+                    <div class="adyen-boleto-download-pdf">
+                        <?php echo Mage::helper('adyen')->__('<a target="_blank" href="%s" title="Boleto PDF">CLIQUE AQUI PARA IMPRIMIR SEU BOLETO</a>', $order->getAdyenBoletoPdf()); ?>
+                    </div>
+                </li>
+            <?php endif; ?>
+
+            <?php if ($order->getPayment()->getMethod() == "mundipagg_boleto"): ?>
+                <?php $boletoUrl = $this->getBoletoUrl(); ?>
+                <?php if($boletoUrl){ ?>
+                <li>
+                    <strong>Forma de pagamento: <small>Boleto Bancário</small></strong><br />
+                    <div class="adyen-boleto-download-pdf">
+                        <a target="_blank" href="<?php echo $boletoUrl; ?>" title="Boleto PDF">CLIQUE AQUI PARA IMPRIMIR SEU BOLETO</a>
+                    </div>
+                </li>
+                <?php } ?>
+            <?php endif; ?>
+
+            <?php if ($order->getPayment()->getMethod() == "wallet"): ?>
+                <li>
+                    <p>
+                        <b> Caso a tela de pagamento da Stelo não tenha sido aberta, por favor clique no botão abaixo</b> </p>
+                    <p>
+                    <a href="<?php echo $walletUrl.'&indLightbox=true'; ?>" id="light-wallet"  lightbox="true" class="openLightbox">
+                        <img src="<?php echo $baseUrl; ?>frontend/base/default/wallet/images/pagueStelo.png"></a>
+                    </p>
+                    <script type="text/javascript">
+                      jQuery('#light-wallet').click(function(){
+                        // jQuery.featherlight( jQuery('<iframe width="950" height="600" src="' + jQuery(this).attr('href') + '"/>') )
+                        return false;
+                      })
+                    </script>
+                </li>
+            <?php endif; ?>
+        </ul>
+        <ul>
+            <li>
+                <a id="bannerEbit"></a>
+                <br />
+                <br />
+            </li>
+
+            <li>
+                <strong>Endereço: <small><?php echo $addr_data['street']; ?></small> </strong>
+                <strong>Cidade: <small><?php echo $addr_data['city']; ?></small> </strong>
+                <strong>Estado: <small><?php echo $addr_data['region']; ?></small> </strong>
+                <strong>CEP: <small><?php echo $addr_data['postcode']; ?></small> </strong>
+                <strong>Telefone: <small><?php echo $addr_data['telephone']; ?></small> </strong>
+                <strong>Celular: <small><?php echo $addr_data['fax']; ?></small> </strong>
+            </li>
+        </ul>
+    </div>
+    <!-- Segunda coluna -->
+    <div class="pedido">
+        <div class="importante">
+            <strong>Importante: </strong>
+            <p>
+                Pedido sujeito a aprovação. A aprovação está condicionada á análise financeira do
+                pagamento e do cadastro do comprador. No decorrer do período entre a conclusão do pedido e a efetiva liberação poderá eventualmente ocorrer falta de produtos em estoque, o que será informado por e-mail e um novo prazo para entrega poderá ser estabelecido ou ocorrer o cancelamento do pedido bem como o estorno do pagamento. Verifique abaixo o prazo para liberação dos pedidos pagos com boleto e cartão de crédito.
+            </p>
+        </div>
+
+        <div class="importante-email">
+            <p>
+                Se você não receber o e-mail, pode ser que ele
+                tenha ido para sua caixa de spam ou seu endereço
+                de e-mail foi digitado incorretamente.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        jQuery(function() {
+            jQuery("dl.informacoes-complementares dd").hide();
+            jQuery("dl dt").each(function(i) {
+                jQuery(this).toggle(
+                function() {
+                    jQuery(this).css('backgroundPosition','0 -131px')
+                    jQuery(this).siblings('dd').eq(i).slideDown()
+                },
+                function() {
+                    jQuery(this).css('backgroundPosition','0 0')
+                    jQuery(this).siblings('dd').eq(i).slideUp()
+                });
+            });
+        });
+
+    </script>
+    <dl class="informacoes-complementares">
+        <dt>Para corrigir o endereço de entrega deste produto:</dt>
+        <dd>
+            <p>SOLICITE A CORREÇÃO PELO E-MAIL <a href="mailto:sac@farmaclub.com.br" title="sac@farmaclub.com.br">sac@farmaclub.com.br</a> E AGUARDE NOSSA RESPOSTA. Caso este procedimento não seja concluído, ou não houver tempo hábil para a correção, seu pedido será despachado para o endereço de entrega mencionado acima e nos casos de necessidade de reenvio os custos serão cobrados.</p>
+        </dd>
+
+        <dt>Liberação do pedido pago com cartão de crédito:</dt>
+        <dd>
+            <p>Todo pagamento com cartão de crédito está sujeito a atraso na chegada da confirmação pois a administradora do cartão tem prazo de até 2 horas para o envio on-line e de até 24 horas para o envio off-line da informação para o nosso sistema. Após a chegada da informação haverá a análise cadastral do comprador e poderá ser solicitado o envio de documentos do titular do cartão ou um contato telefônico com o mesmo para que o pedido seja de fato aprovado ou recusado por nosso departamento financeiro.</p>
+        </dd>
+
+        <dt>Liberação do pedido pago com boleto:</dt>
+        <dd>
+            <p>
+                É o banco onde o boleto é pago quem envia a informação para o nosso sistema e o status do seu pedido é atualizado automaticamente após a confirmação do pagamento.<br/>
+                Caso o boleto seja pago no BRADESCO (dentro do horário bancário) o prazo para recebermos a confirmação é de 1 dia útil, caso contrário 2 dias úteis. Pagamentos efetuados após o horário bancário, mesmo pela internet, dependerá do critério de cada banco o envio da informação do pagamento para o nosso sistema. Pagamentos efetuados aos sábados e domingos serão compensados somente na noite do próximo dia útil (regra bancária).<br/>
+                Sendo pago em outros bancos, correspondentes bancários ou lotéricas, o prazo para recebermos a confirmação pode demorar até 4 dias úteis.<br/>
+                Pagamentos efetuados em cheque têm prazo de até 7 dias úteis para a chegada da confirmação em nosso sistema, pois depende da compensação.<br/>
+                Devolução de produtos pelo motivo de arrependimento de compra, o custo do frete é pago pelo comprador.<br/>
+                Leia a Política de Troca e Devolução: <a href="http://www.farmadelivery.com.br/politica_de_troca_e_devolucao" title="Política de Troca e Devolução">http://www.farmadelivery.com.br/politica_de_troca_e_devolucao</a>
+            </p>
+        </dd>
+    </dl>
+
+
+    <div class="buttons-set">
+        <button type="button" class="button" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><?php echo $this->__('Continuar comprando') ?></span></button>
+
+        <a href="#modal-cancelarcompra" class="simple-modal-open"><?php echo $this->__('Cancelar compra') ?></a>
+        
+        <div id="modal-cancelarcompra" class="simple-modal">
+            <div class="simple-modal-overlay"></div>
+            <div class="simple-modal-content">
+                <a href="#modal-cancelarcompra" class="simple-modal-close">Fechar</a>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('cancelarcompra')->toHtml(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php echo $this->getChildHtml('track-success'); ?>

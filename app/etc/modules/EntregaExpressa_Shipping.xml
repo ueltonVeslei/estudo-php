@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Entrega via Motoboy
+ *
+ * @category   Motoboy
+ * @package    Motoboy_Shipping
+ * @author     Igor Pfeilsticker <igorsop@gmail.com>
+ */
+-->
+<config>
+    <modules>
+        <EntregaExpressa_Shipping>
+            <active>true</active>
+            <codePool>community</codePool>
+        </EntregaExpressa_Shipping>
+    </modules>
+</config>

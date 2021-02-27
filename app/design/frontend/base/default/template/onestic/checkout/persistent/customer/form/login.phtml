@@ -1,0 +1,207 @@
+<?php
+/**
+ * @package     universal
+ * @copyright   Copyright (c) 2010-2015 MeigeeTeam. (http://www.meigeeteam.com)
+ */
+?>
+<?php
+/**
+ * Customer login form template
+ *
+ * @see app/design/frontend/base/default/template/customer/form/login.phtml
+ */
+/** @var $this Mage_Customer_Block_Form_Login */
+// if(Mage::getSingleton('customer/session')->getOnCheckout()) {
+// 	$urlRedirect = Mage::helper('checkout/url')->getCheckoutUrl();
+// } else {
+// 	$urlRedirect = $this->getCreateAccountUrl();
+// }
+
+$urlRedirect = $this->getCreateAccountUrl();
+?>
+<div class="account-login">
+	<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+		<?php echo $this->getBlockHtml('formkey'); ?>
+		<div class="registered-users">
+			<div class="auth-box">
+				<h2 class="auth-title">Já tem cadastro?</h2>
+			</div>
+			<div class="content">
+				<?php echo $this->getMessagesBlock()->toHtml() ?>
+				<div class="email-container">
+					<label for="email">E-mail, CPF/CNPJ</label>
+		        	<div class="input-box">
+		            	<input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" name="login[username]" id="email" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" class="input-text validate-user required-entry" title="<?php echo $this->quoteEscape($this->__('Email Address')) ?>" />
+		        	</div>
+		        	<span id="situacao"></span>
+		        </div>
+		        <div class="pass-container" id="pass-container">
+					<label for="pass">Senha</label>
+		        	<div class="input-box">
+						<input type="password" name="login[password]" autocomplete="off" class="input-text required-entry validate-password" id="pass" title="<?php echo $this->__('Password') ?>" placeholder="Sua Senha" />
+					</div>
+					<a href="<?php echo $this->getForgotPasswordUrl() ?>" class="esqueci_senha"><?php echo $this->__('Forgot Your Password?') ?></a>
+				</div>
+				<?php echo $this->getChildHtml('persistent.remember.me'); ?>
+				<div class="clearfix">
+					<button type="submit" class="btn ui-button auth-button btn-login"
+						title="Login"
+						name="send"
+						id="send"
+						/>
+						<span>
+							<span>
+								Login
+							</span>
+						</span>
+					</button>
+						<hr />
+						<?php echo $this->getChildHtml('inchoo_socialconnect_facebook_login_button'); ?>
+					<hr />
+					<div class="register">
+						<p>Voc&ecirc; &eacute; novo aqui?</p>
+						<a href="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>"
+							title="<?php echo $this->quoteEscape($this->__('Create an Account')) ?>"
+							class="create-count-button">
+							<?php echo $this->__('Cadastre-se agora!') ?>
+						</a>
+				</div>
+				<?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
+			</div>
+		</div>
+		<?php if (Mage::helper('checkout')->isContextCheckout()): ?>
+			<input name="context" type="hidden" value="checkout" />
+		<?php endif; ?>
+	</form>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+	if(!BASE_URL)
+		var BASE_URL = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>";
+
+	var dataForm = new VarienForm('login-form', true);
+
+	$('email').observe('keypress', bindLoginPost);
+	$('email').observe('keypress', mascara);
+	$('email').observe('blur', bindExists);
+	$('pass').observe('keypress', bindLoginPost);
+
+	function bindLoginPost(evt){
+	 	if (evt.keyCode == Event.KEY_RETURN) {
+	 		//evt.preventDefault();
+	 	}
+	}
+
+	function mascara() {
+		$('situacao').hide();
+		value = this.value;
+		if (!checkMail(value)){
+			var er = new RegExp(/^[0-9\-\.\/]+/);
+			if (er.test(value)) {
+				value = value.replace(/\D/g,"");
+				if (value.length >= 1 && value.length <= 11) {
+					mascaraCPF(this);
+				} else {
+					mascaraCNPJ(this);
+				}
+			} else {
+				value = this.value;
+				value = value.replace(/[^a-zA-Z0-9_\-\.@]/gi,"");
+				this.value = value;
+			}
+		}
+	}
+
+	function bindExists() {
+		value = $('email').value;
+		//$('send').writeAttribute('disabled',true);
+		if (value.length > 3) {
+		    if (checkMailDocument(value)) {
+		   		var ok = false;
+		    	var url = BASE_URL + 'onestic_checkout/customer/exists/';
+
+		   		new Ajax.Request(url, {
+		      		method: 'post',
+		      		async: false,
+		     		parameters: 'user=' + encodeURIComponent(value),
+		       		onSuccess: function(transport) {
+			       		var obj = response = eval('(' + transport.responseText + ')');
+			        	if (obj.result === true) {
+			          		$('pass-container').show();
+			          		$('send').show();
+			          		//$('send').writeAttribute('disabled',false);
+			          		$('situacao').hide();
+		           		} else {
+							$('situacao').innerHTML = 'Email ou CPF/CNPJ não encontrado. Tente outro ou clique abaixo para se Cadastrar agora.';
+							$('situacao').show();
+							//$('send').hide();
+		           		}
+			        },
+		          	onComplete: function() {
+		          		//if ($('advice-validate-user-exist-email')) {
+		          			//$('advice-validate-user-exist-email').remove();
+		            	//}
+		        	}
+		      	});
+
+		      	return ok;
+		    } else {
+		  		Validation.add('validate-user', 'Por favor, confira seus dados!', function(value) {
+	    			return Validation.get('IsEmpty').test(value);
+				});
+		    }
+		}
+	}
+//]]>
+</script>
+<style>
+	header {
+		box-shadow: 0 0px 7px 0 rgba(0, 0, 0, 0.16);
+	}
+
+	.logo {
+		display: block;
+    max-width: 200px;
+    overflow: hidden;
+	}
+
+	.logo img {
+		display: block;
+    max-width: 100%;
+    height: auto;
+	}
+
+	.registered-users {
+		max-width: 400px;
+		margin: 25px auto 0;
+	}
+
+	.auth-box {
+
+	}
+
+	.content {
+    padding: 40px 50px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 25px;
+	}
+
+	#situacao {
+		text-align: center;
+    display: block;
+    margin-top: 20px;
+	}
+
+	.ui-button.auth-button {
+		padding: 12px 24px;
+    width: 100%;
+	}
+
+	.ui-button {
+		display: inline-block;
+		width: auto;
+    	padding: 10px;
+	}
+
+</style>

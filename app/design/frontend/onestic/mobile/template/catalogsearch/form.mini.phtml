@@ -1,0 +1,53 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_blank
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+// Gambiarragem emergencial braba aqui << O ideal � pegar o outros arquivo form.mini.footer.phtml, mas j� est� sendo referenciado no xml e n�o deu certo, favor corrigir assim que poss�vel - STeV
+global $busca_count;
+$footer = ($busca_count == 1)?'_footer':''; $busca_count = 1;
+?>
+
+<form id="search_mini_form<?php echo $footer; ?>" action="<?php echo $this->helper('catalogSearch')->getResultUrl() ?>" method="get">
+    <fieldset class="form-search">
+        <legend><?php echo $this->__('Search Site') ?></legend>
+        <input id="search<?php echo $footer; ?>" type="text" class="input-text clearable" name="<?php echo $this->helper('catalogSearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogSearch')->getEscapedQueryText() ?>" placeholder="Busque pelo nome do produto ou marca" />
+        <button class="search_button button">
+            <span><span class="icon-font icon-ic_search_black_24px"></span></span>
+        </button>
+    </fieldset>
+</form>
+
+
+<script type="text/javascript">
+    function tog(v){return v?'addClass':'removeClass';}
+    jQuery(document).on('input', '.clearable', function(){
+        jQuery(this)[tog(this.value)]('x');
+    }).on('mousemove', '.x', function( e ){
+        jQuery(this)[tog(this.offsetWidth-48 < e.clientX-this.getBoundingClientRect().left)]('onX');
+    }).on('touchstart click', '.onX', function( ev ){
+        ev.preventDefault();
+        jQuery(this).removeClass('x onX').val('').change();
+    });
+</script>

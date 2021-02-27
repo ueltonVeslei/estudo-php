@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+
+<config>
+    <sections>
+        <carriers>
+            <groups>
+                <axado translate="label" module="axado_shipping">
+                    <label>Axado Shipping</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Habilitar</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Nome do meio de entrega</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <token translate="label">
+                            <label>Token de autenticação</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </token>
+                        <formato_peso translate="label">
+                            <label>Formato do peso</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Axado_Shipping_Model_Source_WeightType</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>O formato do peso irá implicar na maneira como o mesmo é cadastrado no produto, por
+                                     exemplo, 1 Kg no formato "Kilo" será "1.000", já em "Gramas" será "1000.000".
+                            </tooltip>
+                        </formato_peso>
+                        <prazo_adicional translate="label">
+                            <label>Prazo adicional</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </prazo_adicional>
+                        <preco_adicional translate="label">
+                            <label>Preço adicional</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </preco_adicional>
+                        <notificar_dimensao translate="label">
+                            <label>Notificar produto sem dimensão</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                        </notificar_dimensao>
+                    </fields>
+                </axado>
+            </groups>
+        </carriers>
+    </sections>
+</config>

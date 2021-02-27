@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <av5>
+            <label>AV5</label>
+            <sort_order>200</sort_order>
+        </av5>
+    </tabs>
+    <sections>
+        <av5avisopagamento translate="label" module="av5avisopagamento">
+            <label>Email de Pagamento</label>
+            <tab>av5</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="av5avisopagamento">
+                    <label>Geral</label>
+                    <sort_order>670</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment>
+	                    <![CDATA[
+	                    	<div style="background: #FFF; border: 1px solid #4096ee;">
+	                    	<img src="http://www.av5.com.br/logo-modulos.png" style="float: left;" />
+	                        <div style="padding:10px;float: left;text-align: left">
+	                        <a href="http://www.av5.com.br" target="_blank"><b>AV5 Tecnologia</b></a> em desenvolvimento de módulos Magento.<br />
+	                        Para obter suporte a este módulo visite: <a href="http://www.av5.com.br/aviso_pagamento/">Suporte AV5.Aviso_Pagamento</a>
+	                        </div>
+	                        <div class="clear"></div>
+	                        </div>
+	                    ]]>
+	                </comment>
+                    <fields>
+                        <active translate="label">
+                            <label>Ativado</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <days translate="label">
+                            <label>Limite para pagamento</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Informe o número de dias úteis para o cessar o envio dos avisos.]]></comment>
+                        </days>
+                        <limit translate="label">
+                            <label>Limite por consulta</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+					  		<comment><![CDATA[Informe o número de pedidos analisados a cada iteração do cron.]]></comment>
+                        </limit>
+                        <filter translate="label">
+							<label>Filtrar pedidos pelo status</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>adminhtml/system_config_source_order_status</source_model>
+					  		<sort_order>3</sort_order>
+					  		<show_in_default>1</show_in_default>
+					  		<show_in_website>1</show_in_website>
+					  		<show_in_store>1</show_in_store>
+					  		<comment><![CDATA[Selecione quais os status de pedido serão usados como filtro]]></comment>
+				      	</filter>
+				      	<payments translate="label">
+                            <label>Métodos de Pagamento</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>adminhtml/system_config_source_payment_allmethods</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Selecione os métodos de pagamento que serão usados como filtro]]></comment>
+                        </payments>
+                        <auto_cancel translate="label">
+                            <label>Auto Cancelar Pedidos Vencidos?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Deseja que os pedidos vencidos sejam automaticamente cancelados?]]></comment>
+                        </auto_cancel>
+                        <send_email translate="label">
+                            <label>Enviar email?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </send_email>
+                    </fields>
+                </general>
+            </groups>
+        </av5avisopagamento>
+    </sections>
+</config>
+

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+      <IcebergCommerce_AutoAddCart>
+          <active>true</active>
+          <codePool>community</codePool>
+          <version>1.0.1</version>
+      </IcebergCommerce_AutoAddCart>
+  </modules>
+</config>

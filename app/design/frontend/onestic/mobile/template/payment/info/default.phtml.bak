@@ -1,0 +1,122 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+$code = $this->htmlEscape($this->getMethod()->getCode());
+if ($code == "braspagcc"):
+
+    $payment = Mage::getModel("braspagcc/payment_gateway");
+    $data = $payment->getSession()->getData();
+    $nomeBandeira = $data["nome_bandeira"];
+    
+?>
+    <p><?php echo $this->htmlEscape($this->getMethod()->getTitle()) ?> - <?php print ucfirst($nomeBandeira);?></p>
+<?php else:?>
+    <p><?php echo $this->htmlEscape($this->getMethod()->getTitle()) ?></p>
+<?php endif;?>
+ */
+?>
+<?php 
+   public function bandeiraCodToLabel($cod)
+    {
+			switch ($cod)
+			{
+				case 01: {
+					return "Visa";
+					break;
+				} 
+				case 41: {
+					return "Visa";
+					break;
+				} 
+				case 20: {
+					return "Mastercard/Diners";
+					break;
+				}
+				case 04: {
+					return "Diners";
+					break;
+				}
+				case 18: {
+					return "Amex";
+					break;
+				}
+				case 29: {
+					return "Hipercard";
+					break;
+				}
+				case 37: {
+					return "Aura";
+					break;
+				}
+				case 55: {
+					return "Oi Paggo";
+					break;
+				}
+				case 106: {
+					return "Mastercard";
+					break;
+				}
+				case 9998: {
+					return "Visa";
+					break;
+				}			
+				case 9999: {
+					return "Mastercard Amoedo";
+					break;
+				}
+			}
+		}
+			
+			function BancoCodToLabel($cod) {
+				switch ($cod) {
+					case 02: {
+						return "Visa Electron";
+						break;
+					}
+					case 11: {
+						return "Bradesco";
+						break;
+					}
+					case 12: {
+						return "Itaú";
+						break;
+					}
+					case 15: {
+						return "Banco do Brasil";
+						break;
+					}
+					case 30: {
+						return "Banrisul";
+						break;
+					}
+					case 31: {
+						return "Unibanco";
+						break;
+					}
+				}
+			}
+?>
+	<p>
+		<?php echo $this->htmlEscape($this->getMethod()->getTitle()); ?>	
+	</p>

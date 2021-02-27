@@ -1,0 +1,40 @@
+<?php
+
+/**
+ *
+ * @category   Onestic
+ * @package    Onestic_Checkout
+ * @author     Suporte <suporte@onestic.com>
+ */
+?>
+<?php
+	$value = $this->getTipopessoa();
+?>
+<span class="hidden">Tipo de pessoa:</span>
+<div class="col-xs-6 text-right field">
+		<input type="radio" name="tipopessoa" id="tipopessoa_fisica" 
+			value="Física" <?php echo ($value == 'Física' || !$value) ? 'checked="checked"' : ''; ?> 
+			onclick="toggle_taxvat(this.value);" />
+    <label id="label_fisica" for="tipopessoa_fisica"
+           class="tipopessoa <?php echo ($value == 'Física' || !$value) ? 'active' : ''; ?>">
+        Física
+	</label>
+</div>
+<div class="col-xs-6 field">
+		<input type="radio" name="tipopessoa" id="tipopessoa_juridica"
+			value="Jurídica" <?php echo ($value == 'Jurídica') ? 'checked="checked"' : ''; ?>
+			onclick="toggle_taxvat(this.value);" />
+    <label id="label_juridica" for="tipopessoa_juridica"
+           class=" tipopessoa <?php echo ($value == 'Jurídica') ? 'active' : ''; ?>">
+			Jurídica
+	</label>
+</div>
+<div class="field">
+		<input type="radio" name="tipopessoa" id="tipopessoa_estrangeiro"
+			value="Estrangeiro" <?php echo ($value == 'Estrangeiro') ? 'checked="checked"' : ''; ?>
+			onclick="toggle_taxvat(this.value);" />
+    <label id="label_estrangeiro" for="tipopessoa_estrangeiro"
+           class="hidden tipopessoa <?php echo ($value == 'Estrangeiro') ? 'active' : ''; ?>">
+			Estrangeiro
+	</label>
+</div>

@@ -1,0 +1,389 @@
+<script type="text/javascript">// <![CDATA[
+function glossarioEvent(element) { 
+		var el = jQuery(element);
+		var id = '#' + el.data('id');
+		var content = jQuery('.conteudo-glossario');
+		
+		jQuery('.glossario li, .conteudo-glossario li, .conteudo-glossario ul').removeClass('active');
+		jQuery('#buscaGlossario').val('');
+		el.addClass('active');
+		content.find(id).addClass('active');
+		content.find(id).children('li').addClass('active');
+	};
+
+	function buscaGlossarioEvent(element) {
+		var el = jQuery(element);
+
+		setTimeout(function() {
+			var value = el.val().toLowerCase();
+
+			jQuery('.glossario li, .conteudo-glossario li, .conteudo-glossario ul').removeClass('active');
+			if(value.length > 2) {
+				jQuery('.conteudo-glossario ul li').filter(function() {
+					jQuery(this).toggleClass('active', jQuery(this).children('a').text().toLowerCase().indexOf(value) > -1)
+					jQuery(this).parent().addClass('active');
+				});
+			}
+		}, 300)
+	}
+
+// ]]></script>
+
+<style>
+    .glossario { list-style: none; display: table; margin: 0 auto; margin-bottom: 15px; padding: 0 15px; width: 100%;}
+    .glossario li { display: table-cell; cursor: pointer; height: 22px; width: 22px; text-align: center; }
+    .glossario li.active { text-decoration: underline; font-weight: bold; }
+    .glossario li:hover { text-decoration: underline; }
+    .busca-glossario { display: block; border: 1px solid #000; font-size: 16px; padding: 15px; height: 38px; color: #333; width: 300px; margin: 0 auto 15px auto }
+    .conteudo-glossario { padding: 0 15px;}
+    .conteudo-glossario ul { list-style: none; margin: 0; display: none; padding: 0;}
+    .conteudo-glossario ul.active { display: block }
+    .conteudo-glossario ul li { display: none; padding-bottom: 15px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;  }
+    .conteudo-glossario ul li.active { display: inline-block; }
+    .conteudo-glossario ul li a:hover { color: #00A1E1; transition: color .3s; }
+    .cms-glossario-de-produtos .col-main {display: block;}
+</style>
+
+<p><input id="buscaGlossario" class="busca-glossario" onkeyup="buscaGlossarioEvent(this)" type="text" placeholder="Qual produto deseja pesquisar?" /></p>
+<ul class="glossario">
+    <li onclick="glossarioEvent(this);" data-id="letra-a">A</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-b">B</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-c">C</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-d">D</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-e">E</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-f">F</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-g">G</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-h">H</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-i">I</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-j">J</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-k">K</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-l">L</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-m">M</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-n">N</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-o">O</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-p">P</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-q">Q</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-r">R</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-s">S</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-t">T</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-u">U</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-v">V</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-w">W</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-x">X</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-y">Y</li>
+    <li onclick="glossarioEvent(this);" data-id="letra-z">Z</li>
+</ul>
+
+<div class="conteudo-glossario">
+    <ul id="letra-a" class="active">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'a%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-b">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'b%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-c">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'c%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-d">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'd%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-e">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'e%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-f">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'f%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-g">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'g%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-h">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'h%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-i">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'i%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-j">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'j%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-k">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'k%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-l">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'l%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-m">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'm%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-n">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'n%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-o">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'o%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-p">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'p%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-q">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'q%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-r">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'r%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-s">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 's%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-t">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 't%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-u">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'u%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-v">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'v%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-w">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'w%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-x">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'x%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-y">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'y%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+
+    <ul id="letra-z">
+        <?php
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('name', array('like' => 'z%'))
+            ->addAttributeToSort('name', 'ASC'); 
+        ?>
+        <?php foreach ($collection as $product) : ?>
+            <li><a href="<?php echo $product->getProductUrl()?>"> <?php echo $product->getName(); ?></a></li>
+        <?php endforeach ?>
+    </ul>
+</div>

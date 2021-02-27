@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magaya
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@logistico.com so we can send you a copy immediately.
+ *
+ *
+ * @category   Integration
+ * @package    Magaya_Logistico
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+
+<config>
+    <api>
+        <resources>
+            <logistico_store translate="title" module="mgylogistico">
+                <model>mgylogistico/store_api</model>
+                <title>Logistico Store Connection</title>
+                <methods>
+                    <testConnection translate="title" module="mgylogistico">
+                        <title>Test Logistico Connection</title>                       
+                    </testConnection>
+                </methods>
+                <faults module="sales">
+                    <data_invalid>
+                        <code>102</code>
+                        <message>Invalid data given. Details in error message.</message>
+                    </data_invalid>
+                </faults>
+            </logistico_store>
+            <logistico_shipment>
+                <model>mgylogistico/sales_order_shipment_api</model>
+                <title>Shipment API</title>
+                <methods>
+                    <create translate="title" module="mgylogistico">
+                        <title>Create Shipment</title>                   
+                    </create>
+                </methods>
+            </logistico_shipment>
+            <logistico_orders translate="title" module="mgylogistico">             
+                <model>mgylogistico/sales_order_api</model>
+                <title>Order API</title>
+                <methods>
+                    <list translate="title" module="mgylogistico">
+                        <title>Retrieve list of orders by filters</title>
+                        <method>items</method>                      
+                    </list>
+                    <setAsSynced translate="title" module="mgylogistico">
+                        <title>Mark order as Synced</title> 
+                        <method>setAsSynced</method>                         
+                    </setAsSynced>
+                    <info translate="title" module="sales">
+                        <title>Retrieve order information</title>                       
+                    </info>
+                    <cancel translate="title" module="sales">
+                        <title>Cancel order</title>
+                    </cancel>
+                </methods>
+                <faults module="sales">
+                    <not_exists>
+                        <code>100</code>
+                        <message>Requested order not exists.</message>
+                    </not_exists>
+                    <filters_invalid>
+                        <code>101</code>
+                        <message>Invalid filters given. Details in error message.</message>
+                    </filters_invalid>
+                    <data_invalid>
+                        <code>102</code>
+                        <message>Invalid data given. Details in error message.</message>
+                    </data_invalid>
+                    <status_not_changed>
+                        <code>103</code>
+                        <message>Order status not changed. Details in error message.</message>
+                    </status_not_changed>
+                </faults>
+            </logistico_orders>
+        </resources>
+        <resources_alias>
+            <logistico_store>logistico_store</logistico_store>
+            <logistico_order>logistico_orders</logistico_order>
+            <logistico_shipment>logistico_shipment</logistico_shipment>
+        </resources_alias>
+        <v2>
+            <resources_function_prefix>
+                <logistico_order>logisticoOrders</logistico_order>
+                <logistico_store>logisticoStore</logistico_store>
+                <logistico_shipment>logisticoOrderShipment</logistico_shipment>
+            </resources_function_prefix>
+        </v2>
+    </api>   
+</config>

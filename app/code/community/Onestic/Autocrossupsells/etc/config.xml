@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Onestic_Autocrossupsells>
+            <version>1.0.1</version>
+        </Onestic_Autocrossupsells>
+    </modules>
+        <global>
+            <helpers>
+                    <onestic_autocrossupsells>
+                        <class>Onestic_Autocrossupsells_Helper</class>
+                    </onestic_autocrossupsells>
+                </helpers>
+        </global>
+        <frontend>
+          <routers>
+            <checkout>
+              <args>
+                <modules>
+                  <Onestic_Autocrossupsells before="Mage_Checkout">Onestic_Autocrossupsells_Checkout</Onestic_Autocrossupsells>
+                </modules>
+              </args>
+            </checkout>
+          </routers>
+    </frontend>
+     <adminhtml>
+        <translate>
+            <modules>
+                <Onestic_Autocrossupsells>
+                    <files>
+                        <default>Onestic_Autocrossupsells.csv</default>
+                    </files>
+                </Onestic_Autocrossupsells>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>

@@ -1,0 +1,83 @@
+<?php if($routeName == 'cms' && $identifier == 'home') { ?>
+    <title><?php echo $this->getTitle() ?></title>
+<?php } else { ?>
+    <title><?php echo $this->getTitle() . " | Farmadelivery" ?></title>
+<?php } ?>
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content = "-1" />
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
+<meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+<meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
+<?php $urlRobots = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>
+<?php if (strpos($urlRobots,'/catalogsearch/result') == true) { ?>
+    <meta name="robots" content="NOINDEX,FOLLOW" />
+<?php } else { ?>
+    <meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
+<?php } ?>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<!-- <meta http-equiv="X-UA-Compatible" content="IE=9" > -->
+<!-- <meta http-equiv="pragma" content="no-cache" /> -->
+<link rel="icon" href="<?php echo $this->getSkinUrl('favicon.ico') ?>" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo $this->getSkinUrl('favicon.ico') ?>" type="image/x-icon" />
+<?php
+$actionName = $this->getAction()->getFullActionName();
+//if product view
+if($actionName == 'catalog_product_view') {
+    $_product = Mage::registry('current_product');
+    if ($_product) {
+        $keyProduct = $_product->getUrlKey();
+    }
+    $currentLink = 'https://www.farmadelivery.com.br/'. $keyProduct;
+    if ($currentLink) echo '<link rel="canonical" href="' . $currentLink . '" />';
+}
+?>
+
+<?php
+if(Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+    <?php
+    $customerData = Mage::getSingleton('customer/session')->getCustomer();
+    ?>
+    <script type="text/javascript">
+        var customerID = "<?php echo $customerData->getEmail(); ?>"; // define o ID do cliente
+        (function() {
+            var period = 300;
+            var limit = 20 * 1e3;
+            var nTry = 0;
+            var intervalID = setInterval(function() { // loop para retentar o envio
+                var clear = limit/period <= ++nTry;
+                if ((typeof(Konduto) !== "undefined") &&
+                    (typeof(Konduto.setCustomerID) !== "undefined")) {
+                    window.Konduto.setCustomerID(customerID); // envia o ID para a Konduto
+                    clear = true;
+                }
+                if (clear) {
+                    clearInterval(intervalID);
+                }
+            }, period);
+        })(customerID);
+    </script>
+<?php endif;?>
+
+
+<link href="//fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+    var slidePrevText = '<?php echo $this->__('Previous') ?>';
+    var slideNextText = '<?php echo $this->__('Next') ?>';
+    var viewAll       = '<?php echo $this->__('View All') ?>';
+//]]>
+</script>
+
+<?php echo $this->getCssJsHtml() ?>
+
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+
+<script type="text/javascript">
+    var $j = jQuery.noConflict(); 
+</script>
+
+<?php echo $this->getChildHtml() ?>

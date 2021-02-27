@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	
+	<modules>
+		<MageMigrator_Migrator>
+			<version>1.0</version>
+		</MageMigrator_Migrator>
+	</modules>
+	
+	<global> 
+		
+		<models>
+			<migrator>
+				<class>MageMigrator_Migrator_Model</class>
+			</migrator>
+		</models>
+		
+		<blocks>
+			<migrator>
+				<class>MageMigrator_Migrator_Block</class>
+			</migrator>
+		</blocks>
+		
+	</global>
+	
+	<frontend>
+		<routers>
+			<migrator>
+				<use>standard</use>
+				<args>
+					<module>MageMigrator_Migrator</module>
+					<frontName>migrator</frontName>
+				</args>
+			</migrator>
+		</routers>
+		
+		<layout>
+            <updates>
+                <migrator>
+                    <file>migrator.xml</file>
+                </migrator>
+            </updates>
+        </layout>
+        
+	</frontend>
+	
+</config>

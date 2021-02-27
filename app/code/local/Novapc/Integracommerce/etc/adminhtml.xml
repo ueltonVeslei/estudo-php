@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PHP version 5
+ * Novapc Integracommerce
+ *
+ * @category  Magento
+ * @package   Novapc_Integracommerce
+ * @author    Novapc <novapc@novapc.com.br>
+ * @copyright 2017 Integracommerce
+ * @license   https://opensource.org/licenses/osl-3.0.php PHP License 3.0
+ * @version   GIT: 1.0
+ * @link      https://github.com/integracommerce/modulo-magento
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <integracommerce module="integracommerce">
+                        <title>Integracommerce</title>
+                        <sort_order>711</sort_order>
+                        <children>
+
+                            <integration translate="title" module="integracommerce">
+                                <title>Exportação</title>
+                                <sort_order>1</sort_order>
+                                <action>integracommerce/adminhtml_integration</action>
+                            </integration>
+
+                            <orders translate="title" module="integracommerce">
+                                <title>Gerenciar Pedidos</title>
+                                <sort_order>2</sort_order>
+                                <action>integracommerce/adminhtml_orders</action>
+                            </orders>
+
+                            <report translate="title" module="integracommerce">
+                                <title>Relatório</title>
+                                <sort_order>3</sort_order>
+                                <action>integracommerce/adminhtml_report</action>
+                            </report>
+
+                            <integracommerce_configuration translate="title" module="integracommerce">
+                                <title>Configuração</title>
+                                <sort_order>4</sort_order>
+                                <action>adminhtml/system_config/edit/section/integracommerce/</action>
+                            </integracommerce_configuration>
+
+                        </children>
+                    </integracommerce>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+	<menu>
+            <integracommerce module="integracommerce">
+                <title>Integracommerce</title>
+                <sort_order>711</sort_order>
+                <children>
+
+                    <integration translate="title" module="integracommerce">
+                        <title>Exportação</title>
+                        <sort_order>1</sort_order>
+                        <action>integracommerce/adminhtml_integration</action>
+                    </integration>                    
+
+                    <orders translate="title" module="integracommerce">
+                        <title>Gerenciar Pedidos</title>
+                        <sort_order>2</sort_order>
+                        <action>integracommerce/adminhtml_orders</action>
+                    </orders>
+
+                    <report translate="title" module="integracommerce">
+                        <title>Relatório</title>
+                        <sort_order>3</sort_order>
+                        <action>integracommerce/adminhtml_report</action>
+                    </report>
+
+                    <integracommerce_configuration translate="title" module="integracommerce">
+                        <title>Configuração</title>
+                        <sort_order>4</sort_order>
+                        <action>adminhtml/system_config/edit/section/integracommerce/</action>
+                    </integracommerce_configuration>
+
+                </children>
+            </integracommerce>
+        </menu>
+</config>

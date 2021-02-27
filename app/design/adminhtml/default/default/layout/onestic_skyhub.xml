@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<layout>
+    <onestic_skyhub_adminhtml_order_index>
+        <reference name="content">
+            <block type="onestic_skyhub/adminhtml_order" name="orders.list" />
+        </reference>
+    </onestic_skyhub_adminhtml_order_index>
+    <onestic_skyhub_adminhtml_order_last>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_skyhub/last.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_order_last>
+    <onestic_skyhub_adminhtml_order_import>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_skyhub/import.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_order_import>
+    <onestic_skyhub_adminhtml_order_resyncprogress>
+        <reference name="content">
+            <block type="adminhtml/template" name="resync-progress" template="onestic_skyhub/resync-progress.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_order_resyncprogress>
+    
+    <onestic_skyhub_adminhtml_order_invoice>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_skyhub/progress/invoice.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_order_invoice>
+    <onestic_skyhub_adminhtml_order_shipment>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_skyhub/progress/shipment.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_order_shipment>
+    <onestic_skyhub_adminhtml_order_delivery>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_skyhub/progress/delivery.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_order_delivery>
+    
+    <onestic_skyhub_adminhtml_product_index>
+        <reference name="content">
+            <block type="onestic_skyhub/adminhtml_product" name="products.list" />
+        </reference>
+    </onestic_skyhub_adminhtml_product_index>
+    <onestic_skyhub_adminhtml_product_progress>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_skyhub/products/progress.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_product_progress>
+    <onestic_skyhub_adminhtml_product_resyncprogress>
+        <reference name="content">
+            <block type="adminhtml/template" name="resync-progress" template="onestic_skyhub/products/resync-progress.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_product_resyncprogress>
+    <onestic_skyhub_adminhtml_product_export>
+        <reference name="content">
+            <block type="adminhtml/template" name="export" template="onestic_skyhub/products/export.phtml"/>
+        </reference>
+    </onestic_skyhub_adminhtml_product_export>
+</layout>

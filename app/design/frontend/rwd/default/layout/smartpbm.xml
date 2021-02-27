@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout>
+	<catalog_product_view>
+        <reference name="product.info.addtocart">
+            <block type="smartpbm/check_form" name="smartpbm_form" as="smartpbm_form" template="smartpbm/form.phtml" />
+        </reference>
+    </catalog_product_view>       
+</layout>

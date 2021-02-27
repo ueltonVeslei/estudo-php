@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<onestic_checkout_onepage_index>
+		<reference name="checkout.onepage.payment">
+			<block type="enterprise_customerbalance/checkout_onepage_payment_additional" template="onestic/checkout/onepage/payment/customerbalance.phtml" name="customerstorecredit" />
+		</reference>
+	</onestic_checkout_onepage_index>
+	<onestic_checkout_onepage_paymentmethod>
+		<reference name="root">
+			<block type="enterprise_customerbalance/checkout_onepage_payment_additional" template="onestic/checkout/onepage/payment/customerbalance.phtml" name="customerstorecredit" />
+		</reference>
+	</onestic_checkout_onepage_paymentmethod>
+</layout>

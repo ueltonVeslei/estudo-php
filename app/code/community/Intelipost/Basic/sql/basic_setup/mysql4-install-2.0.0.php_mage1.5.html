@@ -1,0 +1,85 @@
+<?php
+
+$installer = $this;
+$installer->startSetup ();
+
+function addOrUpdateOrdersTable ($installer, $model_name, $comment)
+{
+   $table = $installer->getTable ($model_name);
+
+    $sqlBlock = <<< SQLBLOCK
+CREATE TABLE IF NOT EXISTS {$table}
+(
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  order_id int(10) unsigned NOT NULL COMMENT 'Order ID',
+  delivery_quote_id int(10) unsigned NOT NULL COMMENT 'Delivery Quote ID',
+  delivery_method_id int(10) unsigned NOT NULL COMMENT 'Delivery Method ID',
+  status varchar(255) NOT NULL COMMENT 'Status',
+  shipping_cost decimal(12,4) NOT NULL DEFAULT '0.0000',
+  delivery_business_day int(10) unsigned DEFAULT '0',
+  qty_volumes int(10) unsigned NOT NULL COMMENT 'Quantity Volumes',
+  PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='{$comment}';
+SQLBLOCK;
+
+    $installer->run ($sqlBlock);
+}
+
+function addOrUpdateNFEsTable($installer, $model_name, $comment)
+{
+
+    $table = $installer->getTable ($model_name);
+
+    $sqlBlock = <<< SQLBLOCK
+CREATE TABLE IF NOT EXISTS {$table}
+(
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  increment_id varchar(255) NOT NULL COMMENT 'Order Increment ID',
+  series int(10) unsigned NOT NULL COMMENT 'NFE Series',
+  number int(10) unsigned NOT NULL COMMENT 'NFE Number',
+  total float NOT NULL COMMENT 'NFE Total',
+  cfop varchar(100) DEFAULT NULL COMMENT 'CFOP',
+  created_at date NOT NULL COMMENT 'NFE Created At',
+  key_nfe varchar(255) NOT NULL COMMENT 'NFE Key',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='{$comment}';
+SQLBLOCK;
+
+    $installer->run ($sqlBlock);
+}
+
+function addOrUpdateTrackingsTable($installer, $model_name, $comment)
+{
+	  $table = $installer->getTable ($model_name);
+
+    $sqlBlock = <<< SQLBLOCK
+CREATE TABLE IF NOT EXISTS {$table}
+(
+ id int(11) unsigned NOT NULL AUTO_INCREMENT,
+ increment_id varchar(255) NOT NULL COMMENT 'Order Increment ID',
+ code varchar(255) NOT NULL COMMENT 'Tracking Code',
+ PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='{$comment}';
+SQLBLOCK;
+	
+	$installer->run ($sqlBlock);
+}
+
+function updateShippingRatesTable($installer, $model_name)
+{
+  $table = $installer->getTable ($model_name);
+
+  $sqlBlock = <<< SQLBLOCK
+ALTER TABLE {$table} ADD intelipost_quote_id int(10) unsigned NOT NULL, ADD intelipost_estimated_delivery_business_days int(10) unsigned NOT NULL, ADD intelipost_cost int(10) unsigned NOT NULL, ADD intelipost_restricted_msg varchar(255) DEFAULT NULL; 
+SQLBLOCK;
+  
+  $installer->run($sqlBlock);
+}
+
+
+addOrUpdateOrdersTable ($installer, 'intelipost_basic_orders', 'Intelipost Basic - Orders');
+addOrUpdateNFEsTable ($installer, 'intelipost_basic_nfes', 'Intelipost Basic - NFEs');
+addOrUpdateTrackingsTable ($installer, 'intelipost_basic_trackings', 'Intelipost Basic - Trackings');
+updateShippingRatesTable($installer, 'sales_flat_quote_shipping_rate');
+
+$installer->endSetup();

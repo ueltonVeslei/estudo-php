@@ -1,0 +1,68 @@
+<?
+
+if ($_SERVER['SERVER_PORT'] == 443)
+	$baseURL = "https://".$_SERVER["HTTP_HOST"];
+else 
+    $baseURL = "http://".$_SERVER["HTTP_HOST"];
+
+function BancoCodToLabel($cod) {
+	switch ($cod) {
+		case 02: {
+			return "Visa Electron";
+			break;
+		}
+		case 11: {
+			return "Débito Bradesco";
+			break;
+		}
+		case 12: {
+			return "Débito Itaú";
+			break;
+		}
+		case 15: {
+			return "Débito Banco do Brasil";
+			break;
+		}
+		case 30: {
+			return "Débito Banrisul";
+			break;
+		}
+		case 31: {
+			return "Débito Unibanco";
+			break;
+		}
+	}
+}
+
+$base = Mage::getSingleton('checkout/session')->getQuote()->getData();
+$valor_total = $base['grand_total'];
+
+$_code=$this->getMethodCode();
+$method = $this->getMethod();
+$availableBanks = $this->getEnabledBanks();
+
+?> 
+<fieldset class="form-list" style="margin-bottom: 10px;">
+
+    <ul id="payment_form_<?php echo $_code ?>" style="display:none">
+
+    	<li>
+            <div class="input-box">
+                <?php $i = 1; ?>
+            	<?php foreach( $availableBanks as $bank ): ?>
+					<div style="float:left; width:100px; text-align:center;">
+	                  <input type="radio" id="banco_<?php echo $bank->getName(); ?>" name="payment[banco]" value="<?php echo $bank->getCode(); ?>" class="radio validate-one-required-by-name" />
+	                  <label for="banco_<?php echo $bank->getName(); ?>"><img src="<?php echo $this->getSkinUrl('images/braspag/pgto_' . $bank->getName() . '.png') ?>" border="0" align="absmiddle" /></label>
+	                </div>
+	                <?php $i++;?>
+				<?php endforeach ?>
+            </div>
+        </li>
+   
+     
+        <li style="clear:both">
+            <i><?php echo $this->__('Você será redirecionado para o pagamento após a conclusão do pedido.') ?></i>
+        </li>
+        
+    </ul>
+</fieldset>

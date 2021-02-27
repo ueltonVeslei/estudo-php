@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+ <modules>
+   <Av5_OrderComment>
+       <active>true</active>
+       <codePool>local</codePool>
+   </Av5_OrderComment>
+ </modules>
+</config>

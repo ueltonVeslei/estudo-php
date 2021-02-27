@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	
+	<modules>
+		<MageMigrator_Migcatalogsearch>
+			<version>1.0</version>
+		</MageMigrator_Migcatalogsearch>
+	</modules>
+	
+	<global> 
+		
+		<models>
+			<migcatalogsearch>
+				<class>MageMigrator_Migcatalogsearch_Model</class>
+			</migcatalogsearch>
+		</models>
+		
+	</global>
+	
+</config>

@@ -1,0 +1,932 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <onestic>
+            <label>Onestic</label>
+            <sort_order>200</sort_order>
+        </onestic>
+    </tabs>
+    <sections>
+        <overcoupom translate="label" module="onestic_overcoupom">
+            <label>Onestic Cupons</label>
+            <tab>onestic</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <geral translate="label" module="core">
+                    <label>Geral</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+                        <cupom1 translate="label">
+                            <label>cupom 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 1</comment>
+                        </cupom1>
+                        <cupom2 translate="label">
+                            <label>cupom 2</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 2</comment>
+                        </cupom2>
+                        <cupom3 translate="label">
+                            <label>cupom 3</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 3</comment>
+                        </cupom3>
+                        <cupom4 translate="label">
+                            <label>cupom 4</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 4</comment>
+                        </cupom4>
+                        <cupom5 translate="label">
+                            <label>cupom 5</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 5</comment>
+                        </cupom5>
+                        <cupom6 translate="label">
+                            <label>cupom 6</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 6</comment>
+                        </cupom6>
+                        <cupom7 translate="label">
+                            <label>cupom 7</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 7</comment>
+                        </cupom7>
+                        <cupom8 translate="label">
+                            <label>cupom 8</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 8</comment>
+                        </cupom8>
+                        <cupom9 translate="label">
+                            <label>cupom 9</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 9</comment>
+                        </cupom9>
+                        <cupom10 translate="label">
+                            <label>cupom 10</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 10</comment>
+                        </cupom10>
+                        <cupom11 translate="label">
+                            <label>cupom 11</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 11</comment>
+                        </cupom11>
+                        <cupom12 translate="label">
+                            <label>cupom 12</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 12</comment>
+                        </cupom12>
+                        <cupom13 translate="label">
+                            <label>cupom 13</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 13</comment>
+                        </cupom13>
+                        <cupom14 translate="label">
+                            <label>cupom 14</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 14</comment>
+                        </cupom14>
+                        <cupom15 translate="label">
+                            <label>cupom 15</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 15</comment>
+                        </cupom15>
+                        <cupom16 translate="label">
+                            <label>cupom 16</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 16</comment>
+                        </cupom16>
+                        <cupom17 translate="label">
+                            <label>cupom 17</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 17</comment>
+                        </cupom17>
+                        <cupom18 translate="label">
+                            <label>cupom 18</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>180</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 18</comment>
+                        </cupom18>
+                        <cupom19 translate="label">
+                            <label>cupom 19</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>190</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 19</comment>
+                        </cupom19>
+                        <cupom20 translate="label">
+                            <label>cupom 20</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 20</comment>
+                        </cupom20>
+                        <cupom21 translate="label">
+                            <label>cupom 21</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 21</comment>
+                        </cupom21>
+                        <cupom22 translate="label">
+                            <label>cupom 22</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 22</comment>
+                        </cupom22>
+                        <cupom23 translate="label">
+                            <label>cupom 23</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>230</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 23</comment>
+                        </cupom23>
+                        <cupom24 translate="label">
+                            <label>cupom 24</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>240</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 24</comment>
+                        </cupom24>
+                        <cupom25 translate="label">
+                            <label>cupom 25</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 25</comment>
+                        </cupom25>
+                        <cupom26 translate="label">
+                            <label>cupom 26</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>260</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 26</comment>
+                        </cupom26>
+                        <cupom27 translate="label">
+                            <label>cupom 27</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>270</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 27</comment>
+                        </cupom27>
+                        <cupom28 translate="label">
+                            <label>cupom 28</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>280</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 28</comment>
+                        </cupom28>
+                        <cupom29 translate="label">
+                            <label>cupom 29</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>290</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 29</comment>
+                        </cupom29>
+                        <cupom30 translate="label">
+                            <label>cupom 30</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 30</comment>
+                        </cupom30>
+                        <cupom31 translate="label">
+                            <label>cupom 31</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>310</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 31</comment>
+                        </cupom31>
+                        <cupom32 translate="label">
+                            <label>cupom 32</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>320</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 32</comment>
+                        </cupom32>
+                        <cupom33 translate="label">
+                            <label>cupom 33</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>330</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 33</comment>
+                        </cupom33>
+                        <cupom34 translate="label">
+                            <label>cupom 34</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>340</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 34</comment>
+                        </cupom34>
+                        <cupom35 translate="label">
+                            <label>cupom 35</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 35</comment>
+                        </cupom35>
+                        <cupom36 translate="label">
+                            <label>cupom 36</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>360</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 36</comment>
+                        </cupom36>
+                        <cupom37 translate="label">
+                            <label>cupom 37</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>370</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 37</comment>
+                        </cupom37>
+                        <cupom38 translate="label">
+                            <label>cupom 38</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>380</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 38</comment>
+                        </cupom38>
+                        <cupom39 translate="label">
+                            <label>cupom 39</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>390</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 39</comment>
+                        </cupom39>
+                        <cupom40 translate="label">
+                            <label>cupom 40</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 40</comment>
+                        </cupom40>
+                        <cupom41 translate="label">
+                            <label>cupom 41</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 41</comment>
+                        </cupom41>
+                        <cupom42 translate="label">
+                            <label>cupom 42</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 42</comment>
+                        </cupom42>
+                        <cupom43 translate="label">
+                            <label>cupom 43</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 43</comment>
+                        </cupom43>
+                        <cupom44 translate="label">
+                            <label>cupom 44</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 44</comment>
+                        </cupom44>
+                        <cupom45 translate="label">
+                            <label>cupom 45</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>450</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 45</comment>
+                        </cupom45>
+                        <cupom46 translate="label">
+                            <label>cupom 46</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>460</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 46</comment>
+                        </cupom46>
+                        <cupom47 translate="label">
+                            <label>cupom 47</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>470</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 47</comment>
+                        </cupom47>
+                        <cupom48 translate="label">
+                            <label>cupom 48</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>480</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 48</comment>
+                        </cupom48>
+                        <cupom49 translate="label">
+                            <label>cupom 49</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>490</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 49</comment>
+                        </cupom49>
+                        <cupom50 translate="label">
+                            <label>cupom 50</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 50</comment>
+                        </cupom50>
+                        <cupom51 translate="label">
+                            <label>cupom 51</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>510</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 51</comment>
+                        </cupom51>
+                        <cupom52 translate="label">
+                            <label>cupom 52</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>520</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 52</comment>
+                        </cupom52>
+                        <cupom53 translate="label">
+                            <label>cupom 53</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>530</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 53</comment>
+                        </cupom53>
+                        <cupom54 translate="label">
+                            <label>cupom 54</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>540</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 54</comment>
+                        </cupom54>
+                        <cupom55 translate="label">
+                            <label>cupom 55</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>550</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 55</comment>
+                        </cupom55>
+                        <cupom56 translate="label">
+                            <label>cupom 56</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>560</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 56</comment>
+                        </cupom56>
+                        <cupom57 translate="label">
+                            <label>cupom 57</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>570</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 57</comment>
+                        </cupom57>
+                        <cupom58 translate="label">
+                            <label>cupom 58</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>580</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 58</comment>
+                        </cupom58>
+                        <cupom59 translate="label">
+                            <label>cupom 59</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>590</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 59</comment>
+                        </cupom59>
+                        <cupom60 translate="label">
+                            <label>cupom 60</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>600</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 60</comment>
+                        </cupom60>
+                        <cupom61 translate="label">
+                            <label>cupom 61</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>610</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 61</comment>
+                        </cupom61>
+                        <cupom62 translate="label">
+                            <label>cupom 62</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>620</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 62</comment>
+                        </cupom62>
+                        <cupom63 translate="label">
+                            <label>cupom 63</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>630</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 63</comment>
+                        </cupom63>
+                        <cupom64 translate="label">
+                            <label>cupom 64</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>640</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 64</comment>
+                        </cupom64>
+                        <cupom65 translate="label">
+                            <label>cupom 65</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>650</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 65</comment>
+                        </cupom65>
+                        <cupom66 translate="label">
+                            <label>cupom 66</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>660</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 66</comment>
+                        </cupom66>
+                        <cupom67 translate="label">
+                            <label>cupom 67</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>670</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 67</comment>
+                        </cupom67>
+                        <cupom68 translate="label">
+                            <label>cupom 68</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>680</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 68</comment>
+                        </cupom68>
+                        <cupom69 translate="label">
+                            <label>cupom 69</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>690</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 69</comment>
+                        </cupom69>
+                        <cupom70 translate="label">
+                            <label>cupom 70</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>700</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 70</comment>
+                        </cupom70>
+                        <cupom71 translate="label">
+                            <label>cupom 71</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>710</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 71</comment>
+                        </cupom71>
+                        <cupom72 translate="label">
+                            <label>cupom 72</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>720</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 72</comment>
+                        </cupom72>
+                        <cupom73 translate="label">
+                            <label>cupom 73</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>730</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 73</comment>
+                        </cupom73>
+                        <cupom74 translate="label">
+                            <label>cupom 74</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>740</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 74</comment>
+                        </cupom74>
+                        <cupom75 translate="label">
+                            <label>cupom 75</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>750</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 75</comment>
+                        </cupom75>
+                        <cupom76 translate="label">
+                            <label>cupom 76</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>760</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 76</comment>
+                        </cupom76>
+                        <cupom77 translate="label">
+                            <label>cupom 77</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>770</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 77</comment>
+                        </cupom77>
+                        <cupom78 translate="label">
+                            <label>cupom 78</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>780</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 78</comment>
+                        </cupom78>
+                        <cupom79 translate="label">
+                            <label>cupom 79</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>790</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 79</comment>
+                        </cupom79>
+                        <cupom80 translate="label">
+                            <label>cupom 80</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>800</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 80</comment>
+                        </cupom80>
+                        <cupom81 translate="label">
+                            <label>cupom 81</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>810</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 81</comment>
+                        </cupom81>
+                        <cupom82 translate="label">
+                            <label>cupom 82</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>820</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 82</comment>
+                        </cupom82>
+                        <cupom83 translate="label">
+                            <label>cupom 83</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>830</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 83</comment>
+                        </cupom83>
+                        <cupom84 translate="label">
+                            <label>cupom 84</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>840</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 84</comment>
+                        </cupom84>
+                        <cupom85 translate="label">
+                            <label>cupom 85</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>850</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 85</comment>
+                        </cupom85>
+                        <cupom86 translate="label">
+                            <label>cupom 86</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>860</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 86</comment>
+                        </cupom86>
+                        <cupom87 translate="label">
+                            <label>cupom 87</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>870</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 87</comment>
+                        </cupom87>
+                        <cupom88 translate="label">
+                            <label>cupom 88</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>880</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 88</comment>
+                        </cupom88>
+                        <cupom89 translate="label">
+                            <label>cupom 89</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>890</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 89</comment>
+                        </cupom89>
+                        <cupom90 translate="label">
+                            <label>cupom 90</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>900</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 90</comment>
+                        </cupom90>
+                        <cupom91 translate="label">
+                            <label>cupom 91</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>910</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 91</comment>
+                        </cupom91>
+                        <cupom92 translate="label">
+                            <label>cupom 92</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>920</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 92</comment>
+                        </cupom92>
+                        <cupom93 translate="label">
+                            <label>cupom 93</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>930</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 93</comment>
+                        </cupom93>
+                        <cupom94 translate="label">
+                            <label>cupom 94</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>940</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 94</comment>
+                        </cupom94>
+                        <cupom95 translate="label">
+                            <label>cupom 95</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>950</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 95</comment>
+                        </cupom95>
+                        <cupom96 translate="label">
+                            <label>cupom 96</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>960</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 96</comment>
+                        </cupom96>
+                        <cupom97 translate="label">
+                            <label>cupom 97</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>970</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 97</comment>
+                        </cupom97>
+                        <cupom98 translate="label">
+                            <label>cupom 98</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>980</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 98</comment>
+                        </cupom98>
+                        <cupom99 translate="label">
+                            <label>cupom 99</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>990</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 99</comment>
+                        </cupom99>
+                        <cupom100 translate="label">
+                            <label>cupom 100</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o código do Cupom 100</comment>
+                        </cupom100>
+                    </fields>
+                </geral>
+            </groups>
+        </overcoupom>
+    </sections>
+</config>

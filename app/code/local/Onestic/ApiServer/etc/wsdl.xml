@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+			<complexType name="apiserverConsultaEstoqueItem">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverEstoqueItem">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="Quantidade" type="xsd:int" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverEstoqueItemArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:apiserverEstoqueItem[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="apiserverEstoqueItemRetorno">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="Status" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverEstoqueItemRetornoArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:apiserverEstoqueItemRetorno[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="apiserverItemConsulta">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="Quantidade" type="xsd:int" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverItemConsultaArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:apiserverItemConsulta[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="apiserverRequisicaoConsulta">
+                <all>
+                    <element name="CEP" type="xsd:string" minOccurs="0" />
+                    <element name="PesoTotal" type="xsd:string" minOccurs="0" />
+                    <element name="Refrigeracao" type="xsd:string" minOccurs="0" />
+                    <element name="ApenasCorreio" type="xsd:string" minOccurs="0" />
+                    <element name="FreteGratis" type="xsd:string" minOccurs="0" />
+                    <element name="ValorTotal" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverItemConsultaRetorno">
+                <all>
+                    <element name="Codigo" type="xsd:string" minOccurs="0" />
+                    <element name="Descricao" type="xsd:string" minOccurs="0" />
+                    <element name="Valor" type="xsd:string" minOccurs="0" />
+                    <element name="Observacao" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverItemConsultaRetornoArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:apiserverItemConsultaRetorno[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="apiserverConsultaRetornoEstoque">
+                <all>
+                    <element name="Quantidade" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>			
+            <complexType name="apiserverConsultaRetorno">
+                <all>
+                    <element name="RetornoFrete" type="typens:apiserverItemConsultaRetornoArray" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverEndereco">
+                <all>
+                    <element name="Apartamento" type="xsd:string" minOccurs="0" />
+                    <element name="Bairro" type="xsd:string" minOccurs="0" />
+                    <element name="CEP" type="xsd:string" minOccurs="0" />
+                    <element name="Cidade" type="xsd:string" minOccurs="0" />
+                    <element name="Complemento" type="xsd:string" minOccurs="0" />
+                    <element name="Logradouro" type="xsd:string" minOccurs="0" />
+                    <element name="Numero" type="xsd:string" minOccurs="0" />
+                    <element name="TipoLogradouro" type="xsd:string" minOccurs="0" />
+                    <element name="UF" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverTelefone">
+                <all>
+                    <element name="DDD" type="xsd:string" minOccurs="0" />
+                    <element name="Numero" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverCliente">
+                <all>
+                    <element name="CPF_CNPJ" type="xsd:string" minOccurs="0" />
+                    <element name="DataNascimento" type="xsd:string" minOccurs="0" />
+                    <element name="Email" type="xsd:string" minOccurs="0" />
+                    <element name="Email2" type="xsd:string" minOccurs="0" />
+                    <element name="EnderecoEntrega" type="typens:apiserverEndereco" minOccurs="0" />
+                    <element name="EnderecoPrincipal" type="typens:apiserverEndereco" minOccurs="0" />
+                    <element name="InscricaoEstadual" type="xsd:string" minOccurs="0" />
+                    <element name="Nome" type="xsd:string" minOccurs="0" />
+                    <element name="RG" type="xsd:string" minOccurs="0" />
+                    <element name="Sexo" type="xsd:string" minOccurs="0" />
+                    <element name="TelefoneCelular" type="typens:apiserverTelefone" minOccurs="0" />
+                    <element name="TelefoneComercial" type="typens:apiserverTelefone" minOccurs="0" />
+                    <element name="TelefoneResidencial" type="typens:apiserverTelefone" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverEmpresaCliente">
+                <all>
+                    <element name="CNPJ" type="xsd:string" minOccurs="0" />
+                    <element name="NomeFantasia" type="xsd:string" minOccurs="0" />
+                    <element name="RazaoSocial" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverItemPedido">
+                <all>
+                    <element name="DataReceita" type="xsd:string" minOccurs="0" />
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="NomeRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <element name="NumeroRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <element name="Percentual" type="xsd:double" minOccurs="0" />
+                    <element name="PrecoUnitario" type="xsd:double" minOccurs="0" />
+                    <element name="Quantidade" type="xsd:double" minOccurs="0" />
+                    <element name="TipoConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <element name="UFRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <element name="ValorBruto" type="xsd:double" minOccurs="0" />
+                    <element name="ValorPagoPaciente" type="xsd:double" minOccurs="0" />
+					<element name="Tipo" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverItemPedidoArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:apiserverItemPedido[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="apiserverPedido">
+                <all>
+                    <element name="AutorizacaoApiServer" type="xsd:string" minOccurs="0" />
+                    <element name="Cliente" type="typens:apiserverCliente" minOccurs="0" />
+                    <element name="ClienteRemessa" type="typens:apiserverCliente" minOccurs="0" />
+                    <element name="CPFAutorizacao" type="xsd:string" minOccurs="0" />
+                    <element name="Data" type="xsd:string" minOccurs="0" />
+                    <element name="Empresa" type="typens:apiserverEmpresaCliente" minOccurs="0" />
+                    <element name="EntregaProgramadaFinal" type="xsd:string" minOccurs="0" />
+                    <element name="EntregaProgramadaInicial" type="xsd:string" minOccurs="0" />
+                    <element name="ForcarFreteZero" type="xsd:string" minOccurs="0" />
+                    <element name="IdCotacao" type="xsd:string" minOccurs="0" />
+                    <element name="IdPedido" type="xsd:string" minOccurs="0" />
+                    <element name="Itens" type="typens:apiserverItemPedidoArray" minOccurs="0" />
+                    <element name="Observacao" type="xsd:string" minOccurs="0" />
+                    <element name="Origem" type="xsd:string" minOccurs="0" />
+                    <element name="ReferenciaPedidoCliente" type="xsd:string" minOccurs="0" />
+                    <element name="ValorAReceber" type="xsd:double" minOccurs="0" />
+                    <element name="ValorFreteAReceber" type="xsd:double" minOccurs="0" />
+                    <element name="ValorFreteAVista" type="xsd:double" minOccurs="0" />
+                    <element name="ValorPagoAVista" type="xsd:double" minOccurs="0" />
+                    <element name="FormaEntrega" type="xsd:string" minOccurs="0" />
+                    <element name="FormaPagamento" type="xsd:string" minOccurs="0" />
+                    <element name="DadosPagamento" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverPedidoRetorno">
+                <all>
+                    <element name="IdRetornoPedido" type="xsd:int" minOccurs="0" />
+                    <element name="StatusProcessamento" type="xsd:string" minOccurs="0" />
+                    <element name="Mensagem" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverPedidoInvoice">
+                <all>
+                    <element name="IdPedido" type="xsd:string" minOccurs="0" />
+                    <element name="NF" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverPedidoInvoiceArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:apiserverPedidoInvoice[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="apiserverPedidoShipment">
+                <all>
+                    <element name="Rastreamento" type="xsd:string" minOccurs="0" />
+                    <element name="DataEntrega" type="xsd:string" minOccurs="0" />
+                    <element name="IdPedido" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="apiserverPedidoShipmentArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:apiserverPedidoShipment[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+        </schema>
+    </types>
+    <message name="apiserverConsultarEstoqueRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="Requisicao" type="xsd:string" />
+    </message>	
+    <message name="apiserverConsultarEstoqueProdutosRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="Itens" type="typens:apiserverEstoqueItemArray" />
+    </message>
+    <message name="apiserverConsultarEstoqueResponse">
+        <part name="ConsultarEstoqueResult" type="typens:apiserverConsultaRetornoEstoque" />
+    </message>
+    <message name="apiserverConsultarEstoqueProdutosResponse">
+        <part name="ConsultarEstoqueProdutosResult" type="typens:apiserverEstoqueItemRetornoArray" />
+    </message>
+    <message name="apiserverConsultarProdutosRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="Requisicao" type="typens:apiserverRequisicaoConsulta" />
+    </message>
+    <message name="apiserverConsultarProdutosResponse">
+        <part name="ConsultarProdutosResult" type="typens:apiserverConsultaRetorno" />
+    </message>
+    <message name="apiserverEnviarPedidoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="Pedido" type="typens:apiserverPedido" />
+    </message>
+    <message name="apiserverEnviarPedidoResponse">
+        <part name="EnviarPedidoResult" type="typens:apiserverPedidoRetorno" />
+    </message>
+    <message name="apiserverSyncInvoiceRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="IdPedido" type="xsd:string" />
+    </message>
+    <message name="apiserverSyncInvoiceResponse">
+        <part name="SynInvoiceResult" type="typens:apiserverPedidoInvoice" />
+    </message>
+    <message name="apiserverSyncShipmentRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="IdPedido" type="xsd:string" />
+    </message>
+    <message name="apiserverSyncShipmentResponse">
+        <part name="SyncShipmentResult" type="typens:apiserverPedidoShipment" />
+    </message>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="apiserverConsultarEstoque">
+            <documentation>Consulta Estoque de Determinado Produto</documentation>
+            <input message="typens:apiserverConsultarEstoqueRequest" />
+            <output message="typens:apiserverConsultarEstoqueResponse" />
+        </operation>	
+        <operation name="apiserverConsultarEstoqueProdutos">
+            <documentation>Consulta Estoque dos Produtos</documentation>
+            <input message="typens:apiserverConsultarEstoqueProdutosRequest" />
+            <output message="typens:apiserverConsultarEstoqueProdutosResponse" />
+        </operation>
+        <operation name="apiserverConsultarProdutos">
+            <documentation>Consulta Produtos</documentation>
+            <input message="typens:apiserverConsultarProdutosRequest" />
+            <output message="typens:apiserverConsultarProdutosResponse" />
+        </operation>
+        <operation name="apiserverEnviarPedido">
+            <documentation>Envia Pedido</documentation>
+            <input message="typens:apiserverEnviarPedidoRequest" />
+            <output message="typens:apiserverEnviarPedidoResponse" />
+        </operation>
+        <operation name="apiserverSyncInvoice">
+            <documentation>Consulta Nota Fiscal de Pedido</documentation>
+            <input message="typens:apiserverSyncInvoiceRequest" />
+            <output message="typens:apiserverSyncInvoiceResponse" />
+        </operation>
+        <operation name="apiserverSyncShipment">
+            <documentation>Consulta Entrega de Pedido</documentation>
+            <input message="typens:apiserverSyncShipmentRequest" />
+            <output message="typens:apiserverSyncShipmentResponse" />
+        </operation>
+    </portType>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="apiserverConsultarEstoque">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>        
+		<operation name="apiserverConsultarEstoqueProdutos">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="apiserverConsultarProdutos">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="apiserverEnviarPedido">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="apiserverSyncInvoice">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="apiserverSyncShipment">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+    <service name="{{var wsdl.name}}Service">
+        <port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </port>
+    </service>
+</definitions>

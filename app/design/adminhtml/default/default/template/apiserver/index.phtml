@@ -1,0 +1,63 @@
+<?php 
+$perpage = Mage::helper('onestic_apiclient')->getConfig('orders_per_page');
+$api = Mage::getModel('onestic_apiclient/api_orders');
+$orders = $api->getCollection(array('per_page' => $perpage, 'filters[sync_status][]' => 'NOT_SYNCED'));
+?>
+<div class="content-header">
+    <table class="grid-header">
+        <tr>
+            <td><h3>Pedidos Roche</h3></td>
+            <td class="a-right">
+            	<button onclick="editForm.submit()" class="scalable save" type="button"><span>Sincronizar</span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+    <form id="edit_form" name="edit_form" method="post" action="<?php echo $this->getUrl('*/*/post')?>" target="_self">
+        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+        	<div class="grid">
+	            <table class="data" cellspacing="0" cellpadding="0">
+	            	<colgroup>
+	            		<col width="20" class="a-center">
+                        <col width="200" class="a-center">
+                        <col>
+                        <col width="180" class="a-center">
+                        <col width="180" class="a-center">
+                        <col width="180" class="a-center">
+                    </colgroup>
+	            	<thead>
+	            		<tr class="headings">
+		            		<th >#</th>
+		            		<th>Nro Pedido</th>
+		            		<th class="a-center">Cliente</th>
+		            		<th class="a-center">Valor</th>
+		            		<th class="a-center">Status</th>
+		            		<th class="a-center">Sincronismo</th>
+	            		</tr>
+	            	</thead>
+	            	<tfoot>
+	            	    <tr>
+		            		<td colspan="6">Exibindo <?php echo $perpage; ?> pedidos de <?php echo $orders['body']->total?></th>
+	            		</tr>
+	            	</tfoot>
+	            	<?php 
+	            		$even = true;
+	            		foreach ($orders['body']->orders as $order):
+	            	?>
+	                <tr class="<?php echo ($even) ? "even" : ""; $even = !$even;?>">
+	                    <td><input type="radio" name="order" id="order_id_<?php echo $order->code; ?>" value="<?php echo $order->code; ?>" /></td>
+	                    <td><label for="order_id_<?php echo $order->code; ?>"><?php echo $order->code; ?></label></td>
+	                    <td><?php echo $order->customer->name; ?></td>
+	                    <td align="center"><b><?php echo Mage::helper('core')->currency($order->total_ordered, true, false); ?></b></td>
+	                    <td align="center"><b><?php echo $order->status->label; ?></b></td>
+	                    <td align="center"><b><?php echo $order->sync_status; ?></b></td>
+	                </tr>
+	                <?php endforeach; ?>
+	            </table>
+	    	</div>
+    </form>
+</div>
+<script type="text/javascript">
+    var editForm = new varienForm('edit_form');
+</script>

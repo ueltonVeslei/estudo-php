@@ -1,0 +1,71 @@
+<?php if($_SESSION['news_farma'] != true): ?>
+    <div class="block-subscribe">
+        <div class="block-title">
+            <strong>Ofertas por e-mail</strong>
+        </div>
+        <div class="label-news">
+            <label for="newsletter">Informe o seu e-mail e receba nossas Ofertas & Novidades:</label>
+        </div>
+        <div class="modal-active">
+            <div class="cortina">&nbsp;</div>
+            <div class="content-modal-active tete3">
+                <a href="javascript:void(0);" class="btn-fechar-mod-news">Fechar</a> 
+                <div class="header-modal">
+                    <img src="<?php echo $this->getSkinUrl('images/mail_news.png') ?>" alt="Assinatura newsletter" />
+                    <span>Receba <strong>Ofertas Exclusivas</strong> por e-mail. Cadastre-se!</span>
+                </div>
+                <div style="clear:both;"></div>
+                <form action="<?php echo $this->getUrl('newsletter/subscriber/new') ?>" method="post" id="newsletter-validate-detail">
+                    <fieldset class="block-content">
+                        <legend>Newsletter</legend>
+                        <div class="input-box">
+                            <input name="name" type="text" id="name" class="input-text required-entry" value="" placeholder="Digite seu nome" />
+                        </div>
+                        <div class="input-box">
+                            <input name="email" type="text" id="newsletter" class="input-text required-entry validate-email" value="" placeholder="Digite seu email" />
+                        </div>
+                        <button type="submit" class="button-subscribe"><span>Enviar</span></button>
+                    </fieldset>
+                </form>
+                <script type="text/javascript">
+                //<![CDATA[
+                    var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+                //]]>
+                </script>
+            </div>
+        </div>     
+    </div>
+<?php $_SESSION['news_farma'] = true; ?>
+<?php else: ?>
+    <?php $_SESSION['news_farma'] = true; ?>
+<?php endif; ?>
+<script type="text/javascript">
+	jQuery('.btn-fechar-mod-news').click(function(){
+		jQuery('.modal-active').removeClass('modal-active'); 
+		jQuery('.btn-fechar-mod-news').remove(); 
+		jQuery('.header-modal').remove();
+		jQuery('.cortina').remove();
+	});
+
+	if(!jQuery.support.placeholder) {
+		jQuery('#newsletter-validate-detail input').focus(function(){
+			var _this = jQuery(this);
+			var inputVal = _this.val();
+			var inputDefault = _this.attr('placeholder');
+			if(inputVal == inputDefault){
+				_this.val('');
+			}
+		}).blur(function(){
+			var _this = jQuery(this);
+			var inputVal = _this.val();
+			var inputDefault = _this.attr('placeholder');
+			if(inputVal == ''){
+				_this.val(inputDefault);
+			}
+		}).each(function(){
+			var _this = jQuery(this);
+			var inputDefault = _this.attr('placeholder');
+			_this.val(inputDefault);
+		});
+	}
+</script>

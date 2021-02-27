@@ -1,0 +1,41 @@
+<?php
+/**
+* Magpleasure Ltd.
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the EULA
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://www.magpleasure.com/LICENSE.txt
+*
+* @category   Magpleasure
+* @package    Magpleasure_Adminlogger
+* @copyright  Copyright (c) 2012 Magpleasure Ltd. (http://www.magpleasure.com)
+* @license    http://www.magpleasure.com/LICENSE.txt
+*/
+?>
+<div class="mp-al-summary">
+    <ul>
+        <li><strong><?php echo $this->__("Time: "); ?></strong><?php echo $this->getActionTime(); ?></li>
+        <li><strong><?php echo $this->__("Action Group: "); ?></strong><?php echo $this->getActionGroup(); ?></li>
+        <li><strong><?php echo $this->__("Action Type: "); ?></strong><?php echo $this->getActionType(); ?></li>
+        <li><strong><?php echo $this->__("User: "); ?></strong><?php echo $this->getUserName(); ?></li>
+        <?php if ($this->getWebsiteName()): ?>
+        <li><strong><?php echo $this->__("Website View: "); ?></strong><?php echo $this->getWebsiteName(); ?></li>
+        <?php endif; ?>
+        <li><strong><?php echo $this->__("Store View: "); ?></strong><?php echo $this->getStoreName(); ?></li>
+        <li><strong><?php echo $this->__("Remote Address: "); ?></strong><?php echo $this->getIp(); ?></li>
+        <?php if ($this->getDisplayEntity()): ?>
+        <li><strong><?php echo $this->__("Entity: "); ?></strong><?php if($this->getEntityExists()): ?><a href="<?php echo $this->getEntityUrl(); ?>" target="_blank"><?php endif; ?><?php echo $this->escapeHtml($this->getEntityName()); ?><?php if($this->getEntityExists()): ?></a><?php endif; ?></li>
+        <?php endif; ?>
+    </ul>
+</div>
+<?php if ($this->getShowDetails()): ?>
+<div class="content-header">
+    <h3 class="icon-head head-adminhtml-adminlogger"><?php echo $this->__('Details'); ?></h3>
+</div>
+<div class="mp-al-summary-table grid">
+    <?php echo $this->getRenderedDetails(); ?>
+</div>
+<?php endif; ?>

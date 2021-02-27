@@ -1,0 +1,207 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_blank
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Edit customer address template
+ *
+ * @see Mage_Customer_Block_Address_Edit
+ */
+?>
+<script>
+    function ajaxInit() {
+        var req;
+
+        try {
+           req = new ActiveXObject("Microsoft.XMLHTTP");
+       } catch(e) {
+           try {
+              req = new ActiveXObject("Msxml2.XMLHTTP");
+          } catch(ex) {
+              try {
+                 req = new XMLHttpRequest();
+             } catch(exc) {
+                 alert("Esse browser n?o tem recursos para uso do Ajax");
+                 req = null;
+             }
+         }
+     }
+     return req;
+ }
+ function checkCepJapao(cep, tipo) {
+    //alert(cep);
+    new Ajax.Request('//japan.farmadelivery.com.br/util/ajax/consultaCepJapao/?cep=' + cep + '&tipo=' + tipo, {
+        method: 'get',
+        evalJS: true,
+        onLoading: function() {
+            //$('load').innerHTML = "carregando...";
+        },
+        onSuccess: function(transport) {
+            //$('load').innerHTML = "";
+            //alert(transport.responseText);
+            if (transport.responseText != '') {
+                eval(transport.responseText)
+            }
+        }
+    });
+}
+</script>
+
+<?php if($this->getTitle()): ?>
+    <div class="page-title">
+        <h1><?php echo $this->getTitle() ?></h1>
+    </div>
+<?php endif; ?>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<form action="<?php echo $this->getSaveUrl() ?>" method="post" id="form-validate">
+    <?php echo $this->getBlockHtml('formkey')?> 
+    <div class="fieldset">
+        <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+        <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+        <h2 class="legend"><?php echo $this->__('Contact Information') ?></h2>
+        <ul class="form-list">
+            <li class="fields">
+                <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress()->getFirstname() ? $this->getAddress() : $this->getCustomer())->toHtml() ?>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label for="telephone"><?php echo $this->__('Telefone principal') ?> <span class="required">*</span></label><br />
+                    <input type="text"
+                    name="telephone"
+                    value="<?php echo $this->htmlEscape($this->getAddress()->getTelephone()) ?>"
+                    title="<?php echo $this->__('Telefone principal') ?>"
+                    class="required-entry input-text"
+                    id="telephone" />
+                </div>
+                <div class="field">
+                    <label for="fax"><?php echo $this->__('Telefone alternativo') ?></label><br />
+                    <input type="text"
+                    name="fax"
+                    id="fax"
+                    title="<?php echo $this->__('Telefone alternativo') ?>"
+                    value="<?php echo $this->htmlEscape($this->getAddress()->getFax()) ?>"
+                    class="input-text" />
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Address') ?></h2>        <br />
+        <ul class="form-list">
+            <li class="fields">
+                <div class="field">
+                    <label for="zip"><?php echo $this->__('Zip/Postal Code') ?> <span class="required">*</span></label><br />
+                    <input type="text" 
+                    onblur="checkCepJapao(this.value, '')"
+                    name="postcode" 
+                    value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" 
+                    title="<?php echo $this->__('Zip/Postal Code') ?>" 
+                    id="zip" 
+                    class="input-text inputtext validate-zip-international required-entry" maxlength="7" />
+                </div>
+                <span id="load"></span>
+                <p>Apenas números</p>
+            </li>
+
+            <li>
+                <div class="input-box">
+                    <label for="region_id"><?php echo $this->__('Província') ?> <span class="required">*</span></label><br />
+                    <input type="text" id="region" name="region" value="<?php echo $this->htmlEscape($this->getAddress()->getRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="required-entry input-text" />
+                </div>
+            </li>
+
+            <li>
+                <div class="input-box">
+                    <label for="city"><?php echo $this->__('Cidade') ?> <span class="required">*</span></label><br />
+                    <input type="text" name="city" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('Cidade') ?>" class="required-entry input-text" id="city" />
+                </div>
+            </li>
+
+            <li class="fields">
+                <label for="street1"><?php echo $this->__('Distrito') ?> <span class="required">*</span></label><br />
+                <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" title="<?php echo $this->__('Distrito') ?>" id="street1" class="required-entry input-text" />
+            </li>
+
+            <li>
+                <label for="street2"><?php echo $this->__('Complemento do distrito') ?> <span class="required">*</span></label><br />
+                <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(2)) ?>" title="<?php echo $this->__('Complemento do distrito') ?>" id="street2" class="input-text inputtext required-entry" />
+            </li>
+
+            <li>
+                <label for="street3"><?php echo $this->__('Observações') ?></label><br />
+                <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(3)) ?>" title="<?php echo $this->__('Observações') ?>" id="street3" class="input-text inputtext" />
+                <p>Se Província/Cidade/Distrito acima estão corretos, deixe este campo em branco, se há divergência, registre o correto.</p>
+            </li>
+
+            <li>
+                <label for="street4"><?php echo $this->__('Conjunto residencial ou edifício + bloco + apato') ?></label><br />
+                <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(4)) ?>" title="<?php echo $this->__('Conjunto residencial ou edifício + bloco + apato') ?>" id="street4" class="input-text inputtext"/>
+            </li>
+
+
+            <li class="wide">
+                <div class="field">
+                    <label for="country" class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+                    <div class="input-box">
+                        <?php echo $this->getCountryHtmlSelect() ?>
+                    </div>
+                </div>
+            </li>
+
+            
+            <li>
+                <?php if($this->isDefaultBilling()): ?>
+                    <strong><?php echo $this->__('Default Billing Address') ?></strong>
+                <?php elseif($this->canSetAsDefaultBilling()): ?>
+                    <input type="checkbox" id="primary_billing" name="default_billing" value="1" />&nbsp;
+                    <label for="primary_billing"><?php echo $this->__('Use as my default billing address') ?></label>
+                <?php else: ?>
+                    <input type="hidden" name="default_billing" value="1" />
+                <?php endif; ?>
+            </li>
+            <li>
+                <?php if($this->isDefaultShipping()): ?>
+                    <strong><?php echo $this->__('Default Shipping Address') ?></strong>
+                <?php elseif($this->canSetAsDefaultShipping()): ?>
+                    <input type="checkbox" id="primary_shipping" name="default_shipping" value="1" />&nbsp;
+                    <label for="primary_shipping"><?php echo $this->__('Use as my default shipping address') ?></label>
+                <?php else: ?>
+                    <input type="hidden" name="default_shipping" value="1" />
+                <?php endif; ?>
+            </li>
+        </ul>
+    </div>
+    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+    <div class="buttons-set">
+        <a href="<?php echo $this->getBackUrl() ?>" class="back-link">&laquo; <?php echo $this->__('Back') ?></a>
+        <button type="submit" class="button"><span><?php echo $this->__('Save Address') ?></span></button>
+    </div>
+</form>
+<script type="text/javascript">
+    var dataForm = new VarienForm('form-validate', true);
+    new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>);
+</script>

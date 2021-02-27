@@ -1,0 +1,253 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @var $this Mage_Checkout_Block_Cart
+ */
+?>
+
+<?php
+$_priceDisplay = ($this->helper('tax')->displayCartBothPrices()) ? 'display-both-prices' : 'display-single-price'; ?>
+<div class="cart <?php echo $_priceDisplay; ?>">
+    <div class="page-title title-buttons">
+        <?php $cart = Mage::getSingleton('checkout/session')->getQuote(); ?>
+        <?php $count = $this->helper('checkout/cart')->getSummaryCount(); ?>
+        <?php $_items = $cart->getAllItems(); ?>
+        <?php $countItems = count($_items); ?>
+        <h1><?php echo $this->__('Meu carrinho '); echo '(' . $count . ')'; ?></h1>
+    </div>
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <?php echo $this->getChildHtml('form_before') ?>
+    <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
+        <?php echo $this->getBlockHtml('formkey'); ?>
+        <table id="shopping-cart-table" class="cart-table data-table">
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+            <col width="1" />
+            <col width="1" />
+            <?php endif; ?>
+
+        <?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
+            <thead>
+                <tr>
+                    <th rowspan="<?php echo $mergedCells; ?>"><span class="nobr" style="text-transform: none;"><?php echo $this->__('Item ') ?></span></th>
+
+                    <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
+
+                    <th class="cart-price-head" colspan="<?php echo $mergedCells; ?>">
+<!--                            <div class="cart-price-placeholder">-->
+                            <span class="nobr" style="text-transform: none;"><?php echo $this->__('Valor') ?></span>
+<!--                            </div>-->
+                    </th>
+
+                    <th rowspan="<?php echo $mergedCells; ?>" class="a-center" style="text-transform: none; padding-right: 46px;">
+                        <?php echo $this->__('Quantidade') ?>
+
+                        <?php /*if ($this->helper('wishlist')->isAllowInCart()) : ?>
+                            <span class="nobr"><?php echo $this->__('Move to Wishlist') ?></span>
+                        <?php endif*/ ?>
+
+                    </th>
+
+                    <th class="cart-total-head" colspan="<?php echo $mergedCells; ?>">
+<!--                            <div class="cart-total-placeholder">-->
+                            <?php echo $this->__('Total') ?>
+<!--                            </div>-->
+                    </th>
+
+                    <th class="a-center" rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
+
+                </tr>
+                <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                <tr>
+                    <th class="a-center cart-price-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                    <th class="a-center cart-price-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+                    <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                    <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+                </tr>
+                <?php endif; ?>
+            </thead>
+
+            <tbody>
+            <?php foreach($this->getItems() as $_item): ?>
+                <?php echo $this->getItemHtml($_item) ?>
+            <?php endforeach ?>
+
+            </tbody>
+        </table>
+        <script type="text/javascript">decorateTable('shopping-cart-table')</script>
+    </form>
+
+    <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>
+    <div class="cart-forms">
+        <?php /* Extensions placeholder */ ?>
+        <?php echo $this->getChildHtml('checkout_cart_widget') ?>
+        <?php echo $this->getChildHtml('checkout.cart.extra') ?>
+
+    </div>
+    <div class="cart-totals-wrapper">
+<div class="title">Resumo do pedido</div>
+        <div class="cart-totals">
+
+            <?php echo $this->getChildHtml('totals'); ?>
+            <?php echo $this->getChildHtml('coupon') ?>
+            <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
+
+            <?php $storeId = Mage::app()->getStore()->getStoreId(); ?>
+                <?php if(!$this->hasError()): ?>
+                    <ul class="checkout-types bottom" style="clear: both;">
+                    <?php foreach ($this->getMethods('methods') as $method): ?>
+                        <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+                            <?php // IF PARA VERIFICAR SE O USUÁRIO ESTA LOGADO PARA PEGAR O ID DELE PARA FAZER O BASE64_ENCODE JUNTO COM O CART_ID, SE ELE NÃO TIVER LOGADO O VALOR DO ID DO USUÁRIO DEVE SER 0 ?>
+                            <?php if(Mage::getSingleton('customer/session')->isLoggedIn()) : ?>
+                                <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
+                                <?php $id = $customer->getId(); ?>
+                                <?php $cartId = $this->getQuote()->getId(); ?>
+                                <?php $user = $cartId.":".$id.":"."D" ?>
+                                <?php $encryCart = base64_encode($user); ?>
+                                <?php $url = $encryCart . "S"; ?>
+                                <?php $urlS = base64_encode($url); ?>
+                                <?php $urlC = $urlS . "C"; ?>
+                                <?php $urlFinal = base64_encode($urlC); ?>
+                                <li class="method-dsc">
+                                    <a href='https://checkout.poupafarma.com.br/?cartID=<?php echo $cartId; ?>'
+                                       title="Fechar Pedido" class="dsc-checkout">
+                                        <span>
+                                            <span>FINALIZAR</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <span style="line-height: 50px;cursor:pointer; color: #1abc9c; font-size: 15px;text-transform: none;"
+                                      type="button"
+                                      title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?>"
+                                      class="btn-continue"
+                                      onclick="setLocation('<?php echo Mage::getBaseUrl() ?>')">
+                                    <span>
+                                        <span>
+                                            <?php echo $this->__('Comprar mais produtos <i style="font-size: 10px; color: #1abc9c;vertical-align: middle;">&#9658</i>') ?>
+                                        </span>
+                                    </span>
+                                </span>
+                            <?php else: ?>
+                                <?php $id = 0 ?>
+                                <?php $cartId = $this->getQuote()->getId(); ?>
+                                <?php $user = $cartId.":".$id.":"."D" ?>
+                                <?php $encryCart = base64_encode($user); ?>
+                                <?php $url = $encryCart . "S"; ?>
+                                <?php $urlS = base64_encode($url); ?>
+                                <?php $urlC = $urlS . "C"; ?>
+                                <?php $urlFinal = base64_encode($urlC); ?>
+                                <li class="method-dsc">
+                                    <a href='https://checkout.poupafarma.com.br/?cartID=<?php echo $cartId; ?>'
+                                       title="Fechar Pedido"
+                                       class="dsc-checkout">
+                                        <span>
+                                            <span>FINALIZAR</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <span style="line-height: 50px;cursor:pointer; color: #1abc9c; font-size: 15px;text-transform: none;"
+                                      type="button"
+                                      title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?>"
+                                      class="btn-continue"
+                                      onclick="setLocation('<?php echo Mage::getBaseUrl() ?>')">
+                                    <span>
+                                        <span>
+                                            <?php echo $this->__('Comprar mais produtos <i style="font-size: 10px; color: #1abc9c;vertical-align: middle;">&#9658</i>') ?>
+                                        </span>
+                                    </span>
+                                </span>
+                            <?php endif; ?>
+                            <?php $this->getQuote()->setDscToken($urlFinal)->save(); ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            
+
+        </div>
+    </div>
+    <?php echo $this->getChildHtml('crosssell') ?>
+
+</div>
+
+<script type="text/javascript">
+    var parentTD;
+    var newDiv;
+    var navigationDiv;
+    var i = 1;
+    var currentElement = null;
+
+    $$('input.qty').each(function(el){
+        parentTD = el.parentNode;
+
+        newDiv = document.createElement('div');
+        Element.extend(newDiv);
+        newDiv.id = i++;
+        newDiv.update(parentTD.innerHTML).innerHTML; //set new input inside new div
+        parentTD.update().innerHTML; //erase old input
+        parentTD.appendChild(newDiv); //show new div
+
+        navigationDiv = document.createElement('div');
+        Element.extend(navigationDiv);
+        navigationDiv.update('<button id="minus1cart" class="dn minuscart loading">-</button><button id="add1cart" class="pluscart up loading">+</button>').innerHTML;
+        newDiv.appendChild(navigationDiv);
+    });
+
+    $$('button.up').each(function(el){
+        el.observe('click',function(event){
+            currentElement = el.parentNode.previous();
+            i = 0; //In case we get in to infinite loop
+            while(currentElement.type != 'text' && i < 5){
+                currentElement = currentElement.previous();
+                i++;
+            }
+            currentElement.value = parseInt(currentElement.value) + 1;
+        });
+    });
+
+    $$('button.dn').each(function(el){
+        el.observe('click',function(event){
+            currentElement = el.parentNode.previous();
+            i = 0; //In case we get in to infinite loop
+            while(currentElement.type != 'text' && i < 5){
+                currentElement = currentElement.previous();
+                i++;
+            }
+            if(parseInt(currentElement.value) > 0){
+                currentElement.value = parseInt(currentElement.value) - 1;
+            }
+        });
+    });
+</script>

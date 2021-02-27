@@ -1,0 +1,73 @@
+<?php
+$customerId = '';
+if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $customerData = Mage::getSingleton('customer/session')->getCustomer();
+    $customerId = $customerData->getId();
+}
+
+$cart = Mage::getModel('checkout/cart')->getQuote();
+$productsCart = '';
+$productsCartIds = '';
+$allItens = $cart->getAllItems();
+$sizeOfItens = sizeof($allItens);
+$indexItens = 1;
+foreach ($allItens as $item) {
+    $product_Sku = $item->getProduct()->getSku();
+    $productsCartIds = $productsCartIds . $product_Sku;
+?>
+
+    <?php
+
+    $currentCatIds = $item->getProduct()->getCategoryIds();
+    $categoryCollection = Mage::getResourceModel('catalog/category_collection')
+                         ->addAttributeToSelect('name')
+                         ->addAttributeToSelect('url')
+                         ->addAttributeToFilter('entity_id', $currentCatIds)
+                         ->addIsActiveFilter();
+
+    $categoriesNames = '';
+    $sizeOfCategories = sizeof($categoryCollection);
+    $indexCategories = 1;
+    foreach($categoryCollection as $categorie){
+      $categoriesNames = $categoriesNames . $categorie->getName();
+      if ($indexCategories < $sizeOfCategories){
+        $categoriesNames = $categoriesNames . ',';
+      }
+      $indexCategories++;
+    }
+
+    $productsCart = $productsCart . '{';
+    $productsCart = $productsCart . 'productId: "' . $item->getProduct()->getSku() . '",';
+    $productsCart = $productsCart . 'productName: "' . $item->getProduct()->getName() . '",';
+    $productsCart = $productsCart . 'productPrice: "' . number_format($item->getProduct()->getFinalPrice(), 2, '.', '') . '",';
+    $productsCart = $productsCart . 'productQuantity: "'. $item->getQty() .'",';
+    $productsCart = $productsCart . 'productDepartment: "",';
+    $productsCart = $productsCart . 'productCategory: "' .  $categoriesNames . '",';
+    $productsCart = $productsCart . 'productSubCategory: "",';
+    $productsCart = $productsCart . 'productBrand: "' . $item->getProduct()->getAttributeText('manufacturer') . '"';
+    $productsCart = $productsCart . '}'
+    ?>
+
+    <?php
+    if ($indexItens < $sizeOfItens){
+        $productsCart = $productsCart . ',';
+        $productsCartIds = $productsCartIds . ',';
+    }
+    ?>
+    <?php $indexItens++; ?>
+<?php } ?>
+<script type="text/javascript">
+    var productsCart = [];
+    
+    productsCart.push(<?php echo $productsCart; ?>);
+
+    dataLayer = [{
+        pageName: "checkout",
+        productsCartIds: '<?php echo $productsCartIds; ?>',
+        products: productsCart,
+        cartAmount: '<?php echo $cart->getSubtotal(); ?>',
+        customerId: '<?php echo $customerId; ?>',
+        clientEmail: "<?php if($customer): ?><?php echo $customer->getEmail(); ?><?php endif; ?>",
+        event: "isCart"
+    }];
+</script>

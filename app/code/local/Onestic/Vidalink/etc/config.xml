@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * AV5 Tecnologia
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL).
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Integrator
+ * @package    Onestic_Vidalink
+ * @copyright  Copyright (c) 2016 Onestic
+ * @author     AV5 Tecnologia <anderson@av5.com.br>
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Onestic_Vidalink>
+            <version>0.3.0</version>
+        </Onestic_Vidalink>
+    </modules>
+    <global>
+    	<models>
+            <onestic_vidalink>
+                <class>Onestic_Vidalink_Model</class>
+            </onestic_vidalink>
+    	</models>
+    	<blocks>
+			<onestic_vidalink>
+				<class>Onestic_Vidalink_Block</class>
+			</onestic_vidalink>
+        </blocks>
+		<helpers>
+            <onestic_vidalink>
+                <class>Onestic_Vidalink_Helper</class>
+            </onestic_vidalink>
+        </helpers>
+        <resources>
+            <onestic_vidalink_setup>
+                <setup>
+                    <module>Onestic_Vidalink</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </onestic_vidalink_setup>
+		</resources>
+		<events>
+	    	<sales_order_save_after>
+	            <observers>
+	                <onestic_vidalink_sales_order_save_after>
+						<type>model</type>
+	                    <class>onestic_vidalink/observer</class>
+	                    <method>updateOrder</method>
+	                </onestic_vidalink_sales_order_save_after>
+	            </observers>
+	        </sales_order_save_after>
+	    </events>
+    </global>
+    <adminhtml>
+    	<acl>
+	        <resources>
+	            <admin>
+	                <children>
+	                	<system>
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <vidalink translate="title" module="onestic_vidalink">
+	                                        <title>Onestic Vidalink Delivery</title>
+	                                    </vidalink>
+	                                </children>
+	                            </config>
+	                        </children>
+	                    </system>
+	                </children>
+	            </admin>
+	        </resources>
+	    </acl>
+    </adminhtml>
+     <default>
+        <carriers>
+            <vidalink_shipping>
+                    <active>1</active>
+                    <sallowspecific>0</sallowspecific>
+		    		<model>onestic_vidalink/shipping</model>
+                    <name>Vidalink</name>
+                    <title>Forma de envio configurada na Vidalink</title>
+                    <handling_type>F</handling_type>
+                    <type>I</type>
+                    <showmethod>1</showmethod>    
+            </vidalink_shipping>
+        </carriers>
+        <payment>
+            <vidalink_payment>
+                <model>onestic_vidalink/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Vidalink</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </vidalink_payment>
+        </payment>
+    </default>
+</config>

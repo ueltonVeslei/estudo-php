@@ -1,0 +1,227 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+   
+<div class="header">
+    <div class="links">
+        <ul id="top-links-right">
+            <li class="top-link-contact-us"><a target="_blank" rel="nofollow" href="<?php echo Mage::getBaseUrl() ?>faleconosco/">Fale conosco</a></li>
+            <li class="top-link-about-farmadelivery"><a target="_blank" rel="nofollow" href="<?php echo Mage::getBaseUrl()?>quemsomos/">Quem somos</a></li>
+            <li class="top-link-my-orders"><a target="_blank" href="<?php echo Mage::getBaseUrl()?>sales/order/history/">Meus pedidos</a></li>
+            <li class="top-link-sac"><a target="_blank" href="http://blog.farmadelivery.com.br/?utm_source=sitefarmadelivery&utm_medium=menu&utm_campaign=menuredes_blog_menu_header_Farmadelivery">Blog</a></li>
+            <li class="top-link-security"><span class="divisor">    </span><span class="icon"><img src="<?php echo $this->getSkinUrl('images/siteseguro.png') ?>"></span>Site 100% seguro</li>
+        </ul>
+    </div>
+    <div class="wrapper">
+    <?php if ($this->getIsHomePage()):?>
+        <div class="logo">
+            <h1>
+                <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" itemprop="url">
+                    <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" itemprop="logo" />
+                </a>
+            </h1>
+        </div>
+    <?php else:?>
+        <div class="logo">
+            <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" itemprop="url"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" itemprop="logo" /></a>
+        </div>
+    <?php endif?>
+
+
+
+    <div class="header" style="height: auto;">
+        <div class="wrapper">
+        <div class="quick-access">
+            <?php echo $this->getChildHtml('topSearch') ?>
+        </div>
+
+        <div class="account-wrapper">
+            <?php if(!Mage::getSingleton('customer/session')->isLoggedIn()){ ?>
+                <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" class="skip-account">
+                    <span class="icon"></span>
+                    <span class="label" style="color:#fff;font-size:12px;font-weight: bold;"><?php echo $this->__('Minha Conta'); ?></span>
+                </a><br/>
+            <?php }else{ ?>
+                <?php $customerName = Mage::getSingleton('customer/session')->getCustomer()->getFirstname(); ?>
+                <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" class="skip-account">
+                    <span class="icon"></span>
+                    <span class="label" style="color:#fff;font-size:12px;font-weight: bold;"><?php echo $customerName; ?></span>
+                </a><br/>
+            <?php } ?>
+            <?php
+            if(!Mage::getSingleton('customer/session')->isLoggedIn()){ ?>
+                <a href="<?php echo Mage::getUrl('customer/account/login/'); ?>" class="skip-account">
+                    <span class="icon"></span>
+                    <span class="label highlight"><?php echo $this->__('Entrar'); ?></span>
+                </a>
+            <?php }else{ ?>
+                <a href="<?php echo Mage::getUrl('customer/account/logout/'); ?>" class="skip-account">
+                    <span class="icon"></span>
+                    <span class="label highlight"><?php echo $this->__('Sair'); ?></span>
+                </a>
+            <?php } ?>
+        </div>
+        <div class="account-cart-wrapper">
+            <!-- Cart -->
+
+            <div class="header-minicart">
+                <?php echo $this->getChildHtml('minicart_head'); ?>
+            </div>
+        </div>
+        <?php echo $this->getChildHtml('topContainer'); ?>
+        </div>
+    </div>
+
+</div>
+</div>
+<?php echo $this->getChildHtml('topMenu') ?>
+
+<div class="header header-fixed">
+    <div class="wrapper">
+        <div class="logo"><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><img src="<?php echo $this->getSkinUrl('images/logo-header-fixed.png') ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></div>
+
+        <div class="quick-access">
+            <?php echo $this->getChildHtml('topSearch') ?>
+        </div>
+
+        <div class="account-wrapper">
+            <?php if(!Mage::getSingleton('customer/session')->isLoggedIn()){ ?>
+            <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" class="skip-account">
+                <span class="icon"></span>
+                <span class="label" style="color:#fff;font-size:12px;font-weight: bold;"><?php echo $this->__('Minha Conta'); ?></span>
+            </a><br/>
+            <?php }else{ ?>
+                <?php $customerName = Mage::getSingleton('customer/session')->getCustomer()->getFirstname(); ?>
+                <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" class="skip-account">
+                    <span class="icon"></span>
+                    <span class="label" style="color:#fff;font-size:12px;font-weight: bold;"><?php echo $customerName; ?></span>
+                </a><br/>
+            <?php } ?>
+            <?php
+            if(!Mage::getSingleton('customer/session')->isLoggedIn()){ ?>
+                <a href="<?php echo Mage::getUrl('customer/account/login/'); ?>" class="skip-account">
+                    <span class="icon"></span>
+                    <span class="label highlight"><?php echo $this->__('Entrar'); ?></span>
+                </a>
+            <?php }else{ ?>
+                <a href="<?php echo Mage::getUrl('customer/account/logout/'); ?>" class="skip-account">
+                    <span class="icon"></span>
+                    <span class="label highlight"><?php echo $this->__('Sair'); ?></span>
+                </a>
+            <?php } ?>
+        </div>
+        <div class="account-cart-wrapper">
+            <!-- Cart -->
+
+            <div class="header-minicart">
+                <?php echo $this->getChildHtml('minicart_head'); ?>
+            </div>
+        </div>
+        <?php echo $this->getChildHtml('topContainer'); ?>
+
+    </div>
+</div>
+
+<?php if(Mage::getBlockSingleton('page/html_header')->getIsHomePage()): ?>
+    <div class="banner-principal home_slider_banner_principal">
+        <?php echo $this->getChildHtml('banner-principal-farmadelivery-japan') ?>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">jQuery(window).scroll(function(){if(jQuery(this).scrollTop()>100){jQuery('.header-fixed').fadeIn();}else{jQuery('.header-fixed').fadeOut();}});</script>
+
+<div class="lightbox">
+  <div class="iframeContainer">
+    <div class="toolbarLB">
+      <span class="closeLB" onclick="lightBoxClose()">x</span>
+    </div>
+    <p style="font-weight: bold">AVISO: </p>
+    <p>Devido ao COVID 19 os envios dos pedidos para o Japão estão suspensos temporariamente.</p>
+    <p style="font-weight: bold">Previsão de retomada 31/10/2020.</p>
+  </div>
+</div>
+
+<script>
+    lightBoxClose = function() {
+        document.querySelector(".lightbox").classList.add("closed");
+    }
+</script>
+
+<style>
+    .lightbox {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, .5);
+        z-index: 99999999;
+    }
+
+    .toolbarLB {
+        text-align: right;
+        padding: 3px;
+    }
+
+    .closeLB {
+        color: #fff;
+        cursor: pointer;
+        background-color: #000;
+        border-radius: 50%;
+        padding: 8px 14px;
+        font-size: 18px;
+        position: relative;
+        top: -13px;
+        left: 18px;
+    }
+
+    .lightbox .iframeContainer {
+        vertical-align: middle;
+        padding: 2px;
+        background: #fff;
+        padding: 2px;
+        height: 350px;
+        width: 350px;
+        border-radius: 5px;
+    }
+
+    .lightbox.closed {
+        display: none;
+    }
+
+    .lightbox p{
+        top: 25%;
+        position: relative;
+        padding: 15px;
+        color: #000;
+        margin: -14px auto;
+    }
+</style>

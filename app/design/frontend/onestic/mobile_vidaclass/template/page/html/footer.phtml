@@ -1,0 +1,152 @@
+<div class="footer">
+    <div class="menu-inferior">
+        <div class="formas-pagamento">
+            <h5>Formas de pagamento</h5>
+            <ul class="selo-seguro">
+                <li>
+                    <img alt="visa" src="<?php echo $this->getSkinUrl('images/_cards/parcelamento/visa.png'); ?>"/>
+                </li>
+                <li class="itemRight">
+                    <img alt="amex" src="<?php echo $this->getSkinUrl('images/_cards/parcelamento/amex.png'); ?>"/>
+                </li>
+                <li>
+                    <img alt="mastercard" src="<?php echo $this->getSkinUrl('images/_cards/parcelamento/mastercard.png'); ?>"/>
+                </li>
+                <li class="itemRight">
+                    <img alt="boleto" src="<?php echo $this->getSkinUrl('images/_cards/parcelamento/boleto.png'); ?>"/>
+                </li>
+                <li>
+                    <img alt="elo" src="<?php echo $this->getSkinUrl('images/_cards/parcelamento/elo.png'); ?>"/>
+                </li>
+                <li>
+                    <img alt="diners" src="<?php echo $this->getSkinUrl('images/_cards/parcelamento/diners.png'); ?>"/>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-menu">
+            <div class="menu-footer">
+                <h4>Institucional <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+                <ul class="institucional">
+                    <li><a href="<?php echo $this->getUrl()?>">Home</a></li>
+                    <li><a href="<?php echo $this->getUrl('quemsomos') ?>" rel="nofollow">Quem Somos</a></li>
+                    <li><a href="<?php echo $this->getUrl('institucional_localizacao') ?>">Localiza&ccedil;&atilde;o</a></li>
+                </ul>
+            </div>
+            <div class="menu-footer">
+                <h4>Políticas <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+                <ul class="politicas">
+                    <li><a href="<?php echo $this->getUrl('politica_de_troca_devolucao_arrependimento') ?>">Política de Troca, Devolução e Arrependimento</a></li>
+                    <li><a href="<?php echo $this->getUrl('politica_de_envio') ?>">Política de Envio</a></li>
+                    <li><a href="<?php echo $this->getUrl('politica_de_pagamento') ?>">Política de Pagamento</a></li>
+                    <li><a href="<?php echo $this->getUrl('politica_de_privacidade') ?>">Política de Privacidade</a></li>
+                    <li><a href="<?php echo $this->getUrl('politica_de_seguranca') ?>">Política de Segurança</a></li>
+                </ul>
+            </div>
+            <div class="menu-footer">
+                <h4>Navegação <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+                <ul class="navegacao">
+                    <li><a href="<?php echo $this->getUrl('catalog/seo_sitemap/category') ?>">Mapa do site</a></li>
+                </ul>
+            </div>
+            <div class="menu-footer">
+                <h4>Redes Sociais <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('redes-mobile-vidaclass')->toHtml(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer-store-info">
+    <div class="store-contact">
+        <p><i class="icon-font icon-ic_mail_black_24px"></i> <a href="mailto:sac@vcdelivery.com.br">sac@vcdelivery.com.br</a></p>
+        <p><i class="icon-font icon-ic_local_phone_black"></i> Televendas: (11) 4972-8277</p>
+        <p><i class="icon-font icon-ic_local_phone_black"></i> Whastapp: (11) 99333-0810</p>
+        <p><i class="icon-font icon-ic_shopping_cart_black_24px"></i> <a href="<?php echo Mage::getUrl('customer/account/') ?>"><?php echo $this->__('My Orders') ?></a></p>
+        <p><i class="icon-font icon-ic_home_black_24px"></i> <a href="<?php echo Mage::getUrl('sales/order/history/') ?>"><?php echo $this->__('Registered Customers') ?></a></p>
+    </div>
+
+    <!-- <div class="seguranca">
+        <ul>
+            <li><a href="https://www.ebit.com.br/farma-delivery" target="_blank"><img style="width:90px;" src="<?php echo $this->getSkinUrl('images/medalha_ouro_otima.png'); ?>" alt="" /></a></li>
+            <li><a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fwww.farmadelivery.com.br%2F" target="_blank"><img style="width: 150px;" src="<?php echo $this->getSkinUrl('images/selo_google_sb.png'); ?>" alt="" /></a></li>
+            <li><a href="https://www.feedbackcompany.com/nl-nl/reviews/farmadelivery" target="_blank"><img style="width: 150px;" src="<?php echo $this->getSkinUrl('images/feedback_logo.png'); ?>" alt="" /></a></li>
+            <li><a href="http://abcomm.org/certificado.php?url=WWW.FARMADELIVERY.COM.BR" target="_blank"><img src="https://abcomm.com.br/selo.php" style="width: 80px;" /></a></li>
+        </ul>
+    </div> -->
+
+    <div class="selo-interno">
+        <dl>
+            <dd class="selosonestic">
+                <a href="https://onestic.com/" title="Onestic - Lojas Virtuais para E-commerce" rel="external" target="_blank">
+                    <img src="<?php echo $this->getSkinUrl('images/poweredby.png') ?>" alt="Onestic - Lojas Virtuais para E-commerce" title="Onestic - Lojas Virtuais para E-commerce" />
+                </a><br />
+            </dd>
+        </dl>
+    </div>
+
+    <div class="copyright">
+        <p>� Copyright 2018 - Bom Para Todos - Todos os Direitos Reservados.</p>
+    </div>
+</div>
+
+<div id="frete-gratis-condicoes" class="frete-gratis-condicoes">
+    <div class="frete-gratis-condicoes-modal">
+        <a href="#frete-gratis-condicoes" class="close-modal">Fechar</a>
+        <div class="frete-gratis-condicoes-content">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('frete-gratis-condicoes')->toHtml(); ?>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery('.open-modal').click(function(){
+        var target = jQuery(this).attr('href');
+        jQuery(target).show();
+        return false;
+    });
+    jQuery('.close-modal').click(function(){
+        var target = jQuery(this).attr('href');
+        jQuery(target).hide();
+        return false;
+    });
+</script>
+
+<script type="text/javascript">
+
+    function trocarImagemAlgolia() {
+
+        var category = jQuery("[class^=result], [class^=algoliasearch-autocomplete-hit]").each(function(index) {
+            var _ids = jQuery(this).attr("category-ids");
+            if (_ids) {
+                var split_str = _ids.split(',');
+                if (split_str.indexOf("26") !== -1) {
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/produto-sem-imagem-controle-especial-farmadelivery-277.jpg");
+                }else if(split_str.indexOf("295") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/produto-sem-imagem-antimicrobiano-farmadelivery-277.jpg");
+                }else if(split_str.indexOf("14") !== -1 && split_str.indexOf("28") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/caixa-genericos-tarjados-farmadelivery-277_1.jpg");
+                }else if(split_str.indexOf("28") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/caixa-tarjados-farmadelivery.jpg");
+                }
+            }
+        });
+
+    }
+
+    jQuery(window).load(function() {
+        setTimeout(function() { trocarImagemAlgolia(); }, 300);
+    });
+
+    jQuery(document).bind('keypress, keydown', function(e){
+        if(e.which) {
+            setTimeout(function() { trocarImagemAlgolia(); }, 300);
+        }
+    });
+
+    jQuery(document).click(function() {
+        setTimeout(function() { trocarImagemAlgolia(); }, 300);
+    });
+
+</script>
+
+<?php echo $this->getChildHtml('track-scripts'); ?>

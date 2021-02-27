@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * AV5 Tecnologia
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL).
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Integrator
+ * @package    Onestic_ApiServer
+ * @copyright  Copyright (c) 2016 Onestic
+ * @author     AV5 Tecnologia <anderson@av5.com.br>
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Onestic_ApiServer>
+            <version>0.2.0</version>
+        </Onestic_ApiServer>
+    </modules>
+    <global>
+    	<models>
+            <onestic_apiserver>
+                <class>Onestic_ApiServer_Model</class>
+                <resourceModel>onestic_apiserver_mysql4</resourceModel>
+            </onestic_apiserver>
+            <onestic_apiserver_mysql4>
+                <class>Onestic_ApiServer_Model_Mysql4</class>
+                <entities>
+                    <orders>
+                        <table>roche_orders</table>
+                    </orders>
+                </entities>
+            </onestic_apiserver_mysql4>
+    	</models>
+    	<blocks>
+			<onestic_apiserver>
+				<class>Onestic_ApiServer_Block</class>
+			</onestic_apiserver>
+        </blocks>
+		<helpers>
+            <onestic_apiserver>
+                <class>Onestic_ApiServer_Helper</class>
+            </onestic_apiserver>
+        </helpers>
+        <resources>
+            <onestic_apiserver_setup>
+                <setup>
+                    <module>Onestic_ApiServer</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+                <onestic_apiserver_write>
+                    <connection>
+                        <use>core_write</use>
+                    </connection>
+                </onestic_apiserver_write>
+                <onestic_apiserver_read>
+                    <connection>
+                        <use>core_read</use>
+                    </connection>
+                </onestic_apiserver_read>
+            </onestic_apiserver_setup>
+		</resources>
+		<events>
+	    	<sales_order_save_after>
+	            <observers>
+	                <onestic_apiserver_sales_order_save_after>
+						<type>model</type>
+	                    <class>onestic_apiserver/observer</class>
+	                    <method>updateOrder</method>
+	                </onestic_apiserver_sales_order_save_after>
+	            </observers>
+	        </sales_order_save_after>
+	        <catalog_product_save_after>
+	            <observers>
+	                <onestic_apiserver_catalog_product_save_after>
+						<type>model</type>
+	                    <class>onestic_apiserver/observer</class>
+	                    <method>updateProduct</method>
+	                </onestic_apiserver_catalog_product_save_after>
+	            </observers>
+	        </catalog_product_save_after>			
+	    </events>		
+    </global>
+    <adminhtml>
+    	<acl>
+	        <resources>
+	            <admin>
+	                <children>
+	                	<system>
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <apiserver translate="title" module="onestic_apiserver">
+	                                        <title>Onestic ApiServer Delivery</title>
+	                                    </apiserver>
+	                                </children>
+	                            </config>
+	                        </children>
+	                    </system>
+	                </children>
+	            </admin>
+	        </resources>
+	    </acl>
+    </adminhtml>
+     <default>
+        <carriers>
+            <apiserver_shipping>
+                    <active>1</active>
+                    <sallowspecific>0</sallowspecific>
+		    		<model>onestic_apiserver/shipping</model>
+                    <name>Roche</name>
+                    <title>Forma de envio configurada na Roche</title>
+                    <handling_type>F</handling_type>
+                    <type>I</type>
+                    <showmethod>1</showmethod>    
+            </apiserver_shipping>
+        </carriers>
+        <payment>
+            <apiserver_payment>
+                <model>onestic_apiserver/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Roche</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </apiserver_payment>
+        </payment>
+    </default>
+</config>

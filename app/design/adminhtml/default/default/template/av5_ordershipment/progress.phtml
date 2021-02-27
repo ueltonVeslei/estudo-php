@@ -1,0 +1,69 @@
+<?php 
+$helper = Mage::helper("av5_ordershipment");
+?>
+<div class="content-header">
+    <table class="grid-header">
+        <tr>
+            <td><h3>Importação de Entregas de Pedido</h3></td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+    <ul id="andamento"></ul>
+    <div id="loader"><img src="<?php echo $this->getSkinUrl('images/rule-ajax-loader.gif');?>" class="v-middle" style="margin-right:5px"/> Processando importação...</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var total = 0;
+    var imported = 0;
+    function startUpdate() {
+		$('andamento').innerHTML = '';
+		$('andamento').insert('<li><img src="<?php echo $this->getSkinUrl('images/note_msg_icon.gif')?>" class="v-middle" style="margin-right:5px"/>Importando comentários de pedidos, por favor aguarde... </li>');
+		updateProgress();	
+    }
+    function updateProgress() {
+    	new Ajax.Request( '<?php echo $this->getUrl("*/*/process"); ?>', {
+			method: 'GET',
+			evalScripts: true,
+			onLoading: function(transport) {
+				$('loader').show();
+			},
+			onComplete: function(transport) {
+				$('loader').hide();
+			},
+			onSuccess: function(transport) {
+				if (200 == transport.status) {
+					response = transport.responseText.evalJSON();
+					if(response.count > 0) {
+						$('andamento').insert('<li style="background-color:#DDF;"><img src="<?php echo $this->getSkinUrl('images/fam_bullet_success.gif');?>" class="v-middle" style="margin-right:5px"/> Pedidos atualizados: '+response.success+' - Erros: '+response.errors+'</li>');
+						imported = parseInt(response.count);
+						total = parseInt(response.total);
+						percent = (imported / total) * 100;
+						$('loader').innerHTML = '<img src="<?php echo $this->getSkinUrl('images/rule-ajax-loader.gif');?>" class="v-middle" style="margin-right:5px"/> Importado ' + Math.round(percent) + '% de ' + total + ' pedidos. Processando importação...'; 
+						updateProgress();
+					} else if(response.success == 0 && response.errors == 0 && response.count == 0 && response.total == total) {
+						$('andamento').insert('<li><img src="<?php echo $this->getSkinUrl('images/note_msg_icon.gif')?>" class="v-middle" style="margin-right:5px"/>Processo Finalizado</li>');
+					} else {
+						$('andamento').insert('<li><img src="<?php echo $this->getSkinUrl('images/fam_bullet_error.gif');?>" class="v-middle" style="margin-right:5px"/> Ocorreu um erro. <a href="javascript: startUpdate();">Repetir o procedimento</a></li>');
+					}
+				}
+			},
+			onFailure: function() {
+				$('andamento').insert('<li><img src="<?php echo $this->getSkinUrl('images/fam_bullet_error.gif');?>" class="v-middle" style="margin-right:5px"/> Ocorreu um erro. <a href="javascript: startUpdate();">Repetir o procedimento</a></li>');
+			}
+		});
+    }
+    document.observe('dom:loaded', function() {
+        startUpdate();
+    });
+//]]>
+</script>
+<style type="text/css" >
+	td.label {
+		text-align: right;
+		padding-right: 10px;
+	}
+    ul#andamento { list-style-type:none; padding:0; margin:0; }
+    ul#andamento li, #loader { margin-left:0; border:1px solid #ccc; margin:2px; padding:2px 2px 2px 2px; font:normal 12px sans-serif; }
+    ul#andamento li img, #loader img { margin-right:5px; }
+</style>

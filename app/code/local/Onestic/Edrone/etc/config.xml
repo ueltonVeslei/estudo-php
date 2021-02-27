@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+	<modules>
+		<Onestic_Edrone>
+			<version>0.1.0</version>
+		</Onestic_Edrone>
+	</modules>
+	<global>
+		<helpers>
+			<onestic_edrone>
+				<class>Onestic_Edrone_Helper</class>
+			</onestic_edrone>
+		</helpers>
+		<models>
+			<onestic_edrone>
+				<class>Onestic_Edrone_Model</class>
+			</onestic_edrone>
+		</models>
+		<events>
+			<cataloginventory_stock_item_save_commit_after>
+				<observers>
+					<onestic_edrone_stock_back>
+						<class>Onestic_Edrone_Model_Observer</class>
+						<method>sendWishlist</method>
+					</onestic_edrone_stock_back>
+				</observers>
+			</cataloginventory_stock_item_save_commit_after>
+		</events>
+	</global>
+	<adminhtml>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<onestic_edrone translate="title" module="onestic_edrone">
+											<title>Onestic eDrone</title>
+										</onestic_edrone>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+</config>

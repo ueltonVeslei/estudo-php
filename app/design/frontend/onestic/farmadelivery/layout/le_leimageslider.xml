@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @project     LEImageSlider
+ * @package     LitExtension_LEImageSlider
+ * @author      LitExtension
+ * @email       litextension@gmail.com
+ */
+-->
+<layout version="0.1.0">
+	<cms_index_index translate="label">
+        <reference name="head">        
+            <action method="addItem"><type>skin_js</type><name>leimageslider/js/jquery.nivo.slider.js</name></action>
+
+            <action method="addCss">
+                <stylesheet>leimageslider/css/nivo-slider.css</stylesheet>
+            </action>
+            <action method="addCss">
+                <stylesheet>leimageslider/css/default/default.css</stylesheet>
+            </action>
+        </reference>
+    </cms_index_index>
+</layout>

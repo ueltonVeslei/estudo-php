@@ -1,0 +1,131 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Collpur
+ * @version    1.0.2
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ */
+?>
+
+<h2 id="tit-coletiva">Farma Coletiva</h2>
+
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+
+<ul class="tabs2">
+
+	<?php $data_core = date("Y-m-d", Mage::getModel("core/date")->timestamp(time())); ?>
+	<?php $section = Mage::app()->getRequest()->getParam('section'); ?>
+    <!-- <li class="ativa"> -->
+    <li <?php if ($section == 'active'){echo 'class="ativa"';}?>>
+    
+    
+        <a href="/deals/active.html">Ofertas ativas</a>
+    </li>
+    <li <?php if ($section == 'closed'){echo 'class="ativa"';}?>>
+        <a href="/deals/closed.html">Ofertas finalizadas</a>
+    </li>
+</ul>
+
+<?php if ($this->getAvailableDeals()->count() == 0): ?>
+    <h2  id = "awcp-nodeals-available"><?php echo $this->__('No deals available'); ?></h2>
+    <?php return; ?>
+<?php endif; ?>
+
+<?php //echo $this->getChildHtml('available_deals_pager'); ?>
+
+<div>
+    <script type="text/javascript">
+        $j(document).ready(function(){
+            $j('.awcp-category-grid li').click(function(){
+                var target = $j(this).find('a').attr('href');
+                window.location = target;
+            });
+        });
+    </script>
+    <ul class="awcp-category-grid">
+        <?php $i = 0;
+        foreach ($this->getAvailableDeals() as $deal): ?>
+
+            <?php
+            // Guilherme
+            $product_id = $deal->getProductId();
+            $product = Mage::getModel('catalog/product')->load($product_id);
+            $dealInfo = $this->getDealPricesSpare($product, $deal);
+            ?>	
+
+			<?php $data_ini = date('Y-m-d', strtotime($deal->getAvailableFrom())); ?>
+            <li class="<?php if($data_core == $data_ini){echo 'do-dia';} ?> awcp-item <?php if (!$i || $i % 2 == 0) {
+                echo 'first';
+            } else {
+                echo 'last';
+            } ?>">
+                <span class="oferta-dia">Oferta do dia</span>
+                <a class="awcp-product-image" href="<?php echo $this->getDealPageLink($deal->getId()); ?>">
+                    <span class="desconto">
+                        <strong class="menor"><?php echo $dealInfo->getPercentDiscount(); ?><span>%</span></strong>
+                        <small>desconto</small>
+                    </span>
+                    <img src="<?php echo $this->getDealImage($deal->getDealImage()); ?>" alt="<?php echo $deal->getDealName(); ?>" />
+                </a>
+
+                <span class="valida-ate">Oferta válida até <?php echo date('d/m', strtotime($deal->getAvailableTo())); ?></span>
+
+                <h2 class="awcp-title"><a href="<?php echo $this->getDealPageLink($deal->getId()); ?>"><?php echo $deal->getDealName(); ?> </a></h2>
+
+                <span class="de">De: <?php echo Mage::helper('core')->currency($product->getFinalPrice(), true, false); ?></span>
+
+                <span class="por">Por: <strong><?php echo Mage::helper('core')->currency($dealInfo->getPrice(), true, false); ?></strong></span>
+
+                <span class="economia-de">Economia de <?php echo Mage::helper('core')->currency($dealInfo->getSaveAmount(), true, false); ?></span>
+
+                <span class="minimo">Mínimo de <?php echo $deal['qty_to_reach_deal']; ?> unidades para validar oferta.</span>
+
+                <!--
+                <?php if (!$deal->isClosed()): ?>
+                    <?php $container = "awcp_timer_" . rand(); ?>
+                    <?php if ($deal->isNotRunning() && $deal->getAvailableFrom()): ?>
+                                        <div class="awcp-date" id = "<?php echo $container; ?>"><?php echo $this->getTimeLeftToBuy($deal, $time = 'available_from'); ?></div>
+                    <?php elseif ($deal->isRunning() && $deal->getAvailableTo()): ?>
+                                        <div class="awcp-date" id = "<?php echo $container; ?>"><?php echo $this->getTimeLeftToBuy($deal); ?></div>
+        <?php else: ?>
+                                        <div  class="awcp-date awcp-date-empty" id = "<?php echo $container; ?>">&nbsp;</div>
+        <?php endif; ?>
+                    <?php if ($data = $this->getJsonConfig($deal->getId())): ?>
+                                        <script type = "text/javascript">
+                                        document.observe("dom:loaded", function() {
+                                                new AwcpCollpur(<?php echo $this->getJsonConfig($deal->getId()); ?>,"<?php echo $container; ?>");
+                                        });
+                                        </script>
+                <?php endif; ?>
+    <?php endif; ?>
+                -->
+                <div class="clearer"></div>
+            </li>      
+    <?php $i++;
+endforeach; ?> 
+    </ul>
+    <div class="clearer"></div>
+</div>
+
+<?php
+//echo $this->getChildHtml('available_deals_pager'); ?>

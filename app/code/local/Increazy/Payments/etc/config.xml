@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Increazy_Payments>
+			<version>0.1.0</version>
+			<depends>
+				<Mage_Payment />
+			</depends>
+		</Increazy_Payments>
+	</modules>
+	<global>
+		<models>
+			<increazy_payments>
+				<class>Increazy_Payments_Model</class>
+			</increazy_payments>
+		</models>
+		<helpers>
+			<increazy_payments>
+				<class>Increazy_Payments_Helper</class>
+			</increazy_payments>
+		</helpers>
+		<blocks>
+			<increazy_payments>
+				<class>Increazy_Payments_Block</class>
+			</increazy_payments>
+		</blocks>
+	</global>
+	<default>
+		<payment>
+			<pwastripe>
+				<model>increazy_payments/stripe</model>
+				<active>0</active>
+				<title>Stripe Credit Card</title>
+			</pwastripe>
+			<pwaerede>
+				<model>increazy_payments/erede</model>
+				<active>0</active>
+				<title>eRede Credit Card</title>
+			</pwaerede>
+			<pwasicredi>
+				<model>increazy_payments/sicredi</model>
+				<active>0</active>
+				<title>Sicredi Billet</title>
+			</pwasicredi>
+			<pwaapruve>
+				<model>increazy_payments/apruve</model>
+				<active>0</active>
+				<title>Apruve</title>
+			</pwaapruve>
+			<pwagetnet>
+				<model>increazy_payments/getnet</model>
+				<active>0</active>
+				<title>Getnet</title>
+			</pwagetnet>
+			<pwamundipagg>
+				<model>increazy_payments/mundipagg</model>
+				<active>0</active>
+				<title>Mundipagg</title>
+			</pwamundipagg>
+			<pwapagarme>
+				<model>increazy_payments/pagarme</model>
+				<active>0</active>
+				<title>Pagar.me</title>
+			</pwapagarme>
+		</payment>
+	</default>
+</config>

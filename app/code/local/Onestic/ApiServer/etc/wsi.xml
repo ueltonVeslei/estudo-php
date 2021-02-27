@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}"
+             targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+            <xsd:complexType name="apiserverConsultaEstoqueItem">
+                <xsd:sequence>
+                    <xsd:element name="EAN" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverConsultaRetornoEstoque">
+                <xsd:sequence>
+                    <xsd:element name="Quantidade" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>              
+            <xsd:complexType name="apiserverEstoqueItem">
+                <xsd:sequence>
+                    <xsd:element name="EAN" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Quantidade" type="xsd:int" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverEstoqueItemArray">
+            	<xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:apiserverEstoqueItem" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverEstoqueItemRetorno">
+                <xsd:sequence>
+                    <xsd:element name="EAN" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Status" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverEstoqueItemRetornoArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:apiserverEstoqueItemRetorno" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverItemConsulta">
+                <xsd:sequence>
+                    <xsd:element name="EAN" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Quantidade" type="xsd:int" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverItemConsultaArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:apiserverItemConsulta" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverRequisicaoConsulta">
+                <xsd:sequence>
+                    <xsd:element name="CEP" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="PesoTotal" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Refrigeracao" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="ApenasCorreio" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="FreteGratis" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="ValorTotal" type="xsd:string" minOccurs="0" />					
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverItemConsultaRetorno">
+                <xsd:sequence>
+                    <xsd:element name="Codigo" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Descricao" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Valor" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Observacao" type="xsd:string" minOccurs="0" />					
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverItemConsultaRetornoArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:apiserverItemConsultaRetorno" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverConsultaRetorno">
+                <xsd:sequence>
+					<xsd:element name="RetornoFrete" type="typens:apiserverItemConsultaRetornoArray" minOccurs="0" />					
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverEndereco">
+                <xsd:sequence>
+                    <xsd:element name="Apartamento" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Bairro" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="CEP" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Cidade" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Complemento" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Logradouro" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Numero" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="TipoLogradouro" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="UF" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverTelefone">
+                <xsd:sequence>
+                    <xsd:element name="DDD" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Numero" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverCliente">
+                <xsd:sequence>
+                    <xsd:element name="CPF_CNPJ" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="DataNascimento" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Email" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Email2" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="EnderecoEntrega" type="typens:apiserverEndereco" minOccurs="0" />
+                    <xsd:element name="EnderecoPrincipal" type="typens:apiserverEndereco" minOccurs="0" />
+                    <xsd:element name="InscricaoEstadual" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Nome" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="RG" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Sexo" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="TelefoneCelular" type="typens:apiserverTelefone" minOccurs="0" />
+                    <xsd:element name="TelefoneComercial" type="typens:apiserverTelefone" minOccurs="0" />
+                    <xsd:element name="TelefoneResidencial" type="typens:apiserverTelefone" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverEmpresaCliente">
+                <xsd:sequence>
+                    <xsd:element name="CNPJ" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="NomeFantasia" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="RazaoSocial" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverItemPedido">
+                <xsd:sequence>
+                    <xsd:element name="DataReceita" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="EAN" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="NomeRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="NumeroRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Percentual" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="PrecoUnitario" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="Quantidade" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="TipoConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="UFRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="ValorBruto" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="ValorPagoPaciente" type="xsd:double" minOccurs="0" />
+					<xsd:element name="Tipo" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverItemPedidoArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:apiserverItemPedido" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverPedido">
+                <xsd:sequence>
+                    <xsd:element name="AutorizacaoApiServer" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Cliente" type="typens:apiserverCliente" minOccurs="0" />
+                    <xsd:element name="ClienteRemessa" type="typens:apiserverCliente" minOccurs="0" />
+                    <xsd:element name="CPFAutorizacao" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Data" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Empresa" type="typens:apiserverEmpresaCliente" minOccurs="0" />
+                    <xsd:element name="EntregaProgramadaFinal" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="EntregaProgramadaInicial" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="ForcarFreteZero" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="IdCotacao" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="IdPedido" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Itens" type="typens:apiserverItemPedidoArray" minOccurs="0" />
+                    <xsd:element name="Observacao" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Origem" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="ReferenciaPedidoCliente" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="ValorAReceber" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="ValorFreteAReceber" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="ValorFreteAVista" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="ValorPagoAVista" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="FormaEntrega" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="FormaPagamento" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="DadosPagamento" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverPedidoRetorno">
+                <xsd:sequence>
+                    <xsd:element name="IdRetornoPedido" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="StatusProcessamento" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Mensagem" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverItemPedidoConfirmacao">
+                <xsd:sequence>
+                    <xsd:element name="EAN" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Quantidade" type="xsd:int" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverItemPedidoConfirmacaoArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:apiserverItemPedidoConfirmacao" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverPedidoConfirmacao">
+                <xsd:sequence>
+                    <xsd:element name="AutorizacaoApiServer" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="CNPJ" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="DataVenda" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="IdPedido" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="Itens" type="typens:apiserverItemPedidoConfirmacaoArray" minOccurs="0" />
+                    <xsd:element name="ChaveAcessoNFe" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="NrPDV" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="VendaRealizada" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverPedidoConfirmacaoArray">
+            	<xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:apiserverPedidoConfirmacao" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverPedidoConfirmacaoEntrega">
+                <xsd:sequence>
+                    <xsd:element name="AutorizacaoApiServer" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="DataEntrega" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="EntregaRealizada" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="HoraEntrega" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="IdPedido" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="apiserverPedidoConfirmacaoEntregaArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:apiserverPedidoConfirmacaoEntrega" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <!-- PARAMS DECLARATION -->
+            <!-- CONSULTAR ESTOQUE -->
+            <xsd:element name="apiserverconsultarEstoqueRequestParam">
+	            <xsd:complexType>
+	                <xsd:sequence>
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="Requisicao" type="typens:apiserverConsultaEstoqueItem" />
+	                </xsd:sequence>
+	            </xsd:complexType>
+	        </xsd:element>
+	        <xsd:element name="apiserverconsultarEstoqueResponseParam">
+	            <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:apiserverConsultaRetornoEstoque" />
+                    </xsd:sequence>
+                </xsd:complexType>
+	        </xsd:element>
+	        <!-- CONSULTAR ESTOQUE -->			
+            <!-- CONSULTAR ESTOQUE PRODUTOS -->
+            <xsd:element name="apiserverconsultarEstoqueProdutosRequestParam">
+	            <xsd:complexType>
+	                <xsd:sequence>
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="Itens" type="typens:apiserverEstoqueItemArray" />
+	                </xsd:sequence>
+	            </xsd:complexType>
+	        </xsd:element>
+	        <xsd:element name="apiserverconsultarEstoqueProdutosResponseParam">
+	            <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:apiserverEstoqueItemRetornoArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+	        </xsd:element>
+	        <!-- CONSULTAR ESTOQUE PRODUTOS -->
+	        <!-- CONSULTAR PRODUTOS -->
+            <xsd:element name="apiserverconsultarProdutosRequestParam">
+	            <xsd:complexType>
+	                <xsd:sequence>
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="Requisicao" type="typens:apiserverRequisicaoConsulta" />
+	                </xsd:sequence>
+	            </xsd:complexType>
+	        </xsd:element>
+	        <xsd:element name="apiserverconsultarProdutosResponseParam">
+	            <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:apiserverConsultaRetorno" />
+                    </xsd:sequence>
+                </xsd:complexType>
+	        </xsd:element>
+	        <!-- CONSULTAR PRODUTOS -->
+	        <!-- ENVIAR PEDIDO -->
+            <xsd:element name="apiserverenviarPedidoRequestParam">
+            	<xsd:complexType>
+	                <xsd:sequence>
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="Pedido" type="typens:apiserverPedido" />
+	                </xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="apiserverenviarPedidoResponseParam">
+	            <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:apiserverPedidoRetorno" />
+                    </xsd:sequence>
+                </xsd:complexType>
+	        </xsd:element>
+            <!-- ENVIAR PEDIDO -->
+            <!-- CONSULTAR CONFIRMACAO PEDIDO -->
+            <xsd:element name="apiserverconsultarConfirmacaoPedidoRequestParam">
+	            <xsd:complexType>
+	                <xsd:sequence>
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="IdPedido" type="xsd:string" />
+	                </xsd:sequence>
+	            </xsd:complexType>
+	        </xsd:element>
+	        <xsd:element name="apiserverconsultarConfirmacaoPedidoResponseParam">
+	            <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:apiserverPedidoConfirmacao" />
+                    </xsd:sequence>
+                </xsd:complexType>
+	        </xsd:element>
+	        <!-- CONSULTAR CONFIRMACAO PEDIDO -->
+	        <!-- CONSULTAR CONFIRMACAO ENTREGA PEDIDO -->
+            <xsd:element name="apiserverconsultarConfirmacaoEntregaPedidoRequestParam">
+	            <xsd:complexType>
+	                <xsd:sequence>
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="IdPedido" type="xsd:string" />
+	                </xsd:sequence>
+	            </xsd:complexType>
+			</xsd:element>	        
+			<xsd:element name="apiserverconsultarConfirmacaoEntregaPedidoResponseParam">
+	            <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:apiserverPedidoConfirmacaoEntrega" />
+                    </xsd:sequence>
+                </xsd:complexType>
+	        </xsd:element>    
+			<!-- CONSULTAR CONFIRMACAO ENTREGA PEDIDO -->
+			<!-- CONSULTAR CONFIRMACAO PEDIDOS POR DATA -->
+            <xsd:element name="apiserverconsultarConfirmacaoPedidosPorDataRequestParam">
+	            <xsd:complexType>
+	                <xsd:sequence>
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="DataInicio" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="DataFinal" type="xsd:string" />
+	                </xsd:sequence>
+	            </xsd:complexType>
+	        </xsd:element>
+	        <xsd:element name="apiserverconsultarConfirmacaoPedidosPorDataResponseParam">
+	            <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:apiserverPedidoConfirmacaoArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+	        </xsd:element>
+	        <!-- CONSULTAR CONFIRMACAO PEDIDOS POR DATA -->
+	        <!-- CONSULTAR ENTREGA PEDIDOS POR DATA -->
+            <xsd:element name="apiserverconsultarEntregaPedidosPorDataRequestParam">
+	            <xsd:complexType>
+	                <xsd:sequence>
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="DataInicio" type="xsd:string" />
+	                	<xsd:element minOccurs="1" maxOccurs="1" name="DataFinal" type="xsd:string" />
+	                </xsd:sequence>
+	            </xsd:complexType>
+	        </xsd:element>
+	        <xsd:element name="apiserverconsultarEntregaPedidosPorDataResponseParam">
+	            <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:apiserverPedidoConfirmacaoEntregaArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+	        </xsd:element>
+	        <!-- CONSULTAR ENTREGA PEDIDOS POR DATA -->
+            <!-- END PARAMS DECLARATION -->
+        </xsd:schema>
+    </wsdl:types>
+
+	<wsdl:message name="apiserverConsultarEstoqueRequest">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarEstoqueRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverConsultarEstoqueResponse">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarEstoqueResponseParam" />
+    </wsdl:message>	
+    <wsdl:message name="apiserverConsultarEstoqueProdutosRequest">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarEstoqueProdutosRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverConsultarEstoqueProdutosResponse">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarEstoqueProdutosResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverConsultarProdutosRequest">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarProdutosRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverConsultarProdutosResponse">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarProdutosResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverEnviarPedidoRequest">
+    	<wsdl:part name="parameters" element="typens:apiserverenviarPedidoRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverEnviarPedidoResponse">
+        <wsdl:part name="parameters" element="typens:apiserverenviarPedidoResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverConsultarConfirmacaoPedidoRequest">
+    	<wsdl:part name="parameters" element="typens:apiserverconsultarConfirmacaoPedidoRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverConsultarConfirmacaoPedidoResponse">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarConfirmacaoPedidoResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverConsultarConfirmacaoEntregaPedidoRequest">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarConfirmacaoEntregaPedidoRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="apiserverConsultarConfirmacaoEntregaPedidoResponse">
+        <wsdl:part name="parameters" element="typens:apiserverconsultarConfirmacaoEntregaPedidoResponseParam" />
+    </wsdl:message>
+    
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+    	<wsdl:operation name="apiserverConsultarEstoque">
+            <wsdl:documentation>Consulta Estoque de Determinado Produto</wsdl:documentation>
+            <wsdl:input message="typens:apiserverConsultarEstoqueRequest" />
+            <wsdl:output message="typens:apiserverConsultarEstoqueResponse" />
+        </wsdl:operation>	
+    	<wsdl:operation name="apiserverConsultarEstoqueProdutos">
+            <wsdl:documentation>Consulta Estoque dos Produtos</wsdl:documentation>
+            <wsdl:input message="typens:apiserverConsultarEstoqueProdutosRequest" />
+            <wsdl:output message="typens:apiserverConsultarEstoqueProdutosResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="apiserverConsultarProdutos">
+            <wsdl:documentation>Consulta Produtos</wsdl:documentation>
+            <wsdl:input message="typens:apiserverConsultarProdutosRequest" />
+            <wsdl:output message="typens:apiserverConsultarProdutosResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="apiserverEnviarPedido">
+            <wsdl:documentation>Envia Pedido</wsdl:documentation>
+            <wsdl:input message="typens:apiserverEnviarPedidoRequest" />
+            <wsdl:output message="typens:apiserverEnviarPedidoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="apiserverConsultarConfirmacaoPedido">
+            <wsdl:documentation>Consulta Confirmacao de Pedido</wsdl:documentation>
+            <wsdl:input message="typens:apiserverConsultarConfirmacaoPedidoRequest" />
+            <wsdl:output message="typens:apiserverConsultarConfirmacaoPedidoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="apiserverConsultarConfirmacaoEntregaPedido">
+            <wsdl:documentation>Consulta Confirmacao de Entrega de Pedido</wsdl:documentation>
+            <wsdl:input message="typens:apiserverConsultarConfirmacaoEntregaPedidoRequest" />
+            <wsdl:output message="typens:apiserverConsultarConfirmacaoEntregaPedidoResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="apiserverConsultarEstoque">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>		
+        <wsdl:operation name="apiserverConsultarEstoqueProdutos">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="apiserverConsultarProdutos">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="apiserverEnviarPedido">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="apiserverConsultarConfirmacaoPedido">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="apiserverConsultarConfirmacaoEntregaPedido">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

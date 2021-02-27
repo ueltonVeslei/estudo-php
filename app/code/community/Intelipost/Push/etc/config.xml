@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<config>
+  <modules>
+    <Intelipost_Push>
+      <version>2.3.6</version>
+    </Intelipost_Push>
+  </modules>
+  <global>
+    <helpers>
+      <push>
+        <class>Intelipost_Push_Helper</class>
+      </push>
+    </helpers>
+    <blocks>
+        <push>
+            <class>Intelipost_Push_Block</class>
+        </push>
+
+        <!--<shipping>
+            <rewrite>   
+                <tracking_popup>Intelipost_Push_Block_Tracking_Popup</tracking_popup>         
+            </rewrite>
+        </shipping>-->
+    </blocks>
+    <models>
+        <push>
+            <class>Intelipost_Push_Model</class>
+            <resourceModel>push_mysql4</resourceModel>
+        </push>
+        <push_mysql4>
+            <class>Intelipost_Push_Model_Mysql4</class>
+        </push_mysql4>
+    </models>
+    <resources>
+      <push_setup>
+        <setup>
+          <module>Intelipost_Push</module>
+        </setup>
+        <connection>
+          <use>core_setup</use>
+        </connection>
+      </push_setup>
+      <push_write>
+        <connection>
+          <use>core_write</use>
+        </connection>
+      </push_write>
+      <push_read>
+        <connection>
+          <use>core_read</use>
+        </connection>
+      </push_read>
+    </resources>
+
+        <events>
+          <sales_order_payment_pay>
+            <observers>
+              <push_observer>
+                <type>singleton</type>
+                <class>Intelipost_Push_Model_Observer</class>
+                <method>afterInvoice</method>
+              </push_observer>
+            </observers>
+          </sales_order_payment_pay>     
+        </events>
+
+  </global>
+    <admin>
+        <routers>
+            <adminhtml>
+				<args>
+					<modules>
+						<push before="Mage_Adminhtml">Intelipost_Push_Adminhtml</push>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <push>
+                    <file>intelipost/push.xml</file>
+                </push>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Intelipost_Push>
+                    <files>
+                        <default>Intelipost_Push.csv</default>
+                    </files>
+                </Intelipost_Push>
+            </modules>
+        </translate>
+
+        <events>
+          <core_block_abstract_to_html_before>
+            <observers>
+              <push_observer>
+                <type>model</type>
+                <class>Intelipost_Push_Model_Observer</class>
+                <method>blockToHtmlBefore</method>
+              </push_observer>
+            </observers>
+          </core_block_abstract_to_html_before>
+        </events>
+
+    </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <push>
+                    <file>intelipost/push.xml</file>
+                </push>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Intelipost_Push>
+                    <files>
+                        <default>Intelipost_Push.csv</default>
+                    </files>
+                </Intelipost_Push>
+            </modules>
+        </translate>
+
+        <routers>
+            <push>
+                <use>standard</use>
+                <args>
+                    <module>Intelipost_Push</module>
+                    <frontName>intelipost</frontName>
+                </args>
+            </push>
+        </routers>
+    </frontend>
+    <default>
+        <intelipost_push>
+            <attributes>
+                <federal_tax_payer_id></federal_tax_payer_id>
+            </attributes>
+            <manage_ordes>
+                <nfe_required>1</nfe_required>
+            </manage_ordes>
+        </intelipost_push>
+    </default>
+
+    <crontab>
+      <jobs>     
+
+        <push_cron_cso>     
+            <!--<schedule><cron_expr>*/5 * * * *</cron_expr></schedule>-->
+            <run><model>push/observer::intelipostCreateShipOrder</model></run>
+        </push_cron_cso>
+
+        <push_cron_nf>     
+            
+            <!--<schedule><cron_expr>*/5 * * * *</cron_expr></schedule>-->
+            <run><model>push/observer::updateNfe</model></run>
+        </push_cron_nf>
+
+        <push_cron_rts>     
+            <!--<schedule><cron_expr>*/5 * * * *</cron_expr></schedule>-->
+            <run><model>push/observer::intelipostReadyToShip</model></run>
+        </push_cron_rts>
+
+        <push_cron_gs>
+            <!--<schedule><cron_expr>*/5 * * * *</cron_expr></schedule>-->
+            <run><model>push/observer::intelipostGenerateShipment</model></run>
+        </push_cron_gs>
+      </jobs>
+    </crontab>
+</config>
+

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<config>
+    <menu>
+        <intelipost_push module="push">
+            <title>Intelipost</title>
+            <sort_order>1000</sort_order>
+            <children>
+                <orders module="push">
+                    <title>Manage Orders</title>
+                    <sort_order>0</sort_order>
+                    <action>adminhtml/push_orders</action>
+                </orders>
+                <nfes module="push">
+                    <title>Manage NFEs (manually)</title>
+                    <sort_order>10</sort_order>
+                    <action>adminhtml/push_nfes</action>
+                </nfes>
+                <trackings module="push">
+                    <title>Manage Trackings (manually)</title>
+                    <sort_order>20</sort_order>
+                    <action>adminhtml/push_trackings</action>
+                </trackings>
+                <intelipost_orders_list>
+                    <title>Export Order List</title>
+                    <sort_order>100</sort_order>
+                    <action>adminhtml/push_orders/orderListLink</action>
+                </intelipost_orders_list>
+            </children>
+        </intelipost_push>
+    </menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<intelipost_push translate="title" module="push">
+										<title>Intelipost Push Section</title>
+										<sort_order>0</sort_order>
+									</intelipost_push>
+
+                                    <orders translate="title" module="push">
+                                        <title>Push Gerenciar Pedidos</title>
+                                        <sort_order>1</sort_order>
+                                    </orders>
+
+                                    <nfes module="push">
+                                        <title>Gerenciar Notas Fiscais (manualmente)</title>
+                                        <sort_order>12</sort_order>
+                                    </nfes>
+                                    <trackings module="push">
+                                        <title>Gerenciar Códigos de Rastreamento (manualmente)</title>
+                                        <sort_order>20</sort_order>
+                                    </trackings>
+								</children>
+							</config>
+						</children>
+					</system>
+                    <intelipost_push translate="title" module="push">
+                        <title>Push</title>
+                        <sort_order>1100</sort_order>
+                        <children>
+                            <orders translate="title">
+                                <title>Manage Orders</title>
+                                <sort_order>0</sort_order>
+                            </orders>
+                            <nfes translate="title">
+                                <title>Manage NFEs</title>
+                                <sort_order>10</sort_order>
+                            </nfes>
+                            <trackings translate="title">
+                                <title>Manage Trackings</title>
+                                <sort_order>20</sort_order>
+                            </trackings>
+                        </children>
+                    </intelipost_push>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>
+

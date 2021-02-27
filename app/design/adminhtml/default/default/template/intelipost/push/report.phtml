@@ -1,0 +1,163 @@
+<table style="width:1000px; border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+<tr>
+<td colspan="2" style="width:12%;">
+        <?php $company_logo = Mage::getStoreConfig ('intelipost_push/romaneio_company_info/company_logo'); ?>
+		<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "intelipost/push/{$company_logo}"; ?>" alt="" title="Company Logo" />
+	</td>
+<td colspan="5" align="center">
+		<span style="font-size: 20pt">
+		<strong><?php echo Mage::helper ('push')->__('LISTA DE POSTAGEM'); ?></strong>
+		</span>
+    </td>
+    <td colspan="2" style="width:15%; vertical-align:top;" align="center">
+        <span style="font-size: 10pt">
+		<strong><?php echo Mage::helper ('push')->__('DATA DA POSTAGEM'); ?></strong>
+        <br />
+        <?php echo date("d/m/Y H:i:s "); ?>
+		</span>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="9" height="50px" align="center" style="font-size: 16pt">
+    <strong><?php echo $this->getMethodName()?></strong>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="5" align="center" width="50%">
+        <span style="font-size: 8pt">
+		<strong><?php echo Mage::helper ('push')->__('NOME DO CLIENTE'); ?>:</strong>
+        <?php $company_name = Mage::getStoreConfig ('intelipost_push/romaneio_company_info/company_name'); ?>
+        <?php echo $company_name; ?>
+		</span>
+    </td>
+    <td colspan="4" align="center" width="50%">
+        <span style="font-size: 8pt">
+		<strong><?php echo Mage::helper ('push')->__('CNPJ'); ?>:</strong>
+        <?php echo Mage::getStoreConfig ('intelipost_push/romaneio_company_info/company_cnpj'); ?>
+		</span>
+    </td>
+</tr>
+
+<?php if ($this->isCorreios()) :?>
+	<tr style="margin-bottom:20px">
+	    <td colspan="3" align="center" width="25%" style="border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+	        <span style="font-size: 8pt">
+			<strong><?php echo Mage::helper ('push')->__('CÓDIGO SERVIÇO '); ?>:</strong>
+	        <?php echo $this->getCorreiosConfig('service_code') ?>
+			</span>
+	    </td>
+
+	    <td colspan="2" align="center" width="25%" style="border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+	        <span style="font-size: 8pt">
+			<strong><?php echo Mage::helper ('push')->__('NÚMERO CONTRATO '); ?>:</strong>
+	        <?php echo $this->getCorreiosConfig('contract_number') ?>
+			</span>
+	    </td>
+
+	    <td colspan="2" align="center" width="25%" style="border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+	        <span style="font-size: 8pt">
+			<strong><?php echo Mage::helper ('push')->__('NÚMERO CARTÃO POSTAGEM '); ?>:</strong>
+	        <?php echo $this->getCorreiosConfig('card_number') ?>
+			</span>
+	    </td>
+
+	    <td colspan="2" align="center" width="25%" style="border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+	        <span style="font-size: 8pt">
+			<strong><?php echo Mage::helper ('push')->__('UNIDADE DE POSTAGEM '); ?>:</strong>
+	        <?php echo $this->getCorreiosConfig('post_unity') ?>
+			</span>
+	    </td>
+    </tr>
+
+<?php endif;?>
+
+<tr>
+    <td align="center" colspan="2" rowspan="2" style="width:20%; border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+        <span style="font-size: 8pt">
+		<strong><?php echo Mage::helper ('push')->__('Pedido'); ?></strong>
+		</span>
+    </td>
+    <td align="center" colspan="4" width="40%" rowspan="2"  style="width:40%; border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+        <span style="font-size: 8pt">
+		<strong><?php echo Mage::helper ('push')->__('Código Rastreamento / Nota Fiscal'); ?></strong>
+		</span>
+    </td>
+    <!--<td align="center" colspan="2" width="20%" rowspan="2"  style="width:20%; border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+        <span style="font-size: 8pt">
+		<strong><?php //echo Mage::helper('push')->__('Código Rastreamento'); ?></strong>
+		</span>
+    </td>-->
+   
+    <td align="center" colspan="2" width="20%" rowspan="2"  style="width:20%; border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+        <span style="font-size: 8pt">
+		<strong><?php echo Mage::helper ('push')->__('CEP Destino'); ?></strong>
+		</span>
+    </td>
+
+    <td align="center" colspan="1" rowspan="2"  style="width:20%; border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+        <span style="font-size: 8pt">
+		<strong><?php echo Mage::helper('push')->__('UF Destino'); ?></strong>
+		</span>
+    </td>
+
+    <!--<td colspan="3" align="center"  style="width:30%; border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+    </td>-->
+</tr>
+<tr></tr>
+<tr>
+	<td colspan="9" >
+    	<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+        	<tbody>
+				<?php foreach ($this->getOrderIds() as $order) :?>
+					<?php $this->getOrderData($order->order_id)?>
+                    <tr align="center"  style="background-color:#E0E0E0">
+                        <td style="width:20%;"><?php echo $this->getOrderIncrementId() ?></td>
+                        <td style="width:40%;"><?php echo $this->getTrackingInvoice()?></td>
+                        <!--<td style="width:20%;"><?php //echo $this->getTrackingCode() ?></td>-->
+                        <td style="width:20%;"><?php echo $this->getPostCode() ?></td>
+                        <td style="width:20%;"><?php echo $this->getUf() ?></td>
+                    </tr>
+				<?php endforeach ?>
+			</tbody>
+		</table>
+	</td>
+</tr>
+
+<tr>
+    <td colspan="2" style="border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; vertical-align:top;">
+        <span style="font-size: 8pt"><?php echo Mage::helper ('push')->__('CARIMBO'); ?></span>
+    </td>
+    <td colspan="7" style="border-right: black thin solid; border-top: black thin solid; border-left: black thin solid; border-bottom: black thin solid;">
+        <span style="font-size: 8pt">Total pedidos postados: <?php echo $this->getCountOrders() ?></span>
+        <br />
+        <span style="font-size: 8pt">Total volumes postados: ________ </span>
+        <br />
+        <span style="font-size: 8pt">Coleta: <?php echo date("d/m/Y H:i:s "); ?></span>
+        <br />
+        <br />
+    </td>
+</tr>
+
+<tr>
+    <td colspan="2" rowspan="2" style="border-right: black thin solid; border-bottom: black thin solid; border-left: black thin solid;">&nbsp;</td>
+	<td colspan="3" rowspan="2" style="border-right: black thin solid; border-bottom: black thin solid; border-left: black thin solid;">
+		<br />
+        <br />
+        <br />
+        <span style="font-size: 10pt; border-top: black thin solid;">
+		<?php echo Mage::helper ('push')->__('ASSINATURA E MATRÍCULA - <strong>Coletor</strong>'); ?>
+		</span>
+    </td>
+    <td colspan="4" rowspan="2" style="border-right: black thin solid; border-bottom: black thin solid;">
+        <br />
+        <br />
+        <br />
+        <span style="font-size: 10pt; border-top: black thin solid;">
+		<?php echo Mage::helper ('push')->__('ASSINATURA E MATRÍCULA - <strong>' . $company_name . '</strong>'); ?>
+		</span>
+    </td>
+</tr>
+
+</table>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magpleasure_Adminlogger>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Magpleasure_Adminlogger>
+    </modules>
+</config> 

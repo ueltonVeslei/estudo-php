@@ -1,0 +1,9 @@
+<?xml version = "1.0"?>
+<config>
+	<modules>
+		<Criteo_OneTag>
+			<active>false</active>
+			<codePool>community</codePool>
+		</Criteo_OneTag>
+	</modules>
+</config>

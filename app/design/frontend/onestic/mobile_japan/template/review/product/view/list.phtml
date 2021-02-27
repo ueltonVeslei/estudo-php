@@ -1,0 +1,154 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+
+<!-- função para gerar as estrelas médias -->
+<?php
+$_product = $this->getProduct();
+$productId = $_product->getId();
+$reviews = Mage::getModel('review/review')
+        ->getResourceCollection()
+        ->addStoreFilter(Mage::app()->getStore()->getId())
+        ->addEntityFilter('product', $productId)
+        ->addStatusFilter(Mage_Review_Model_Review::STATUS_APPROVED)
+        ->setDateOrder()
+        ->addRateVotes();
+
+$avg = 0;
+$ratings = array();
+if (count($reviews) > 0) {
+    foreach ($reviews->getItems() as $review) {
+        foreach ($review->getRatingVotes() as $vote) {
+            $ratings[] = $vote->getPercent();
+        }
+    }
+
+    if (array_sum($ratings) > 0) {
+        $avg = array_sum($ratings) / count($ratings);
+    } else {
+        $avg = 0;
+    }
+}
+?>
+
+<?php $_items = $this->getReviewsCollection()->getItems(); ?>
+<div class="box-collateral box-reviews" id="customer-reviews">
+    <div class="container-reviews">
+        <a href="javascript:void(0)" class="avaliado" title="Avaliação do cliente">Avaliação do cliente <i class="icon-font icon-ic_more_horiz_black_24px"></i></a>
+        <div class="opinioes-enviadas">
+            <?php if (count($_items)): ?>
+                <h5>
+                    <?php if (count($_items) == 1) : ?>
+                        <div class="rating-box">
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <div class="rating" style="width: <?php echo ceil($avg); ?>%;">
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                            </div>
+                        </div> 
+                        <strong><?php echo (count($_items)); ?> avaliação</strong>
+                    <?php else : ?>
+                        <div class="rating-box">
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                            <div class="rating" style="width: <?php echo ceil($avg); ?>%;">
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                            </div>
+                        </div> 
+                        <strong><?php echo (count($_items)); ?> avaliações</strong>
+                    <?php endif; ?>
+                </h5>
+                <ul class="rating-legenda">
+                    <li class="excelente"><strong>Excelente</strong></li>
+                    <li class="otimo"><strong>Ótimo</strong></li>
+                    <li class="bom"><strong>Bom</strong></li>
+                    <li class="regular"><strong>Regular</strong></li>
+                    <li class="ruim"><strong>Ruim</strong></li>
+                </ul>
+                <p class="txt-avalie">Avalie este produtos, você pode contar suas experiências, apontar qualidades ou informações relevantes sobre o uso.</p>
+                <a href="javascript:void(0)" class="avalie bt-avalie">Avalie este produto</a>
+                <?php //echo $this->getChildHtml('toolbar')  ?>
+                <ul class="avaliacoes">
+                    <?php foreach ($_items as $_review): ?>
+                        <li>
+                            <div class="quem">
+                                <?php $_votes = $_review->getRatingVotes(); ?>
+                                <?php if (count($_votes)): ?>
+                                    <?php foreach ($_votes as $_vote): ?>
+                                                    <!--<strong><?php echo $this->escapeHtml($_vote->getRatingCode()) ?></strong>-->
+                                        <div class="rating-box">
+                                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                                            <i class="icon-font icon-ic_favorite_border_black_18px"></i>
+                                            <div class="rating" style="width:<?php echo $_vote->getPercent() ?>%;">
+                                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                                <i class="icon-font icon-ic_favorite_black_18px"></i>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+    
+                                <?php echo $this->__('<span>%s</span>', $this->htmlEscape($_review->getNickname())) ?>
+                            </div>
+                            <div class="comentario">
+                                <a href="<?php echo $this->getReviewUrl($_review->getId()) ?>"><?php echo $this->htmlEscape($_review->getTitle()) ?></a>
+                                <p><?php echo nl2br($this->htmlEscape($_review->getDetail())) ?></p>
+                                <small class="date"><?php echo $this->__('(Posted on %s)', $this->formatDate($_review->getCreatedAt()), 'long') ?></small>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php echo $this->getChildHtml('toolbar') ?>
+            <?php else : echo ('Seja o primeiro a avaliar este produto'); ?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="container-reviews">
+        <a href="javascript:void(0)" class="avalie" title="Avalie este produto">Avalie este produto <i class="icon-font icon-ic_more_horiz_black_24px"></i></a>
+        <?php echo $this->getChildHtml('review_form') ?>
+    </div>
+    
+</div>

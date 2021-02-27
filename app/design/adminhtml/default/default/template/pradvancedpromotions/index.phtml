@@ -1,0 +1,75 @@
+<?php
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_AdvancedPromotions
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+?>
+<?php
+    $order = Mage::registry('current_order');
+    if ($order['applied_rule_ids']) {
+        $rule_ids = array_unique(explode(",", $order['applied_rule_ids']));
+    } else {
+        $rule_ids = array();
+    }
+?>
+<?php if (count($rule_ids)) { ?>
+<div id="prpromo" class="box-right" style="margin-top: 15px;">
+    <!--Shipping Method-->
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Shopping Cart Price Rules') ?></h4>
+        </div>
+        <fieldset>
+            <div class="">
+                <table cellspacing="0" width="100%">
+                    <colgroup>
+                        <col>
+                        <col width="1">
+                    </colgroup>
+                    <?php
+                        foreach ($rule_ids as $rule_id):
+                            if ($rule_id == 439999) {
+                            ?>
+                                <tr class="2">
+                                    <td class="label">
+                                        Reward Points
+                                    </td>
+                                </tr>
+                            <?php
+                                continue;
+                            }
+                            $rule = Mage::getSingleton('salesrule/rule')->load($rule_id);
+                            $href = Mage::helper('adminhtml')->getUrl('adminhtml/promo_quote/edit', array('id' => $rule_id));
+                            $done[$rule_id] = true;
+                            ?>
+                            <tr class="2">
+                                <td class="label">
+                                    <a href="<?php echo $href ?>" target="_blank"><?php echo $rule['name'] ?></a>
+                                </td>
+                            </tr>
+                            <?php
+                        endforeach;
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<script>
+  document.getElementById('sales_order_view_tabs_order_info_content').firstChild.lastChild.previousSibling.appendChild(
+    document.getElementById('prpromo')
+  );
+</script>
+<?php } ?>

@@ -1,0 +1,56 @@
+<div id="page:main-container">
+	<div id="messages"></div>
+	<div class="content-header">
+		<h3 class="icon-head head-boleto-baixas">Baixas de Boletos</h3>
+		<p class="form-buttons">
+			<button id="id_1ae1dc0cb19b3eae2b0ed746137890cd" type="button"
+				class="scalable " onclick="setLocation(window.location.href)"
+				style="">
+				<span>Redefinir</span>
+			</button>
+			<button id="id_1ee8d52b1606c619b4335e607f4ab182" type="button"
+				class="scalable save" onclick="editForm.submit();" style="">
+				<span>Salvar</span>
+			</button>
+		</p>
+	</div>
+	<div class="entry-edit">
+		<form
+			action="<?php echo $this->getFormAction();?>"
+			method="post" enctype="multipart/form-data" id="edit_form">
+			
+			<div>
+				<input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+			</div>
+			
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-edit-form fieldset-legend">Formulário</h4>
+				<div class="form-buttons"></div>
+			</div>
+			<div class="fieldset " id="base_fieldset">
+				<div class="hor-scroll">
+					<table cellspacing="0" class="form-list">
+						<tbody>
+							<tr>
+								<td colspan="2" class="hidden"><input id="code" name="code"
+									value="<?php echo $this->getBoletoCode();?>" type="hidden" class=" required-entry" />
+								</td>
+							</tr>
+							<tr>
+								<td class="label"><label for="arquivo">Arquivo <span
+										class="required">*</span>
+								</label>
+								</td>
+								<td class="value"><input id="arquivo" name="arquivo" value=""
+									title="Arquivo" type="file" class=" required-entry" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+    editForm = new varienForm('edit_form', '');
+</script>
+</div>

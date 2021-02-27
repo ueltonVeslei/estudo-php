@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Auctionmaid Shipping Module
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Auctionmaid
+ * @package    Auctionmaid_Matrixrate
+ * @copyright  Copyright (c) 2008 Auction Maid (http://www.auctionmaid.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     Karen Baker <enquiries@auctionmaid.com>
+*/
+-->
+<config>
+  <sections>
+    <carriers translate="label" module="shipping">
+      <label>Shipping Methods</label>
+      <tab>sales</tab>
+      <frontend_type>text</frontend_type>
+      <sort_order>320</sort_order>
+      <show_in_default>1</show_in_default>
+      <show_in_website>1</show_in_website>
+      <show_in_store>1</show_in_store>
+      <groups>
+        <matrixrate translate="label">
+          <label>Auctionmaid Matrix Rates</label>
+          <frontend_type>text</frontend_type>
+          <sort_order>2</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <handling_type translate="label">
+              <label>Calculate handling fee</label>
+              <frontend_type>select</frontend_type>
+              <source_model>shipping/source_handlingType</source_model>
+              <sort_order>80</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </handling_type>
+            <handling_fee translate="label">
+              <label>Handling fee</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>90</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </handling_fee>
+            <active translate="label">
+              <label>Enabled</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>1</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </active>
+            <allow_free_shipping_promotions translate="label">
+              <label>Free shipping promotions</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_enabledisable</source_model>
+              <sort_order>50</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </allow_free_shipping_promotions>
+            <show_only_free translate="label">
+              <label>Only display free shipping</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>51</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </show_only_free>
+            <free_method_text translate="label">
+              <label>Free shipping display text</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>52</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </free_method_text>
+            <enable_free_shipping_threshold translate="label">
+              <label>Free shipping with minimum order amount</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_enabledisable</source_model>
+              <sort_order>53</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </enable_free_shipping_threshold>
+            <free_shipping_threshold translate="label">
+              <label>Minimum order amount for free shipping</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>54</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </free_shipping_threshold>
+            <zip_range translate="label">
+              <label>Use zipcode to/from range</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>60</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </zip_range>
+            <remove_virtual translate="label">
+              <label>Exclude Virtual from Cart Price</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>70</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </remove_virtual>
+            <condition_name translate="label">
+              <label>Condition</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_shipping_matrixrate</source_model>
+              <sort_order>4</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </condition_name>
+            <!-- export translate="label">
+                <label>Export</label>
+                <frontend_type>export</frontend_type>
+                 <backend_model>adminhtml/system_config_backend_shipping_export_matrixrate</backend_model>
+               <sort_order>6</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>0</show_in_store>
+            </export -->
+            <import translate="label">
+              <label>Import</label>
+              <frontend_type>import</frontend_type>
+              <backend_model>adminhtml/system_config_backend_shipping_matrixrate</backend_model>
+              <sort_order>70</sort_order>
+              <show_in_default>0</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </import>
+            <name translate="label">
+              <label>Method name</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>3</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </name>
+            <sort_order translate="label">
+              <label>Sort order</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>200</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </sort_order>
+            <title translate="label">
+              <label>Title</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>2</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </title>
+            <sallowspecific translate="label">
+              <label>Ship to applicable countries</label>
+              <frontend_type>select</frontend_type>
+              <sort_order>100</sort_order>
+              <frontend_class>shipping-applicable-country</frontend_class>
+              <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </sallowspecific>
+            <specificcountry translate="label">
+              <label>Ship to specific countries</label>
+              <frontend_type>multiselect</frontend_type>
+              <sort_order>110</sort_order>
+              <source_model>adminhtml/system_config_source_country</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </specificcountry>
+            <showmethod translate="label">
+              <label>Show method if not applicable</label>
+              <frontend_type>select</frontend_type>
+              <sort_order>120</sort_order>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </showmethod>
+            <specificerrmsg translate="label">
+              <label>Displayed error message</label>
+              <frontend_type>textarea</frontend_type>
+              <sort_order>80</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </specificerrmsg>
+          </fields>
+        </matrixrate>
+      </groups>
+    </carriers>
+  </sections>
+</config>

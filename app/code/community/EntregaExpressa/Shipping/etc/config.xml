@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * EntregaExpressas shipping model
+ *
+ * @category   EntregaExpressa
+ * @package    EntregaExpressa_Shipping
+ * @author     Igor Pfeilsticker <igorsop@gmail.com>
+ */
+-->
+<config>
+    <modules>
+        <EntregaExpressa_Shipping>
+            <version>0.1.0</version>
+            <depends>
+                <Mage_Shipping />
+            </depends>
+        </EntregaExpressa_Shipping>
+    </modules>
+    <global>
+    	<models>
+    		<tmshipping>
+	    		<class>EntregaExpressa_Shipping</class>
+	    	</tmshipping>
+    	</models>
+        <resources>
+            <tmshipping_setup>
+                <setup>
+                    <module>EntregaExpressa_Shipping</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </tmshipping_setup>
+            <tmshipping_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </tmshipping_read>
+             <tmshipping_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </tmshipping_write>
+        </resources>
+        <sales>
+            <shipping>
+                <carriers>
+                    <EntregaExpressa>
+                        <class>EntregaExpressa_Shipping_Model_Carrier_EntregaExpressa</class>
+                    </EntregaExpressa>
+                </carriers>
+            </shipping>
+        </sales>
+        
+    </global>
+
+    <default>
+   
+        <carriers>
+            <EntregaExpressa>
+				<model>EntregaExpressa_Shipping_Model_Carrier_EntregaExpressa</model>
+                <title>Entrega Própria</title>
+				<name>Entrega Propria</name>
+            </EntregaExpressa>
+        </carriers>
+    </default>
+</config>

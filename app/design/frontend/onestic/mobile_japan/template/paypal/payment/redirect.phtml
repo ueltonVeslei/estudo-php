@@ -1,0 +1,21 @@
+<div id="payment_form_<?php echo $this->getMethodCode() ?>">
+    <div id="labelpaypal" style="position:relative;">
+        <?php echo $this->__('Você será redirecionado para o site do PayPal para finalizar o pagamento.'); ?>
+        <div style="color:red;font-weight: bold;font-size: 13px;">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('payment-block')->toHtml(); ?>
+        </div>
+        <div id="paypal_img">
+            <img src="<?php echo $this->getSkinUrl('images/seal_paypal.jpg'); ?>" alt="Paypal Detalhes Pagamento" />
+            <p>*Parcela mínima: R$ 50</p>
+        </div>
+    </div>
+    
+    <?php if ($code = $this->getCreateBACode()): ?>
+        <label for="<?php echo $code ?>"><input type="checkbox" id="<?php echo $code ?>" value="1" name="payment[<?php echo $code ?>]" class="checkbox" />
+            <?php //echo $this->__('Sign a billing agreement to streamline further purchases with PayPal.') ?>
+            <?php echo $this->__('Suas informações de cobrança serão ignoradas e você será redirecionado para o PayPal.') ?>
+        </label>
+    <?php endif; ?>
+    
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('detalhe-paypal')->toHtml(); ?>
+</div>

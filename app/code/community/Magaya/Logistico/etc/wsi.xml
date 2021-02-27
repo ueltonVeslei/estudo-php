@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magaya
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@logistico.com so we can send you a copy immediately.
+ *
+ *
+ * @category   Integration
+ * @package    Magaya_Logistico
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}"
+             targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">         
+            <xsd:complexType name="salesOrderListEntity">
+                <xsd:sequence>
+                    <xsd:element name="gift_message_body" type="xsd:string" minOccurs="0" maxOccurs="1"  />
+                    <xsd:element name="shipping_address" type="typens:salesOrderAddressEntity" minOccurs="0" />
+                    <xsd:element name="items" type="typens:salesOrderItemEntityArray" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="logisticoSalesOrderListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="filters" type="typens:filters" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="logisticoSalesOrderListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:salesOrderListEntityArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="logisticoStoreTestConnectionRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="logisticoStoreTestConnectionResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>           
+            <xsd:element name="logisticoSalesOrderSyncRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="orderIncrementId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="logisticoSalesOrderSyncResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="logisticoOrderShipmentCreateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="orderIncrementId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="itemsQty" type="typens:orderItemIdQtyArray" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="comment" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="email" type="xsd:int" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="includeComment" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="logisticoOrderShipmentCreateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+        </xsd:schema>
+    </wsdl:types>
+    
+    <wsdl:message name="logisticoSalesOrderListRequest">
+        <wsdl:part name="parameters" element="typens:logisticoSalesOrderListRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="logisticoSalesOrderListResponse">
+        <wsdl:part name="parameters" element="typens:logisticoSalesOrderListResponseParam" />
+    </wsdl:message>
+    
+     <wsdl:message name="logisticoStoreTestConnectionRequest">
+        <wsdl:part name="parameters" element="typens:logisticoStoreTestConnectionRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="logisticoStoreTestConnectionResponse">
+        <wsdl:part name="parameters" element="typens:logisticoStoreTestConnectionResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="logisticoSalesOrderSyncRequest">
+        <wsdl:part name="parameters" element="typens:logisticoSalesOrderSyncRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="logisticoSalesOrderSyncResponse">
+        <wsdl:part name="parameters" element="typens:logisticoSalesOrderSyncResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="logisticoOrderShipmentCreateRequest">
+        <wsdl:part name="parameters" element="typens:logisticoOrderShipmentCreateRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="logisticoOrderShipmentCreateResponse">
+        <wsdl:part name="parameters" element="typens:logisticoOrderShipmentCreateResponseParam" />
+    </wsdl:message>
+   
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+         <wsdl:operation name="logisticoStoreTestConnection">
+            <wsdl:documentation>Test Logistico Store Connection</wsdl:documentation>
+            <wsdl:input message="typens:logisticoStoreTestConnectionRequest" />
+            <wsdl:output message="typens:logisticoStoreTestConnectionResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="logisticoOrdersList">
+            <wsdl:documentation>Retrieve list of orders by filters</wsdl:documentation>
+            <wsdl:input message="typens:logisticoSalesOrderListRequest" />
+            <wsdl:output message="typens:logisticoSalesOrderListResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="logisticoOrdersSetAsSynced">
+            <wsdl:documentation>Mark an order as Synced with Logistico</wsdl:documentation>
+            <wsdl:input message="typens:logisticoSalesOrderSyncRequest" />
+            <wsdl:output message="typens:logisticoSalesOrderSyncResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="logisticoOrderShipmentCreate">
+            <wsdl:documentation>Create new shipment for order</wsdl:documentation>
+            <wsdl:input message="typens:logisticoOrderShipmentCreateRequest" />
+            <wsdl:output message="typens:logisticoOrderShipmentCreateResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+         <wsdl:operation name="logisticoStoreTestConnection">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logisticoOrdersList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logisticoOrdersSetAsSynced">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logisticoOrderShipmentCreate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="{{var wsdl.name}}Service">
+        <wsdl:port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+	    <Av5_LogViewer>
+	    	<version>0.1.0</version>
+	    </Av5_LogViewer>
+  	</modules>
+	<global>
+	    <helpers>
+	    	<logviewer>
+				<class>Av5_LogViewer_Helper</class>
+			</logviewer>
+	    </helpers>
+		<blocks>
+			<logviewer>
+				<class>Av5_LogViewer_Block</class>
+			</logviewer>
+		</blocks>
+		<models>
+			<logviewer>
+				<class>Av5_LogViewer_Model</class>
+				<resourceModel>logviewer_resource</resourceModel>
+			</logviewer>
+	        <logviewer_resource>
+				<class>Av5_LogViewer_Model_Resource</class>
+			</logviewer_resource>
+		</models>
+		<resources>
+			<logviewer_write>
+			    <connection>
+			        <use>core_write</use>
+			    </connection>
+			</logviewer_write>
+			<logviewer_read>
+			    <connection>
+			        <use>core_read</use>
+			    </connection>
+			</logviewer_read>
+		</resources>
+	</global>
+	<admin>
+		<routers>
+			<logviewer>
+				<use>admin</use>
+				<args>
+					<module>Av5_LogViewer</module>
+					<frontName>logviewer</frontName>
+				</args>
+			</logviewer>
+		</routers>
+	</admin>
+	<adminhtml>
+		<menu>
+			<report>
+				<children>
+					<logviewer module="logviewer">
+						<title>Visualizador de Arquivos</title>
+						<sort_order>100</sort_order>
+						<children>
+							<loglist module="logviewer">
+								<title>Logs</title>
+								<sort_order>0</sort_order>
+								<action>logviewer/adminhtml_logs</action>
+						  	</loglist>
+						  	<reportlist module="logviewer">
+								<title>Reports</title>
+								<sort_order>0</sort_order>
+								<action>logviewer/adminhtml_report</action>
+						  	</reportlist>
+							<exportslist module="logviewer">
+								<title>Exportações</title>
+								<sort_order>0</sort_order>
+								<action>logviewer/adminhtml_exports</action>
+							</exportslist>
+						</children>
+					</logviewer>
+				</children>					
+			</report>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<report>
+							<children>
+								<logviewer translate="title" module="logviewer">
+								  <title>Visualizar de Arquivos</title>
+								  <sort_order>1000</sort_order>
+								  <children>
+									<loglist translate="title">
+										<title>Visualizar Logs</title>
+									</loglist>
+									<reportlist translate="title">
+										<title>Visualizar Reports</title>
+									</reportlist>
+									<exportslist translate="title">
+									  <title>Visualizar Exportações</title>
+									</exportslist>
+								  </children>
+								</logviewer>
+							</children>
+						</report>
+			  		</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<logviewer>
+					<file>logviewer.xml</file>
+				</logviewer>
+			</updates>
+		</layout>
+	</adminhtml>
+</config> 

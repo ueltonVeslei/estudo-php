@@ -1,0 +1,100 @@
+<?php
+$id = $this->getRequest()->getParam('id');
+// get reviewplus model
+$reviewplus_reviews_db = Mage::getModel('reviewplus/reviews')->load($id);
+$status = $reviewplus_reviews_db->getData('review_status');
+$rating = $reviewplus_reviews_db->getData('product_rating');
+// get order model
+$order_id = $reviewplus_reviews_db->getData('order_id');
+$increment_id = Mage::getModel('sales/order')->load($order_id)->getIncrementId();
+// get product model
+$sku = $reviewplus_reviews_db->getData('product_sku');
+$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+// ProductQuestions config data
+$config_email = Mage::getStoreConfig('productquestions_options/productquestions_config/reply_email', Mage::app()->getStore());
+$config_name = Mage::getStoreConfig('productquestions_options/productquestions_config/reply_name', Mage::app()->getStore());
+?>
+<div class="content-header">
+	<h3><?php echo $this->__('Edit and Reply - ReviewPlus'); ?></h3>
+	<p class="form-buttons">
+		<button type="button" class="button" onclick="edit_form.submit();" title="<?php echo $this->__('Save Changes'); ?>"><span><span><?php echo $this->__('Save Changes'); ?></span></span></button>
+		<button type="button" class="scalable back" onclick="javascript:history.back()" title="<?php echo $this->__('Back'); ?>" ><span><span><?php echo $this->__('Back'); ?></span></span></button>
+	</p>
+</div>
+<div class="entry-edit" style="margin-bottom:10px;">
+	<div class="entry-edit-head">
+		<h4><?php echo $this->__('Edit Review'); ?></h4>
+	</div>
+	<form id="edit-form" name="edit-form" action="<?php echo $this->getUrl('adminhtml/reviews/save') ?>" method="post">
+		<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+		<input type="hidden" id="reviewplus_id" name="reviewplus_id" value="<?php echo $id; ?>" />
+		<div class="fieldset fieldset-wide" id="edit_fieldset">
+			<div class="hor-scroll">
+				<table cellspacing="0" cellpadding="0" class="form-list">
+					<tbody>
+						<tr>
+							<td class="label"><?php echo $this->__('Order #'); ?></td>
+							<td class="value">
+								<a href="<?php echo $this->getUrl('adminhtml/sales_order/view', array('order_id' => $order_id)); ?>" target="_blank" ><strong><?php echo $increment_id; ?></strong></a>
+							</td>
+						</tr>
+						<tr>
+							<td class="label"><?php echo $this->__('Product Name'); ?></td>
+							<td class="value">
+								<a href="<?php echo Mage::getBaseUrl().$product->getUrlPath(); ?>" target="_blank" ><strong><?php echo $product->getName(); ?></strong></a>
+							</td>
+						</tr>
+						<tr>
+							<td class="label"><?php echo $this->__('Rating'); ?><em class="required"> * </em></td>
+							<td class="value">
+								<select id="edit_rating" name="edit[rating]" class="required-entry select">
+									<option value="1" <?php if ($rating == 1) { echo 'selected="selected"'; } ?>><?php echo $this->__('1 star'); ?></option>
+									<option value="2" <?php if ($rating == 2) { echo 'selected="selected"'; } ?>><?php echo $this->__('2 stars'); ?></option>
+									<option value="3" <?php if ($rating == 3) { echo 'selected="selected"'; } ?>><?php echo $this->__('3 stars'); ?></option>
+									<option value="4" <?php if ($rating == 4) { echo 'selected="selected"'; } ?>><?php echo $this->__('4 stars'); ?></option>
+									<option value="5" <?php if ($rating == 5) { echo 'selected="selected"'; } ?>><?php echo $this->__('5 stars'); ?></option>
+								</select>
+							</td>
+						</tr>
+						<!--tr>
+							<td class="label"><?php echo $this->__('Status'); ?></td>
+							<td class="value">
+								<select id="edit_status" name="edit[status]" class="required-entry select">
+									<option value="pending" <?php if ($status == 'pending') { echo 'selected="selected"'; } ?>><?php echo $this->__('Pending'); ?></option>
+									<option value="approved"<?php if ($status == 'approved') { echo 'selected="selected"'; } ?>><?php echo $this->__('Approved'); ?></option>
+								</select>
+							</td>
+						</tr-->
+						<tr>
+							<td class="label"><?php echo $this->__('Customer Name'); ?><em class="required"> * </em></td>
+							<td class="value">
+								<input type="text" id="edit_name" name="edit[name]" class="required-entry input-text" value="<?php echo $reviewplus_reviews_db->getData('customer_name'); ?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="label"><?php echo $this->__('Customer Email'); ?><em class="required"> * </em></td>
+							<td class="value">
+								<input type="text" id="edit_email" name="edit[email]" class="required-entry input-text validate-email" value="<?php echo $reviewplus_reviews_db->getData('customer_email'); ?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="label"><?php echo $this->__('Review Title'); ?><em class="required"> * </em></td>
+							<td class="value">
+								<input type="text" id="edit_title" name="edit[title]" class="required-entry input-text" value="<?php echo $reviewplus_reviews_db->getData('product_review_title'); ?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="label"><?php echo $this->__('Review Detail'); ?><em class="required"> * </em></td>
+							<td class="value">
+								<textarea id="edit_detail" name="edit[detail]" class="required-entry textarea" style="height:12em;" rows="2" cols="15"><?php echo $reviewplus_reviews_db->getData('product_review'); ?></textarea>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form> 
+</div>
+<script type="text/javascript">
+	var edit_form = new varienForm('edit-form');
+</script>

@@ -1,0 +1,31 @@
+<config>
+    
+    <modules>
+        <Biostore_Relatorioformaspgto>
+            <version>0.1.0</version>
+        </Biostore_Relatorioformaspgto>
+    </modules>
+
+    <admin>
+        <routers>
+            <routerrelatorioformaspgto>
+                <use>admin</use>
+                <args>
+                    <module>Biostore_Relatorioformaspgto</module>
+                    <frontName>relatorioformaspgto</frontName>
+                </args>
+            </routerrelatorioformaspgto>
+        </routers>
+    </admin>
+
+     <global>
+        
+    	<helpers>
+        	<relatorioformaspgto>
+            	<class>Biostore_Relatorioformaspgto_Helper</class>
+        	</relatorioformaspgto>
+    	</helpers>
+
+      </global>
+
+</config>

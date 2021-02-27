@@ -1,0 +1,135 @@
+<?php
+
+/**
+ *
+ * @category   Onestic
+ * @package    Onestic_Checkout
+ * @author     Suporte <suporte@onestic.com>
+ */
+?>
+
+<div class="page-title">
+  <h1><?php echo $this->__('Edit Account Information') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+<form action="<?php echo $this->getUrl('customer/account/editPost') ?>" method="post" id="form-validate" autocomplete="off">
+  <div class="fieldset">
+    <?php echo $this->getBlockHtml('formkey')?>
+    <h2 class="legend"><?php echo $this->__('Account Information') ?></h2>
+    <ul class="form-list">
+      <!-- =========
+      Tipo Pessoa
+      ========== -->
+      <?php 
+        $_tipopessoa = $this->getLayout()->createBlock('onestic_checkout/widget_tipopessoa');
+      ?>
+      <?php if ($_tipopessoa->isEnabled()) : ?>
+        <li class="fields tipopessoa">
+          <?php echo $_tipopessoa->setTipopessoa($this->getCustomer()->getTipopessoa())->toHtml() ?>
+        </li>
+      <?php endif; ?>
+      <li class="row fields">
+        <?php echo $this->getLayout()->createBlock('onestic_checkout/widget_name')->setObject($this->getCustomer())->toHtml() ?>
+      </li>
+
+      <li class="row fields">
+        <?php $_taxvat = $this->getLayout()->createBlock('onestic_checkout/widget_taxvat') ?>
+        <?php if ($_taxvat->isEnabled()): ?>
+            <div class="col-md-6">
+              <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->toHtml() ?>
+            </div>
+        <?php endif; ?>
+
+        <?php $_rgie = $this->getLayout()->createBlock('onestic_checkout/widget_rgie'); ?>
+        <?php if ($_rgie->isEnabled()) : ?>
+          <div class="col-md-6">
+            <?php echo $_rgie->setRgie($this->getCustomer()->getRgie())->toHtml(); ?>
+          </div>
+        <?php endif; ?>
+      </li>
+
+      <li>
+        <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
+        <div class="input-box">
+          <input type="text" name="email" id="email" value="<?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Email Address')) ?>" class="input-text required-entry validate-email" />
+        </div>
+      </li>
+      
+      <li class="row fields">
+        <?php $_dob = $this->getLayout()->createBlock('onestic_checkout/widget_dob') ?>
+        <?php if ($_dob->isEnabled()): ?>
+          <div class="customer-dob col-md-6" id="dob_container">
+            <?php echo $_dob->setDate($this->getCustomer()->getDob())->toHtml() ?>
+          </div>
+        <?php endif; ?>
+
+        <?php $_gender = $this->getLayout()->createBlock('onestic_checkout/widget_gender') ?>
+        <?php if ($_gender->isEnabled()): ?>          
+          <?php echo $_gender->setGender($this->getCustomer()->getGender())->toHtml() ?>
+        <?php endif ?>
+      </li>
+      
+      <div class="row">
+        <li class="col-md-6">
+          <label for="current_password" class="required"><em>*</em>
+            <?php echo Mage::helper('core')->quoteEscape($this->__('Current Password')) ?>
+          </label>
+          <div class="input-box">
+            <!-- This is a dummy hidden field to trick firefox from auto filling the password -->
+            <input type="text" class="input-text no-display" name="dummy" id="dummy" />
+            <input type="password" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Current Password')) ?>" class="input-text required-entry" name="current_password" id="current_password" />
+          </div>
+        </li>
+      </div>
+        <li class="control">
+          <input type="checkbox" name="change_password" id="change_password" value="1" onclick="setPasswordForm(this.checked)" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Change Password')) ?>"<?php if($this->getCustomer()->getChangePassword()==1): ?> checked="checked"<?php endif; ?> class="checkbox" /><label for="change_password"><?php echo $this->__('Change Password') ?></label>
+        </li>
+    </ul>
+  </div>
+  
+  <div class="fieldset" style="display:none;">
+    <h2 class="legend"><?php echo $this->__('Change Password') ?></h2>
+    <ul class="form-list">
+      <li class="fields">
+        <div class="field">
+          <label for="password" class="required"><em>*</em><?php echo $this->__('New Password') ?></label>
+          <div class="input-box">
+            <input type="password" title="<?php echo Mage::helper('core')->quoteEscape($this->__('New Password')) ?>" class="input-text required-entry validate-password" name="password" id="password" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="confirmation" class="required"><em>*</em><?php echo $this->__('Confirm New Password') ?></label>
+          <div class="input-box">
+            <input type="password" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Confirm New Password')) ?>" class="input-text required-entry validate-cpassword" name="confirmation" id="confirmation" />
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="buttons-set">
+    <!-- <p class="required"><?php //echo $this->__('* Required Fields') ?></p> -->
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <button type="submit" 
+      title="<?php echo Mage::helper('core')->quoteEscape($this->__('Salvar Alterações')) ?>" 
+      class="button">
+      <span>
+        <span>
+          <?php echo $this->__('Salvar Alterações') ?>
+        </span>
+      </span>
+    </button>
+  </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var dataForm = new VarienForm('form-validate', true);
+function setPasswordForm(arg){
+  $('password').up('.fieldset')[arg ? 'show': 'hide']();
+}
+
+<?php if($this->getCustomer()->getChangePassword()): ?>
+  setPasswordForm(true);
+<?php endif; ?>
+//]]>
+</script>

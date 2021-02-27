@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	
+	<modules>
+		<MageMigrator_Migcategory>
+			<version>1.0</version>
+		</MageMigrator_Migcategory>
+	</modules>
+	
+	<global> 
+		<models>
+			<migcategory>
+				<class>MageMigrator_Migcategory_Model</class>
+			</migcategory>
+		</models>
+	</global>
+	
+</config>

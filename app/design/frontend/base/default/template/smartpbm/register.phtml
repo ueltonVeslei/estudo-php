@@ -1,0 +1,211 @@
+<?php
+$pbms = $this->getPbm();
+?>
+<?php if ($pbms): ?>
+<div class="block block-smartpbm-check" id="block-smartpbm-register" style="clear: both;">
+    <div class="block-title">
+        <strong>Verifique o seu desconto</strong>
+    </div>
+    <div class="block-content">
+        <ul class="smartpbm-check-form" id="smartpbm-eligibility-form">
+            <input type="hidden" name="ean" id="ean" value="<?php echo $this->getProduct()->getCodigoBarras(); ?>">
+            <input type="hidden" name="product" id="product" value="<?php echo $this->getProduct()->getId(); ?>">
+            <?php if (count($pbms) == 1): ?>
+                <input type="hidden" name="pbm" id="smartpbm_pbm" value="<?php echo $pbms[0]; ?>" />
+            <?php else: ?>
+                <li class="item">
+                    <div class="input-box">
+                        <label for="smartpbm_pbm" class="pbm_label">Selecione seu Programa</label>
+                        <span class="input-text-right">
+                    	<select id="smartpbm_pbm" name="pbm" <?php if($this->hasVidalink()): ?>onchange="checkConvenios(this.value);"<?php endif; ?>>
+            <?php
+            foreach ($pbms as $pbm):
+                $pbmName = Mage::getModel('smartpbm/pbms_' . $pbm)->getName();
+                ?>
+                <option value="<?php echo $pbm; ?>"><?php echo $pbmName; ?></option>
+            <?php endforeach; ?>
+                        </select>
+                    </span>
+                    </div>
+                </li>
+            <?php endif; ?>
+            <li class="item">
+                <div class="input-box">
+                    <label for="spr_document" id="document_label">CPF</label>
+                    <span class="input-text-right">
+                        <input class="input-text" type="text" id="spr_document" name="document" placeholder="CPF" onkeyup="onlyNumbers(this)" maxlength="11" />
+                    </span>
+                </div>
+            </li>
+        </ul>
+        <div id="smartpbm-register-container"></div>
+        <div class="actions">
+            <button type="button" title="Verificar CPF" onclick="checkEligibility()" id="btn-check" class="button">
+                <span>
+                    <span>Verificar</span>
+                </span>
+            </button>
+            <button type="button" title="Ativar Benefício" onclick="activateBenefit()" id="btn-activate" class="button" style="display:none;">
+                <span>
+                    <span>Ativar Benefício</span>
+                </span>
+            </button>
+            <button type="button" title="Registrar" onclick="register()" id="btn-register" class="button" style="display:none;">
+                <span>
+                    <span>Registrar</span>
+                </span>
+            </button>
+            <span class="please-wait f-left" id="smartpbm-eligibility-loading-message" style="display:none;">
+                Verificando...
+            </span>
+            <span class="please-wait f-left" id="smartpbm-register-loading-message" style="display:none;">
+                Processando cadastro...
+            </span>
+            <span class="please-wait f-left" id="smartpbm-activate-loading-message" style="display:none;">
+                Verificando seu desconto...
+            </span>
+            <div id="smartpbm-register-results" style="display:none" align="center"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    function register()
+    {
+        var registerUrl = '<?php echo $this->getRegisterUrl();?>';
+        var items = $$(['.smartpbm-check-form input',
+            '.smartpbm-check-form select','#qty']);
+
+        var validationResult = true;
+
+        // Check the valid input
+        if (!items.map(Validation.validate).all()) {
+            return;
+        }
+
+        var parameters = Form.serializeElements(items, true);
+        $('smartpbm-register-loading-message').show();
+        $('smartpbm-register-results').hide();
+        new Ajax.Updater('smartpbm-register-results', registerUrl, {
+            parameters: parameters,
+            onComplete: function() {
+                $('smartpbm-register-loading-message').hide();
+                $('smartpbm-register-results').show();
+                $('btn-register').hide();
+            }
+        });
+
+    }
+
+    function checkEligibility() {
+        var eligibilityUrl = '<?php echo $this->getEligibilityUrl();?>';
+        var items = $$('#smartpbm-eligibility-form input');
+
+        var validationResult = true;
+
+        // Check the valid input
+        if (!items.map(Validation.validate).all()) {
+            return;
+        }
+
+        var parameters = Form.serializeElements(items, true);
+        $('smartpbm-eligibility-loading-message').show();
+        $('smartpbm-register-container').hide();
+        $('smartpbm-register-results').hide();
+        $('btn-check').hide();
+        $('btn-activate').hide();
+        $('btn-register').hide();
+        new Ajax.Updater('smartpbm-register-container', eligibilityUrl, {
+            parameters: parameters,
+            onComplete: function() {
+                $('smartpbm-eligibility-loading-message').hide();
+                $('smartpbm-register-container').show();
+                if ($('spr_is_activate')) {
+                    $('btn-activate').show();
+                } else {
+                    $('btn-register').show();
+                    //$('btn-check').show();
+                }
+            }
+        });
+    }
+
+    function activateBenefit()
+    {
+        var checkUrl = '<?php echo $this->getCheckUrl();?>';
+        var items = $$(['.smartpbm-check-form input',
+            '.smartpbm-check-form select','#qty']);
+
+        var validationResult = true;
+
+        // Check the valid input
+        if (!items.map(Validation.validate).all()) {
+            return;
+        }
+
+        var parameters = Form.serializeElements(items, true);
+        $('smartpbm-activate-loading-message').show();
+        $('smartpbm-register-results').hide();
+        $('btn-check').hide();
+        $('btn-activate').hide();
+        $('btn-register').hide();
+        new Ajax.Updater('smartpbm-register-results', checkUrl, {
+            parameters: parameters,
+            onComplete: function() {
+                $('smartpbm-activate-loading-message').hide();
+                $('smartpbm-register-results').show();
+            }
+        });
+    }
+
+    function onlyNumbers(obj)
+    {
+        var value = obj.value;
+        value = value.replace(/\D/g,"");
+        obj.value = value;
+    }
+
+    function bindCrm(obj) {
+        if (jQuery('.is-crm')) {
+            jQuery('.is-crm').each(function(elm){
+                jQuery(this).val(obj.value);
+            });
+        }
+    }
+
+    function formatPhone(obj){
+        val = obj.value;
+        val = val.replace(/\D/g,"");
+        val = val.replace(/^(\d\d)(\d)/g,"($1)$2");
+        regexCel = /^\((10)|([1-9]{2})\)[9][0-9\-]*/;
+        if (regexCel.test(val)) {
+            obj.setAttribute('maxlength',"14");
+            val = val.replace(/(\d{5})(\d)/,"$1-$2");
+        } else {
+            obj.setAttribute('maxlength',"13");
+            val = val.replace(/(\d{4})(\d)/,"$1-$2");
+        }
+        obj.value = val;
+        obj.maxlength = 14;
+    }
+
+    function formatZipcode(obj){
+        val = obj.value;
+        val = val.replace(/\D/g,"");
+        val = val.replace(/(\d{5})(\d)/,"$1-$2");
+        obj.value = val;
+        obj.maxlength = 9;
+    }
+
+    function formatDate(obj){
+        val = obj.value;
+        val = val.replace(/\D/g,"");
+        val = val.replace(/(\d{2})(\d)/,"$1/$2");
+        val = val.replace(/(\d{2})\/(\d{2})(\d)/,"$1/$2/$3");
+        obj.value = val;
+        obj.maxlength = 10;
+    }
+    //]]>
+</script>
+<?php endif; ?>

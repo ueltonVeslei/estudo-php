@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Nastnet_OrderPrint>
+            <version>0.1.3</version>
+        </Nastnet_OrderPrint>
+    </modules>
+
+    <global>
+        <blocks>
+	    	<adminhtml>
+	    		<rewrite>
+	    			<sales_order_view>Nastnet_OrderPrint_Block_Sales_Order_View</sales_order_view>
+	    		</rewrite>
+	    	</adminhtml>
+    	</blocks>
+        <rewrite>
+            <Nastnet_OrderPrint_OrderController>
+                <from><![CDATA[#/\w+/sales_order/print/#]]></from>
+                <to>/orderprint/order/print/</to>
+            </Nastnet_OrderPrint_OrderController>
+        </rewrite>
+        <models>
+            <Nastnet_OrderPrint>
+                <class>Nastnet_OrderPrint_Model</class>
+            </Nastnet_OrderPrint>
+        </models>
+        <pdf>
+        	<order>
+        		<default>Nastnet_OrderPrint/order_pdf_items_order_default</default>
+                <grouped>Nastnet_OrderPrint/order_pdf_items_order_grouped</grouped>
+        	</order>
+        </pdf>
+    </global>
+	<admin>
+        <routers>
+            <Nastnet_OrderPrint>
+                 <use>admin</use>
+                <args>
+                    <module>Nastnet_OrderPrint</module>
+                    <!-- This is used when "catching" the rewrite above -->
+                    <frontName>orderprint</frontName>
+                </args>
+            </Nastnet_OrderPrint>
+        </routers>
+    </admin>
+</config>

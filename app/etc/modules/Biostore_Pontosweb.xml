@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Biostore_Pontosweb>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Biostore_Pontosweb>
+    </modules>
+</config>

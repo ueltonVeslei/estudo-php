@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	
+	<modules>
+		<MageMigrator_Mignewsletter>
+			<version>1.0</version>
+		</MageMigrator_Mignewsletter>
+	</modules>
+	
+	<global> 
+		
+		<models>
+			<mignewsletter>
+				<class>MageMigrator_Mignewsletter_Model</class>
+			</mignewsletter>
+		</models>
+		
+	</global>
+	
+</config>

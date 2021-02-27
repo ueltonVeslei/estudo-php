@@ -1,0 +1,117 @@
+<?php
+/**
+ * Uecommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Uecommerce EULA.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.uecommerce.com.br/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.uecommerce.com.br/ for more information
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @copyright  Copyright (c) 2012 Uecommerce (http://www.uecommerce.com.br/)
+ * @license    http://www.uecommerce.com.br/
+ */
+
+/**
+ * Mundipagg Payment module
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @author     Uecommerce Dev Team
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Order partially authorized') ?></h1>
+</div>
+<?php
+$_coreHelper = $this->helper('core');
+$order = $this->getOrder();
+$orderGrandTotal = $order->getGrandTotal();
+$restToPay = 0;
+
+// Session
+$authorizedAmount = $order->getPaymentAuthorizationAmount();
+$payments = $order->getPayment();
+
+$restToPay = $orderGrandTotal - $authorizedAmount;
+
+//Return Standard model
+$standard = $this->getStandard();
+
+// We check if taxvat is enabled
+$_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat');
+
+// Get current currency symbol
+$currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
+
+// Min installment value
+$valorMinParcelamento = $standard->getConfigData('parcelamento_min');
+
+//Credit Card Saved On File
+$ccs = $this->getCcs();
+?>
+<style type="text/css">
+/*.issuers {text-align: center; padding-right: 10px;}
+.cancel button.button span { border-color:red; background:red;}
+.float-left {float:left;}*/
+</style>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.js') ?>"></script>
+<script type="text/javascript">
+//<![CDATA[
+    var quoteBaseGrandTotal = <?php echo (float)$restToPay; ?>;
+    var checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+    var payment = new Payment('co-payment-form', '<?php echo $this->getUrl('mundipagg/standard/partialPost') ?>');
+    var lastPrice;
+//]]>
+</script>
+
+<h3>
+	<?php echo $this->__('One of your payment methods is invalid') ?>
+</h3>
+<p>
+	<b><?php echo $this->__('Order total:') ?></b> <?php echo $_coreHelper->currency($orderGrandTotal, true, false); ?>
+</p>
+<p>
+	<b><?php echo $this->__('Amount authorized:') ?></b> <?php echo $_coreHelper->currency($authorizedAmount, true, false) ?>
+</p>
+
+<?php
+if($payments['additional_information']['1_Success'] != 1){
+    echo "<p><b>Cartão não autorizado: </b>" . $payments['additional_information']['1_MaskedCreditCardNumber'] . "</p>";
+}
+if($payments['additional_information']['2_Success'] != 1){
+    echo "<p><b>" . $this->__('Not authorized credit card') . ": </b>" . $payments['additional_information']['2_MaskedCreditCardNumber'] . "</p>";
+}
+?>
+<br>
+<p>
+    <a href="<?php echo $this->getUrl('checkout/cart', array('_secure' => true)); ?>"><?php echo $this->__('Back to shopping cart'); ?>
+</p>
+
+<div class="page-title">
+</div>
+
+<form action="<?php echo $this->getUrl('mundipagg/standard/partialPost') ?>" id="co-payment-form" method="post">
+	
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var paymentForm = new VarienForm('co-payment-form', true);
+
+function paymentFormSubmit(button) {
+	if(paymentForm.validator && paymentForm.validator.validate()){
+        button.disabled = true;
+        $('payment-please-wait').show();
+        paymentForm.submit();
+    }
+}
+//]]>
+</script>

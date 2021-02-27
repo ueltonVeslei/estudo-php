@@ -1,0 +1,13 @@
+<span><?php echo $this->__('Gender') ?>: </span>
+<?php $options = Mage::getResourceSingleton('customer/customer')->getAttribute('gender')->getSource()->getAllOptions();?>
+<?php $value = $this->getGender();?>
+<?php foreach ($options as $option):?>
+<?php 	if (!$option['value']) continue; ?>
+
+	<input type="radio" name="<?php echo $this->getFieldName('gender')?>" id="<?php echo $this->getFieldId('gender')?>_<?php echo $option['value'] ?>" 
+		value="<?php echo $option['value'] ?>" <?php echo ($option['value'] == $value) ? 'checked="checked"' : ''; ?> />
+    <label id="label_<?php echo $option['value'] ?>" for="<?php echo $this->getFieldId('gender')?>_<?php echo $option['value'] ?>"
+           class="gender <?php echo ($option['value'] == $value) ? 'active' : ''; ?>">
+        <?php echo $option['label'] ?>
+</label>
+<?php endforeach;?>

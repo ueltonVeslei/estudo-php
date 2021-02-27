@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<config>
+    <tabs>
+        <intelipost translate="label" module="basic">
+            <label>Intelipost</label>
+            <sort_order>0</sort_order>
+        </intelipost>
+    </tabs>
+    <sections>
+        <intelipost_basic translate="label" module="basic">
+            <label>Basic</label>
+            <tab>intelipost</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>0</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <about_us>
+                    <frontend_model>basic/about</frontend_model>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </about_us>
+                <settings translate="label"> 
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <apiurl translate="label">
+                            <label>API URL</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>basic/config_api_url</backend_model>
+                            <validate>required-entry</validate>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>API URL</comment>
+                        </apiurl>
+                        <apikey translate="label">
+                            <label>API key</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>basic/config_api_key</backend_model>
+                            <validate>required-entry</validate>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>API key</comment>
+                        </apikey>
+
+                        <test_fallback>
+                            <label>Test Fallback</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If Enable, it will call wrong URL to hit Freight Fallback</comment>
+                        </test_fallback>
+
+                        <zipcode translate="label">
+                            <label>Zipcode</label>
+                            <frontend_type>text</frontend_type>
+                            <!--<validate>validate-zip-international required-entry</validate>-->
+                            <validate>required-entry</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Zipcode</comment>
+                        </zipcode>
+
+                        <default_wh translate="label">
+                            <label>Default Warehouse</label>
+                            <frontend_type>text</frontend_type>
+                            <!--<validate>validate-zip-international required-entry</validate>-->                           
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Default Warehouse</comment>
+                        </default_wh>
+
+                        <use_another_origin>
+                            <label>Use another origin zipcode?</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If Enable, it could use another origin zipcode</comment>
+                        </use_another_origin>
+
+                        <aux_origin_zipcode translate="label">
+                            <label>New origin Zipcode</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>24</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_another_origin>1</use_another_origin></depends>
+                        </aux_origin_zipcode>
+
+                        <destination_range_start translate="label">
+                            <label>New origin Zipcode - Destination Range Start</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_another_origin>1</use_another_origin></depends>
+                        </destination_range_start>
+
+                        <destination_range_end translate="label">
+                            <label>New origin Zipcode - Destination Range End</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_another_origin>1</use_another_origin></depends>
+                        </destination_range_end>
+
+                        <new_origin_wh translate="label">
+                            <label>New Origin Warehouse</label>
+                            <frontend_type>text</frontend_type>
+                            <!--<validate>validate-zip-international required-entry</validate>-->                           
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>New Origin Warehouse</comment>
+                        </new_origin_wh>
+
+                        <products_nature translate="label">
+                            <label>Product's nature</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Use main NCM or a generic description. eg: Eletronics]]></comment>
+                        </products_nature>
+
+                        <icms_tax_exempt translate="label">
+	                        <label>ICMS tax exempt</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+	                        <frontend_type>select</frontend_type>
+	                        <sort_order>40</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <comment>ICMS tax exempt</comment>
+                        </icms_tax_exempt>
+                        
+                        <quote_method>
+                            <label>Quote Method</label>
+                            <source_model>basic/config_quote_methods</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Advanced volume calculation</comment>
+                        </quote_method>
+
+                        <weight_unit>
+	                        <label>Unit of Weight</label>
+	                        <frontend_type>select</frontend_type>
+	                        <source_model>basic/resource_weight</source_model>
+	                        <sort_order>6</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>  
+	                        <can_be_empty>0</can_be_empty>
+	                        <comment><![CDATA[Unit, in which product weight is set]]></comment>
+                        </weight_unit>
+
+                        <volume_unity>
+                            <label>Unit of Volume / Dimensions</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>basic/resource_volume</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <can_be_empty>0</can_be_empty>
+                            <comment><![CDATA[Unit, in which product volume is set]]></comment>
+                        </volume_unity>
+                    </fields>
+                </settings>
+                <product_attributes translate="label"> 
+                    <label>Product attributes</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <use_volume_attr>
+                            <label>Use volume attribute?</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </use_volume_attr>
+                        <volume_attr>
+                            <label>Volume attribute</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>basic/resource_attribute_source_list</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_volume_attr>1</use_volume_attr></depends>
+                        </volume_attr>
+                        <volume_contingency>
+                            <label>Volume Contingency Value</label>
+                            <frontend_type>text</frontend_type>                        
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_volume_attr>1</use_volume_attr></depends>
+                        </volume_contingency>
+                        <width translate="label">
+                            <label>Width</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>basic/resource_attribute_source_list</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Width</comment>
+                            <depends><use_volume_attr>0</use_volume_attr></depends>
+                        </width>
+                        <height translate="label">
+                            <label>Height</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>basic/resource_attribute_source_list</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Height</comment>
+                            <depends><use_volume_attr>0</use_volume_attr></depends>
+                        </height>
+                        <length translate="label">
+                            <label>Length</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>basic/config_dimensions_attributes</backend_model>
+                            <source_model>basic/resource_attribute_source_list</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Length</comment>
+                            <depends><use_volume_attr>0</use_volume_attr></depends>
+                        </length>
+
+                        <average_weight translate="label">
+                            <label>Average Weight</label>
+                            <frontend_type>text</frontend_type>                        
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Average weight. Use '.' to separate decimals</comment>
+                        </average_weight>
+
+                        <default_width translate="label">
+                            <label>Default width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>When not configured in the product will be used default value of 11 cm.</comment>
+                        </default_width>
+                        <default_height translate="label">
+                            <label>Default height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>When not configured in the product will be used default value of 2 cm.</comment>
+                        </default_height>
+                        <default_length translate="label">
+                            <label>Default length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>When not configured in the product will be used default value of 16 cm.</comment>
+                        </default_length>
+
+                        <categories translate="label">
+                            <label>Categories</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>60</sort_order>
+                            <source_model>basic/config_product_categories</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Default categories for products.</comment>
+                        </categories>
+
+                    </fields>
+                </product_attributes>
+                <quote_volume translate="label"> 
+                    <label>Quote by Volume</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <advanced_vol_calc translate="label">
+                            <label>Advanced volume calculation</label>
+                            <source_model>basic/resource_calc_dimensions</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Advanced volume calculation</comment>
+                        </advanced_vol_calc>
+
+                        <box_additional_weigth>
+                            <label>Additional Box Weigth</label>                            
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>box weigth added to final products weigth</comment>
+                        </box_additional_weigth>
+                        <default_width translate="label">
+                            <label>Box Default width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Box Total width</comment>  
+                        </default_width>
+                        <default_height translate="label">
+                            <label>Box Default height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <comment>Box Total height</comment>
+                        </default_height>
+                        <default_length translate="label">
+                            <label>Box Default length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Box Total length</comment>  
+                        </default_length>
+                        <default_weight translate="label">
+                            <label>Box Default weight</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <comment>Box Total weight</comment>
+                        </default_weight>
+                    </fields>
+                </quote_volume>
+            </groups>
+        </intelipost_basic>
+    </sections>
+</config>
+

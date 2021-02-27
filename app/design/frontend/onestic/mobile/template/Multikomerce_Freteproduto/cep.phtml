@@ -1,0 +1,26 @@
+<div id="container-frete">
+    <div class="calcule">
+        <p class="label">Confira o valor do frete e o prazo de entrega do seu pedido, para a sua região:</p>
+        <div id="inner-frete">
+            <i class="icon-font icon-ic_local_shipping_black_24px"></i>
+            <form id="form-cep" onsubmit="return false">
+                <input id="cep" type="text" placeholder="<?php echo $this->__('Freight') ?>" />
+                <button id="calcula-cep" type="submit" class="button" value="<?php echo $this->__('Calcular'); ?>"><span>Calcular frete</span></button>
+            </form>
+        </div>
+    </div>
+    <div id="content-frete">
+
+    </div>
+    <?php
+    $produto = Mage::registry('product');
+    /* echo "<pre>";
+      var_export($produto->debug());
+      echo "</pre>"; */
+    ?>
+    <script>
+        Event.observe('form-cep', 'submit', function(event) {
+            new Ajax.Updater('content-frete', '/Freteproduto?cep='+$('cep').getValue()+'&productid=<?php echo $produto->getId(); ?>', { method: 'get' });
+        });
+    </script>
+</div>

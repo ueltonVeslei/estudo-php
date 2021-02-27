@@ -1,0 +1,97 @@
+<?php Mage::log($this->getShippingMethodsQty());?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 class="head-dashboard"><?php echo $this->__('Romaneio Details') ?></h3></td>
+        </tr>
+    </table>
+</div>
+
+<div class="dashboard-container" style="width:1290px; float:left">
+    <div style=" width:100%; float:left ">
+    	<table>
+	    	<tr>
+	    		<th>Nome do método</th>
+	    		<th>Quantidade de Pedidos</th>
+	    	</tr>
+	    	<?php if ($this->getMethodsInfo()) : ?>
+	    	<?php foreach ($this->getMethodsInfo() as $key => $value) : ?>
+	    		<tr>
+	    			<td><?php echo $key ?></td>
+	    			<td><?php echo count($value) ?></td>
+	    		</tr>
+	    	<?php endforeach; ?>
+	    	<?php endif; ?>
+    	</table>
+    	<button type="button" onclick="printRomaneio()">Imprimir Romaneio</button>
+    </div>
+</div>
+<div class="dashboard-container" id="reports" style="width:1290px; float:left">
+
+
+</div>
+
+<script type="text/javascript">
+
+function printRomaneio()
+{
+	var jArray= <?php echo json_encode($this->getMethodsInfo() ); ?>;
+	buscepintelipost = "<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/push_orders/printRomaneio')?>";
+
+	var filename = '';
+	var fileUrl = '';
+	for (var key in jArray) 
+	{
+		//arr.push(jArray[key]);			
+
+	new Ajax.Request(buscepintelipost, {
+		  //method: 'post',
+		  dataType: 'json',
+		  parameters: {isAjax: 1, method: 'POST', data1:key,data2:JSON.stringify(jArray[key])},
+		  onSuccess: successFunc,
+		  onFailure:  failureFunc
+		  });
+	}
+
+	//SaveToDisk(fileUrl, fileName );
+	function successFunc(response)
+	{   
+	    var jsonResponse = JSON.parse(response.responseText);
+
+	    fileName = jsonResponse.file;
+	    //container.update(content);
+	    fileUrl = jsonResponse.filepath;
+	    //var a = document.getElementById("reports");
+	    var url_format = fileUrl.replace(' ', '%20');
+	    $j("#reports").append("<p><a href=" + url_format + " target='_blank'>" + fileName + "</a></p>");
+	    SaveToDisk(fileUrl, fileName );
+	}
+
+	function failureFunc(response)
+	{
+	    
+	}
+}
+
+function SaveToDisk(fileURL, fileName) {
+    // for non-IE
+    if (!window.ActiveXObject) {
+        var save = document.createElement('a');
+        save.href = fileURL;
+        save.target = '_blank';
+        save.download = fileName || 'unknown';
+
+        var event = document.createEvent('Event');
+        event.initEvent('click', true, true);
+        save.dispatchEvent(event);
+        (window.URL || window.webkitURL).revokeObjectURL(save.href);
+    }
+    // for IE
+    else if ( !! window.ActiveXObject && document.execCommand)     {
+        var _window = window.open(fileURL, '_blank');
+        _window.document.close();
+        _window.document.execCommand('SaveAs', true, fileName || fileURL)
+        _window.close();
+    }
+}
+</script>

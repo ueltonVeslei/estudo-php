@@ -1,0 +1,647 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php $_helperLinkMarca = $this->helper('fd_linkmarca'); ?>
+<?php $linkMarca = $_helperLinkMarca->getLinkMarca($_product); ?>
+<?php $productName = $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+<?php $productUrl = $_helper->productAttribute($_product, $_product->getProductUrl(), 'product_url'); ?>
+<?php $productImage = $_product->getImageUrl() ?>
+<?php $_categoryIds = $_product->getCategoryIds(); ?>
+<?php $summaryData = Mage::getModel('review/review_summary')->setStoreId(Mage::app()->getStore()->getId())->load($_product->getId()); ?>
+<?php
+$isSignature = false;
+if($_product->getAssinatura1Meses()):
+    $isSignature = true;
+endif;
+?>
+
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="product-view">
+    <div class="product-essential">
+    <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->_isSecure())) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <?php echo $this->getBlockHtml('formkey') ?>
+        <input type="hidden" name="is_recurring" id="is_recurring" value="0" />
+        <input type="hidden" name="recurring_plan" id="recurring_plan" value="0" />
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+        </div>
+
+        <div class="product-img-box">
+
+
+            <?php if (in_array(26, $_categoryIds)): ?>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-controlados')->toHtml(); ?>
+            <?php elseif(in_array(295, $_categoryIds)): ?>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-antimicrobianos')->toHtml(); ?>
+            <?php elseif(in_array(14, $_categoryIds) && in_array(28, $_categoryIds)): ?>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-genericos')->toHtml(); ?>
+            <?php elseif(in_array(28, $_categoryIds)): ?>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem')->toHtml(); ?>
+                <?php /*<div class="bula_manual">
+                    <?php if($_product->getBula()!='') : ?>
+                        <div class="bula">
+                            <a target="_blank" href="/media/upload/pdf/BULAS/<?php echo $_helper->productAttribute($_product, $this->htmlEscape($_product->getBula()), 'bula')?>">Baixar Bula do produto em PDF</a>
+                        </div>
+                    <?php endif;?>
+                </div>*/ ?>
+            <?php else: ?>
+                <?php echo $this->getChildHtml('media') ?>
+            <div class="social-share">
+                <span>Compartilhe: </span>
+                <ul>
+
+                    <li style="margin-right: 11px;float: left;">
+                        <a href="javascript:popWin('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($productUrl); ?>&t=<?php echo urlencode($productName); ?>', 'facebook', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');" title="<?php echo $this->__('Share on Facebook') ?>"><img src="<?php echo $this->getSkinUrl('images/facebookProdutoIcon.png') ?>"></a>
+                    </li>
+                    <li style="margin-right: 15px;margin-top: 3px;float: left;">
+                        <a href="javascript:popWin('http://twitter.com/home/?status=<?php echo urlencode($productName . ' (' . $productUrl . ')'); ?>', 'twitter', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');" title="<?php echo $this->__('Tweet') ?>">
+                        <img src="<?php echo $this->getSkinUrl('images/twitterProdutoIcon.png') ?>">
+                        </a>
+                    </li>
+                    <li style="margin-right: 10px;float: left;">
+                        <a href="javascript:popWin('https://pinterest.com/pin/create/button/?url=<?php echo urlencode($productUrl); ?>&media=<?php echo urlencode($productImage); ?>&description=<?php echo urlencode($productName); ?>', 'pinterest', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');" title="<?php echo $this->__('Pin it') ?>">
+                        <img src="<?php echo $this->getSkinUrl('images/pinProdutoIcon.png') ?>">
+                        </a>
+                    </li>
+                    <li style="margin-right: 22px;float: left;">
+                        <a href="javascript:popWin('https://plus.google.com/share?url=<?php echo urlencode($productUrl); ?>', 'google', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');" title="<?php echo $this->__('Share on Google Plus') ?>">
+                        <img src="<?php echo $this->getSkinUrl('images/gplusProdutoIcon.png') ?>">
+                        </a>
+                    </li>
+                </ul>
+                    <?php /*<div class="bula_manual">
+                            <?php if($_product->getBula()!='') : ?>
+                                    <div class="bula">
+                                        <a target="_blank" href="/media/upload/pdf/BULAS/<?php echo $_helper->productAttribute($_product, $this->htmlEscape($_product->getBula()), 'bula')?>">Baixar Bula do produto em PDF</a>
+                                    </div>
+                            <?php endif;?>
+                            <?php if($_product->getManual()!='') : ?>
+                                    <div class="manual">
+                                        <a target="_blank" href="/media/upload/pdf/Manuais/<?php echo $_helper->productAttribute($_product, $this->htmlEscape($_product->getManual()), 'manual')?>">Baixar Manual do produto em PDF</a>
+                                    </div>
+                            <?php endif;?>
+                    </div>*/ ?>
+
+            </div>
+            <?php endif; ?>
+            <div class="image-promotion">
+                <?php echo $_product->getData("image_promotion"); ?>
+            </div>
+        </div>
+
+        <div class="product-shop">
+
+            <?php if($_product->getAttributeText('manufacturer')): ?>
+                <?php if ($linkMarca['url']): ?>
+                    <a class="marca-link" href="<?php echo $linkMarca['url']; ?>">
+                <?php endif; ?>
+                <span class="marca"><?php echo $linkMarca['name']; ?></span>
+                <?php if ($linkMarca['url']): ?>
+                    </a>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <div class="product-name">
+                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                <?php
+                $price = $_helper->productAttribute($_product, $_product->getPrice(), 'price');
+                $price_final = $_helper->productAttribute($_product, $_product->getFinalPrice(), 'final_price');
+                $_discountPercentage = round((($price-$price_final)/$price)*100);
+                ?>
+
+                <?php if($_product->getPagueLeve()): ?>
+                    <div class="frete_gratis_icon pague_leve">
+                        <?php echo $_product->getAttributeText('pague_leve'); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($_product->getPromo1()): ?>
+                    <div class="selo_promo">
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('promo1')->toHtml(); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($_product->getPromo2()): ?>
+                    <div class="selo_promo">
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('promo2')->toHtml(); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($_product->getPromo3()): ?>
+                    <div class="selo_promo">
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('promo3')->toHtml(); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($_product->getFreteGratisDropdown()): ?>
+                    <div class="frete_gratis_icon">
+                        <a href="#frete-gratis-condicoes" class="open-modal">
+                            <?php echo $_product->getAttributeText('frete_gratis_dropdown'); ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($_discountPercentage > 0){  ?>
+                    <div class="desconto_icon"><?php echo '-' . $_discountPercentage . '%' ?></div>
+                <?php } ?>
+                <div class="leiamais">
+                    <?php
+                    $leiamais = $_product->getDescription();
+                    $strArray = preg_split( '/(\.|!|\?)/', $leiamais);
+                    echo $custom_desc = $strArray[0].'.';
+                    ?>
+                    <span><a href="#leiamais">Leia mais...</a></span>
+                </div>
+                <?php if($summaryData['reviews_count']): ?>
+                    <div class="rating-box-product"><span>Avalie este produto: </span>
+                        <?php echo $this->getReviewsSummaryHtml($_product, 'short')?>
+                    </div>
+                <?php endif;  ?>
+            </div>
+            <?php echo $this->getTierPriceHtml() ?>
+            <div class="qty-frete">
+                <div class="quantity-title">Quantidade</div>
+
+                <form action="<?php echo $this->getAddToCartUrl($_product) ?>" method="post" id="product_addtocart_form_<?php echo $_product->getId(); ?>">
+                    <div class="quantity">
+                        <?php if(!$_product->isGrouped()): ?>
+                            <input type="button" value="-" id="minus1" class="minus"/>
+                            <input type="text" value="1" name="qty" id="qty" maxlength="12" value="1" title="<?php echo $this->__('Qty') ?>" class="qty" />
+                            <input type="button" value="+" id="add1" class="plus"/>
+                        <?php endif; ?>
+                        </div>
+                    <div class="frete">
+                        <?php echo $this->getChildHtml('shipping.estimate.form') ?>
+                    </div>
+                </form>
+            </div>
+
+
+            <?php if ($this->hasOptions()): ?>
+                <?php if (in_array(26, $_categoryIds) || in_array(295, $_categoryIds)) { ?>
+                    <?php echo $this->getChildHtml('tierprices'); ?>
+                    <?php if($isSignature): ?>
+                    <br>
+                        <?php
+                        if (Mage::registry('current_product')) { ?>
+                                <a class="minimal-price-link" onclick="openModalSignature();">
+                        <?php } else { ?>
+                                 <a href="<?php// echo $_product->getProductUrl(); ?>" class="minimal-price-link" onclick="openModalSignature();">
+                                    <?php } ?>
+                                    <span class="minimal-price-link signbutton">
+                                        <span class="label">Ou assine e tenha mais vantagens</span>
+                                        <div class="arrow"></div>
+                                        <span class="price" id="product-minimal-price">
+                                            ASSINAR
+                                        </span>
+                                    </span>
+                                </a>
+                    <?php endif;?>
+
+                    <div class="box-comprar">
+                        <?php echo $this->getChildHtml('product_type_data') ?>
+                        <div class="add-to-box">
+                        </div>
+                        <?php if (!$_product->isSaleable()): ?>
+                            <!--
+                        <div class="availability">
+                            <p>
+                                <span class="out-of-stock">Produto Esgotado</span>
+                            </p>
+                        </div>
+                            -->
+                        <?php endif; ?>
+                        <?php //echo $this->getChildHtml('alert_urls') ?>
+                        <div style="clear:both;"></div>
+                    </div>
+                <?php } else { ?>
+                    <?php if ($_product->isSaleable()):?>
+                        <?php
+                            foreach ($_product->getOptions() as $option) {
+                                if ($option->getTitle()=='Nome do Médico') { ?>
+                                    <div class="options-title"><span>Este produto deve ser utilizado sob orientação médica. Por favor anexe o arquivo (foto, imagem) com a cópia da receita médica com carimbo e n° de registro (CRM) do seu médico nos campos abaixo.</span></div>
+                                <?php }
+                            }
+                        ?>
+
+                    <div class="box-comprar">
+                        <?php echo $this->getChildHtml('product_type_data') ?>
+                        <div class="add-to-box">
+                            <?php
+                            if (in_array(26, $_categoryIds) || in_array(295, $_categoryIds)) {
+                                // Do Nothing
+                            } else {
+                                echo $this->getChildHtml('addtocart');
+                            }
+                            ?>
+                        </div>
+                    </div>
+                        <?php else: ?>
+                            <?php echo $this->getChildHtml('alert_urls') ?>
+                    <?php endif;?>
+                <?php } ?>
+
+            <?php else: ?>
+
+                <?php echo $this->getChildHtml('tierprices') ?>
+
+                <div class="box-comprar">
+                    <?php echo $this->getChildHtml('product_type_data') ?>
+                    <div class="add-to-box">
+                        <?php
+                        if (in_array(26, $_categoryIds) || in_array(295, $_categoryIds)) {
+                            // Do Nothing
+                        } else {
+                            echo $this->getChildHtml('addtocart');
+                        }
+                        ?>
+                    </div>
+                    <?php if (in_array(26, $_categoryIds) || in_array(295, $_categoryIds)): ?>
+                    <?php else: ?>
+                        <?php echo $this->getChildHtml('alert_urls') ?>
+                    <?php endif; ?>
+                    <div style="clear:both;"></div>
+                </div>
+            <?php endif; ?>
+
+            <!-- Aviso Venda Proibida -->
+            <?php if (in_array(26, $_categoryIds) || in_array(295, $_categoryIds)): ?>
+                <div id="vendaproibida">
+                    <!--                            <p><strong>Venda proibida via Internet.</strong> Compre em nossa <a href="<?php echo $this->getUrl('institucional_localizacao'); ?>">Loja Física</a>.</p>-->
+                    <p><strong>Venda proibida via internet. Mais informações ligue: (11) 4972-8277.</strong></p>
+                </div>
+            <?php endif; ?>
+
+            <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+
+
+            <div class="pagamento">
+                
+
+                <?php $maximo = floor($_product->getFinalPrice() / 45); ?>
+                <?php if($maximo>=3){ ?>
+                    <span class="info">Parcelamento em até <span style="font-weight: bold; color: #666; font-size: 18px;">3x de <?php echo Mage::helper('core')->currency($_product->getFinalPrice() / 3, true, false); ?></span> sem juros nos cartões</span>
+                <?php } elseif($maximo==1 || $maximo==0) { ?>
+                    <span class="info">Pague também nos cartões:</span>
+                <?php } else { ?>
+                    <span class="info">Parcelamento em até <span style="font-weight: bold; color: #666; font-size: 18px;"><?php echo $maximo; ?>x de <?php echo Mage::helper('core')->currency($_product->getFinalPrice() / $maximo, true, false); ?></span> sem juros nos cartões</span>
+                <?php } ?>
+
+
+
+                <div class="cartoes">
+                    <ul>
+                        <li style="margin-right: 22px;"><img src="<?php echo $this->getSkinUrl('images/visaproduto.png') ?>"></li>
+                        <li style="margin-right: 20px;"><img src="<?php echo $this->getSkinUrl('images/mastercardproduto.png') ?>"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="clearer"></div>
+
+
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function(button, url){
+            if(this.validator) {
+                var nv = Validation.methods;
+                delete Validation.methods['required-entry'];
+                delete Validation.methods['validate-one-required'];
+                delete Validation.methods['validate-one-required-by-name'];
+                // Remove custom datetime validators
+                for (var methodName in Validation.methods) {
+                    if (methodName.match(/^validate-datetime-.*/i)) {
+                        delete Validation.methods[methodName];
+                    }
+                }
+
+                if (this.validator.validate()) {
+                    if (url) {
+                        this.form.action = url;
+                    }
+                    this.form.submit();
+                }
+                Object.extend(Validation.methods, nv);
+            }
+        }.bind(productAddToCartForm);
+    //]]>
+        function sendSignature(plan, button) {
+            jQuery('#is_recurring').val('1');
+            jQuery('#recurring_plan').val(plan);
+            productAddToCartForm.submit(button);
+        }
+
+        function openModalSignature() {
+            jQuery('#modalSignaturePlans').show();
+        }
+
+        function closeModalSignature() {
+            jQuery('#modalSignaturePlans').hide();
+        }
+
+        jQuery(".plus").click(function () {
+            var currentValcart = parseInt(jQuery(this).prev(".qty").val());
+
+            jQuery(this).prev(".qty").val(currentValcart +1);
+        });
+
+        jQuery(".minus").click(function () {
+            var currentValcart = parseInt(jQuery(this).next(".qty").val());
+            if (currentValcart == "NaN") currentValcart = 1;
+            if (currentValcart > 1) {
+                jQuery(this).next(".qty").val(currentValcart -1);
+            }
+
+        });
+
+    jQuery( "dt:contains('Nome do Médico')" ).css( "display", "none" );
+    jQuery( "dt:contains('CRM do Médico')" ).css( "display", "none" );
+    jQuery( "dt:contains('Selecione o Arquivo')" ).css( "float", "left" );
+    jQuery( "dt:contains('Selecione o Arquivo')" ).css( "margin-top", "-33px" );
+    jQuery("#options_77698_text").attr("placeholder", "Nome do Médico");
+    jQuery("#options_60947_text").attr("placeholder", "CRM do Médico");
+
+
+    jQuery(document).on('click', 'a[href^="#leiamais"]', function (event) {
+        event.preventDefault();
+
+        jQuery('html, body').animate({
+            scrollTop: jQuery(jQuery.attr(this, 'href')).offset().top
+        }, 500);
+    });
+    </script>
+    </div>
+    <?php echo $this->getChildHtml('upsell_products') ?>
+    <div class="product-collateral">
+     <!-- SCRIPT SYNDIGO -->
+    <script src="https://scontent.webcollage.net/api/v2/product-content"></script>
+    <!-- DIV SYNDIGO -->
+    <div id="wc-power-page"></div>
+    <script>
+      // load Mosaic content
+       //Webcollage.loadProductContent('farmadelivery-br-pt', '<?php echo $sku = $_product->getSku() ?>', {"mosaic-board": {containerSelector: "div.product-img-box"}});
+       // load Power Page content
+       Webcollage.loadProductContent('farmadelivery-br-pt', '<?php echo $sku = $_product->getSku() ?>', {"power-page": {autoPlayAndStop: true}});
+    </script>
+
+
+<?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
+        <div class="box-collateral <?php echo "box-{$alias}"?>" id="leiamais">
+            <?php if ($title = $this->getChildData($alias, 'title')):?>
+            <h2><?php echo $this->escapeHtml($title); ?></h2>
+
+            <?php endif;?>
+            <?php echo $html; ?>
+        </div>
+
+
+<?php endforeach;?>
+        <?php echo $this->getChildHtml('product_additional_data') ?>
+
+        <?php if (!in_array(13, $_categoryIds)): ?>
+            <?php echo $this->getChildHtml('reviews') ?>
+        <?php endif; ?>
+
+    </div>
+</div>
+<?php if ($isSignature): ?>
+<div id="modalSignaturePlans" class="modal-signature-background">
+    <div class="modal-signature-modal">
+        <a href="javascript: closeModalSignature();" class="modal-signature-close">x</a>
+        <div class="modal-signature-title">
+            Escolha seu plano de assinatura abaixo e receba seu pedido em casa!
+        </div>
+        <div class="modal-signature-content">
+            <div class="options">
+                <ul class="products-grid">
+                    <?php
+                    for($i=1;$i<=3;$i++):
+                        if (!$_product->getData('assinatura' . $i . '_meses')) continue;
+                        $_discountPercentage = $_product->getData('assinatura' . $i . '_desconto');
+                        $_fixedValue = $_product->getData('assinatura' . $i . '_valorfixo');
+                        ?>
+                        <li style="position:relative;" class="item <?php echo ($i == 1) ? 'first' : (($i == 3) ? 'last' : ''); ?>" id="product-signature-plan<?php echo $i; ?>" onclick="sendSignature(<?php echo $i; ?>, this);">
+                            <?php $_categoryIds = $_product->getCategoryIds(); ?>
+                            <?php /*if($_discountPercentage > 0){  ?>
+                                <div class="desconto_icon">DESCONTO DE <?php echo '' . $_discountPercentage . '%' ?></div>
+                            <?php }else{ ?>
+                                <div style="background-color:#fff;font-size:0;" class="desconto_icon">DESCONTO DE <?php echo '-' . $_discountPercentage . '%' ?></div>
+                            <?php }*/ ?>
+
+                            <!-- FIM SELOS -->
+
+                            <?php $_imgSize = 300; ?>
+                            <a href="#" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image" id="product-signature-plan<?php echo $i; ?>" onclick="sendSignature(<?php echo $i; ?>, this);">
+                                <?php if (in_array(26, $_categoryIds)): ?>
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-controlados')->toHtml(); ?>
+                                <?php elseif(in_array(295, $_categoryIds)): ?>
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-antimicrobianos')->toHtml(); ?>
+                                <?php elseif(in_array(14, $_categoryIds) && in_array(28, $_categoryIds)): ?>
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-genericos')->toHtml(); ?>
+                                <?php elseif(in_array(28, $_categoryIds)): ?>
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem')->toHtml(); ?>
+                                <?php else: ?>
+                                    <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+                                         src="<?php echo $_helper->productAttribute($_product, $this->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize), 'small_image'); ?>"
+                                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" width="180px" height="180px" />
+                                <?php endif; ?>
+                            </a>
+
+                            <h2 class="product-name">Assinar por <?php echo $_product->getData('assinatura' . $i . '_meses'); ?> meses</h2>
+
+                            <?php
+                                //$calcDiscount = $_product->getPrice() - (($_product->getPrice() * $_discountPercentage) / 100);
+                            ?>
+
+                            <?php echo Mage::helper('core')->currency($_fixedValue); ?>
+
+                            <p><i>* cada caixa</i></p>
+
+                            <div class="actions">
+                                <button type="button" title="Assinar" class="button btn-cart" id="product-signature-plan<?php echo $i; ?>" onclick="sendSignature(<?php echo $i; ?>, this);"><span><span>Assinar</span></span></button>
+                            </div>
+                        </li>
+                    <?php endfor; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.modal-signature-background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0,0,0,.7);
+    text-align: center;
+    z-index: 9999;
+    display: none;
+    left: 0;
+}
+.modal-signature-modal {
+    width: 800px;
+    display: inline-block;
+    height: 465px;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    position: relative;
+    top: 100px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.modal-signature-title {
+    background: #e6e6e6;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #444;
+    box-shadow: 0px 10px 4px -5px #f6f6f6;
+    padding: 7px;
+    border-radius: 10px 10px 0px 0px;
+}
+.modal-signature-close {
+    border-radius: 50%;
+    background: #FF7F0B;
+    color: #fff;
+    font-size: 14px;
+    line-height: 25px;
+    position: absolute;
+    right: -8px;
+    top: -9px;
+    width: 25px;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+}
+.modal-signature-content {
+    height: 410px;
+    overflow-y: scroll;
+    padding: 0 10px 0px;
+    border-bottom-right-radius: 10px;
+    margin: 10px 0 0;
+}
+.btn-sign {
+    background-color: #FF7F0B !important;
+}
+.modal-signature-content li.item {
+    width: 29.8%;
+    float: left;
+    cursor: pointer;
+}
+.modal-signature-content li.item.first {
+    margin-left: 0px;
+}
+.modal-signature-content li.item.last {
+    margin-right: 0px;
+}
+.modal-signature-content ul.products-grid li {
+    background: #fff;
+    -webkit-box-shadow: 0px 4px 14px 6px #f6f6f6;
+    -moz-box-shadow: 0px 4px 14px 6px #f6f6f6;
+    box-shadow: 0px 4px 14.28px 6.72px #f6f6f6;
+    min-height: 300px;
+}
+.modal-signature-content .desconto_icon {
+    width: 140px;
+    right: 15px;
+    visibility: visible;
+}
+
+.modal-signature-content h2.product-name {
+    height: 15px;
+}
+
+.modal-signature-content .price {
+    color: #ef4e3e;
+    font-size: 27px;
+}
+
+.modal-signature-content .actions button {
+    display: inline-block !important;
+}
+</style>
+<?php endif; ?>
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Pharmacy",
+        "name": "Farma Delivery",
+        "url": "https://www.farmadelivery.com.br/",
+        "image": "<?php echo $productImage ?>",
+        "logo": "https://www.farmadelivery.com.br/skin/frontend/onestic/farmadelivery/images/logo.png",
+            "address": "Rua das Hortênsias, 1204, Jardim do Estádio, Santo André/SP, Cep 09175-500",
+            "openingHours": "Seg-Sex 08:15-19:45 / Sáb 08:15-15:45",
+            "telephone" : "+55 (11) 4972-8277",
+                "sameAs" : [
+                    "https://www.facebook.com/farmadelivery/",
+                    "https://twitter.com/farmadelivery",
+                    "https://www.instagram.com/farmadelivery/",
+                    "https://www.linkedin.com/company/farma-delivery-drogaria/about/",
+                    "https://www.youtube.com/user/FarmaDelivery/"
+                ]
+}
+</script>

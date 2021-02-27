@@ -1,0 +1,402 @@
+/*
+.links {
+	background: #00c89f;
+}*/
+
+.header {
+	background-color: #ff2d2d !important;
+}
+
+
+.header div.logo {
+	text-decoration: none!important;
+    position: absolute;
+    top: 0;
+    background: none !important;
+    padding-top: 47px;
+    padding-left: 0px !important;
+    margin-left: -64px;
+    background-size: 82px 150px;
+    height: 110px;
+    box-sizing: border-box;
+}
+.header div.logo h1 {
+	margin: 0;
+	padding: 0;
+}
+.header div.logo a {
+	display: block;
+	width: 320px;
+	height: 82px;
+	margin: 42px 0 0 64px;
+}
+.header div.logo img {
+	display: block;
+	width: 85%;
+	height: auto;
+}
+
+.header.header-fixed  div.logo {
+	padding: 0 !important;
+	margin: 0 !important;
+	height: 69px;
+}
+
+.header.header-fixed  div.logo a {
+	width: 200px;
+	height: 52px;
+	margin: 10px 0 0 0;
+}
+
+
+.customer-account-create .header .logo,
+.checkout-onepage-index .header .logo,
+.customer-account-login .header .logo {
+    background: none;
+    margin: 11px 0 0 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+}
+
+.customer-account-create .header .logo a,
+.checkout-onepage-index .header .logo a,
+.customer-account-login .header .logo a {
+    width: 200px;
+    height: 52px;
+    margin: 0;
+}
+
+
+
+.header .quick-access {
+    margin-left: 334px !important;
+}
+
+.header .form-search input.input-text {
+    width: 357px;
+}
+
+.account-wrapper {
+    margin: 25px 0 0 41px;
+}
+.account-cart-wrapper {
+	margin: 25px 0 0 31px;
+}
+
+.footer-session2 {
+	height: 220px !important;
+}
+
+.footer-session2 .coluna4 li, .footer-session2 .coluna5 li {
+	color: #333;
+}
+
+.tarja-topo {
+    margin: -11px 0;
+}
+
+.links {
+	background-color: #ffc31d !important;
+}
+
+#top-links-right {
+	background-color: #ffc31d !important;
+}
+
+.links a {
+	color: #d20000!important;
+}
+
+.top-link-televendas, .top-link-whatsapp {
+	color: #fff0c8 !important;
+}
+
+.header .form-search input.input-text {
+	border-radius: 0 !important;
+}
+
+.header .form-search button.button {
+	border-radius: 0 !important;
+}
+
+.banner.small_banner_home .image-gallery-outer {
+    width: 558px;
+	display: inline-block;
+	padding-top: 40px;
+}
+
+.small_banner_home .owl-carousel .owl-item img {
+	max-width: 100%;
+	width: auto;
+}
+
+.banner.small_banner_home .image-gallery-outer:first-child {
+    margin-right: 20px;
+}
+
+.banner.small_banner_home:before {
+    content: '';
+    display: block;
+    border-top: 1px solid #ccc;
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+.small_banner_home .owl-theme .owl-controls .owl-nav .owl-prev,
+.small_banner_home .owl-theme:hover .owl-controls .owl-nav .owl-prev {
+	top: 200px !important;
+}
+
+.small_banner_home .owl-theme .owl-controls .owl-nav .owl-next,
+.small_banner_home .owl-theme:hover .owl-controls .owl-nav .owl-next {
+    top: 200px !important;
+}
+
+.small-cat-home-poupafarma {
+	display: flex;
+	margin: -20px 0 45px;
+}
+
+.medicamentos-home {
+    border: 1px solid #828282;
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 250px;
+	margin: 0 25px;
+}
+
+.medicamentos-home:before {
+    content: '';
+    display: block;
+    background: url('../images/remedio.png')no-repeat;
+    height: 45px;
+    width: 45px;
+    position: absolute;
+    margin-top: -9px;
+}
+
+.mamaebebe-home {
+    border: 1px solid #828282;
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 250px;
+	margin: 0 25px;
+}
+
+.mamaebebe-home:before {
+    content: '';
+    display: block;
+    background: url('../images/maternidade.png')no-repeat;
+    height: 50px;
+    width: 45px;
+    position: absolute;
+    margin-top: -12px;
+}
+
+.perfumaria-home {
+    border: 1px solid #828282;
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 250px;
+	margin: 0 25px;
+
+}
+
+.perfumaria-home:before {
+    content: '';
+    display: block;
+    background: url('../images/perfumaria.png')no-repeat;
+    height: 45px;
+    width: 45px;
+    position: absolute;
+    margin-top: -10px;
+}
+
+.diabetes-home {
+    border: 1px solid #828282;
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 250px;
+	margin: 0 25px;
+}
+
+.diabetes-home:before {
+    content: '';
+    display: block;
+    background: url('../images/diabete.png')no-repeat;
+    height: 45px;
+    width: 45px;
+    position: absolute;
+    margin-top: -10px;
+    margin-left: 10px;
+}
+
+.small-cat-home-poupafarma a {
+    text-decoration: none;
+    color: #575757;
+    font-size: 16px;
+    padding-left: 70px;
+    display: block;
+    margin-top: 2px;
+}
+
+.small-cat-home-poupafarma .perfumaria-home a {
+    margin-top: -3px;
+    line-height: 1;
+}
+
+.triple-banner-slider .image-gallery-outer {
+    width: 374px;
+	display: inline-block;
+	padding-top: 40px;
+}
+
+.triple-banner-slider .owl-carousel .owl-item img {
+	max-width: 100%;
+	width: auto;
+}
+
+.triple-banner-slider .image-gallery-outer:first-child{
+    margin-right: 10px;
+}
+
+.triple-banner-slider div.image-gallery-outer:nth-child(3) {
+	margin-left: 10px;
+}
+
+.triple-banner-slider .owl-theme .owl-controls .owl-nav .owl-prev {
+	left: 10px;
+}
+
+.triple-banner-slider .owl-theme .owl-controls .owl-nav .owl-next {
+	right: 10px;
+}
+
+.triple-banner-slider .owl-theme .owl-controls .owl-dots {
+	bottom: 45px;
+}
+
+.fullbanner-middle_home {
+    margin-top: 8em;
+}
+
+.principais-marcas-content {
+	margin-top: -40px !important;
+}
+
+.marcas-slider .slick-slide {
+    margin-bottom: 0px !important;
+    min-width: auto !important;
+}
+
+.marcas-slider .slick-next, .marcas-slider .slick-next:hover,
+.marcas-slider .slick-next::before {
+    background: url(../images/next.png) no-repeat 13px;
+}
+
+.marcas-slider .slick-prev, .marcas-slider .slick-prev:hover,
+.marcas-slider .slick-prev::before {
+    background: url(../images/prev.png) no-repeat 12px;
+}
+
+.header-fixed .tarja-topo .theme-default .nivoSlider img {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    display: block;
+}
+
+.header-fixed {
+	height: 118px !important;
+}
+
+.header-fixed div.logo {
+	top: 48px !important;
+}
+
+.footer-session1 {
+    background: none !important;
+}
+
+.footer-session1 .mascote {
+    background: url(../images/simbolo-poupafarma.png) no-repeat center center !important;
+}
+
+.footer-container .need-help-session .content {
+    margin: 50px 0 !important;
+}
+
+.footer-container .vantagens .chat {
+    margin-right: 41px !important;
+    margin-left: 2px !important;
+}
+
+.logo-help-session {
+    margin-left: -18em;
+}
+
+.footer-container h4 {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+.block-subscribe input.input-text {
+    border-radius: 0px 10px 0px 10px !important;
+}
+
+.block-subscribe .actions {
+    border-radius: 10px !important;
+    left: 0px !important;
+    padding: 0px 20px !important;
+    background: transparent !important;
+    border: 1px solid #fdc131;
+    color: #fdc131;
+}
+
+.block-subscribe .actions button.button {
+    background: transparent !important;
+}
+
+.block-subscribe .block-content .actions .button:after {
+    content: 'Enviar';
+    display: block;
+    font-size: 13px;
+    color: #fdc131;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.top-link-televendas span {
+    background-image: url('../images/tel-topo.PNG') !important;
+    background-size: auto !important;
+    background-repeat: no-repeat;
+    background-position: 0;
+    padding: 5px 0;
+    padding-left: 20px;
+}
+
+.top-link-whatsapp span {
+    background-image: url('../images/whats-top.PNG') !important;
+    background-size: auto !important;
+    background-repeat: no-repeat;
+    background-position: 0;
+    padding: 5px 0;
+    padding-left: 20px;
+}
+
+.account-wrapper {
+    background: url('../images/user.png') no-repeat !important;
+}
+
+.account-cart-wrapper {
+    background: url('../images/cart.png') no-repeat !important;
+}
+
+.customer-account-login ul#top-links-right {
+    background-color: #ff2d2d !important;
+}
+
+.customer-account-create .links, .customer-account-login .links, .checkout-onepage-index .links {
+    height: 60px !important;
+}

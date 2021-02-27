@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<layout>
+    <onestic_apiclient_adminhtml_order_index>
+        <reference name="content">
+            <block type="onestic_apiclient/adminhtml_order" name="orders.list" />
+        </reference>
+    </onestic_apiclient_adminhtml_order_index>
+    <onestic_apiclient_adminhtml_order_last>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_apiclient/last.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_order_last>
+    <onestic_apiclient_adminhtml_order_import>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_apiclient/import.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_order_import>
+    <onestic_apiclient_adminhtml_order_resyncprogress>
+        <reference name="content">
+            <block type="adminhtml/template" name="resync-progress" template="onestic_apiclient/resync-progress.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_order_resyncprogress>
+    
+    <onestic_apiclient_adminhtml_order_invoice>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_apiclient/progress/invoice.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_order_invoice>
+    <onestic_apiclient_adminhtml_order_shipment>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_apiclient/progress/shipment.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_order_shipment>
+    <onestic_apiclient_adminhtml_order_delivery>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_apiclient/progress/delivery.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_order_delivery>
+    
+    <onestic_apiclient_adminhtml_product_index>
+        <reference name="content">
+            <block type="onestic_apiclient/adminhtml_product" name="products.list" />
+        </reference>
+    </onestic_apiclient_adminhtml_product_index>
+    <onestic_apiclient_adminhtml_product_progress>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="onestic_apiclient/products/progress.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_product_progress>
+    <onestic_apiclient_adminhtml_product_resyncprogress>
+        <reference name="content">
+            <block type="adminhtml/template" name="resync-progress" template="onestic_apiclient/products/resync-progress.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_product_resyncprogress>
+    <onestic_apiclient_adminhtml_product_export>
+        <reference name="content">
+            <block type="adminhtml/template" name="export" template="onestic_apiclient/products/export.phtml"/>
+        </reference>
+    </onestic_apiclient_adminhtml_product_export>
+</layout>

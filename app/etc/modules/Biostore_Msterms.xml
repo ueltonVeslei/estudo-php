@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Biostore_Msterms>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Biostore_Msterms>
+    </modules>
+</config>

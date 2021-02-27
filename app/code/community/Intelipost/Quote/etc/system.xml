@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<config>
+    <sections>
+        <carriers translate="label" module="quote">
+            <tab>intelipost</tab>
+            <sort_order>1</sort_order>
+            <groups>
+                <intelipost translate="label">
+                    <label>Intelipost</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <model>quote/carrier_intelipost</model>
+                    <fields>
+                        <about_us>
+                            <frontend_model>quote/about</frontend_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </about_us>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Title displayed in frontend checkout/cart.]]></comment>
+                        </title>
+                        <name translate="label">
+                            <label>Method Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Identify carrier provider. Always leave 'intelipost'.]]></comment>
+                        </name>
+                       
+                       <customizetitle translate="label">
+                            <label>Customize title for shipping methods</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>quote/config_title</backend_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA["%s" to the name of the service, for example "Courier", "%d" for the number of days.]]></comment>
+                        </customizetitle>
+
+                        <same_day_delivery_title>
+                            <label>Same Day Delivery Title?</label>
+                            <frontend_type>text</frontend_type>                            
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </same_day_delivery_title>
+
+                        <sort_order translate="label comment" >
+                            <label>Checkout position</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[Position related to other sipping methods at store.]]></comment>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+
+                        <free_shipping_method translate="label comment">          
+                            <label>Free shipping method</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/config_methods_free</source_model>
+                            <comment><![CDATA[This method will be applied only when the customer purchase meet the requirements of the rules of promotions.]]></comment>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>          
+                        </free_shipping_method>
+
+                        <free_shipping_text translate="label comment">          
+                            <label>Free shipping text</label>
+                            <comment><![CDATA[If empty, method name will be displayed.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>          
+                        </free_shipping_text>
+
+                        <choose_methods_qty>
+                            <label>Choose quantity methods to display?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>360</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </choose_methods_qty>
+
+                        <methods_display_qty>
+                            <label>Quantity Methods to Display</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/resource_methods_display</source_model>
+                            <sort_order>370</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><choose_methods_qty>1</choose_methods_qty></depends>
+                        </methods_display_qty>
+
+                        <use_scheduled_delivery>
+                            <label>Use Scheduled Delivery?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>380</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </use_scheduled_delivery>
+
+                        <concat_quote_id translate="label">
+                            <label>Concat Intelipost Quote Id in Shipping Method?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>390</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </concat_quote_id>
+
+                        <use_order_price translate="label">
+                            <label>Use order price?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </use_order_price>
+
+                        <order_price_by translate="label">
+                            <label>Order Price By</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/resource_order_price</source_model>
+                            <sort_order>450</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_order_price>1</use_order_price></depends>
+                        </order_price_by>
+
+                        <use_cache translate="label">
+                            <label>Use Quote cache?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>460</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>    
+                        </use_cache>
+
+                        <lifetime translate="label">
+                            <label>Lifetime</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <can_be_empty>0</can_be_empty>
+                            <depends><use_cache>1</use_cache></depends>
+                            <comment>When not configured will be used default value of 1h</comment>
+                        </lifetime>
+
+                        <rounded_prices translate="label">
+                            <label>Rounded prices</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/resource_roundPrices</source_model>
+                            <sort_order>550</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <can_be_empty>0</can_be_empty>
+                            <comment>Rounded prices</comment>
+                        </rounded_prices>
+
+                        <use_restricted_area_msg translate="label comment">
+                            <label>Use Restricted Area Message?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>600</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <can_be_empty>0</can_be_empty>
+                            <comment><![CDATA[Use Restricted area delivery message displayed to customer at checkout]]></comment>
+                        </use_restricted_area_msg>
+
+                        <restricted_msg translate="label">
+                            <label>Restricted Area Message</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>605</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <depends><use_restricted_area_msg>1</use_restricted_area_msg></depends>
+                        </restricted_msg>
+
+                        <use_economic_express_method>
+                            <label>Use Economic/Express Method?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>610</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <can_be_empty>0</can_be_empty>
+                            <comment><![CDATA[Inform if quote method text in use is 'economic/express']]></comment>
+                        </use_economic_express_method>
+
+                         <keep_method_description>
+                            <label>Keep methods description on requote or exchange method?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>620</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </keep_method_description>
+
+                        <prazo_produto translate="label">
+                            <label>Include product deadlines?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>650</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </prazo_produto>
+
+                        <prazo_produto_att translate="label">
+                            <label>Deadline product attribute.</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/resource_attribute_source_list</source_model>
+                            <sort_order>700</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><prazo_produto>1</prazo_produto></depends>
+                            <comment>Atributo Prazo de produto</comment>
+                        </prazo_produto_att>
+
+                        <client_id translate="label">
+                            <label>Identify requested quote user</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/resource_clients_ids</source_model>
+                            <sort_order>703</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Used as Quote Additional Informations]]></comment>
+                        </client_id>
+
+                        <cpf_attr translate="label">
+                            <label>Choose CPF attribute.</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/adminhtml_system_config_source_attributes_customer</source_model>
+                            <sort_order>704</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><client_id>cpf</client_id></depends>
+                            <comment>Atributo CPF</comment>
+                        </cpf_attr>
+
+                        <cnpj_attr translate="label">
+                            <label>Choose CNPJ attribute.</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/adminhtml_system_config_source_attributes_customer</source_model>
+                            <sort_order>705</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><client_id>cnpj</client_id></depends>
+                            <comment>Atributo CNPJ</comment>
+                        </cnpj_attr>
+
+                        <use_requote translate="label">
+                            <label>Allow Requote?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>710</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </use_requote>
+
+                        <requote_order_status translate="label">
+                            <label>Choose status order for requote</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>quote/config_order_status</source_model>
+                            <sort_order>720</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <depends><use_requote>1</use_requote></depends>
+                            <show_in_store>1</show_in_store>
+                        </requote_order_status>
+
+                        <requote_orders_without_quote_id translate="label">
+                            <label>Requote orders without quote_id?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>711</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <depends><use_requote>1</use_requote></depends>
+                            <show_in_store>1</show_in_store>
+                        </requote_orders_without_quote_id>
+
+                        <requote_auto_select_method translate="label">
+                            <label>Autoselect delivery method config</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/config_methods_requote</source_model>
+                            <sort_order>712</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <depends><use_requote>1</use_requote></depends>
+                            <show_in_store>1</show_in_store>
+                        </requote_auto_select_method>
+
+                        <use_requote_cron>
+                            <label>Use cron for requote?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>721</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_requote>1</use_requote></depends>
+                        </use_requote_cron>
+
+                        <requote_order_qty translate="label comment">
+                            <label>Order Quantity to Requote</label>
+                            <frontend_type>text</frontend_type>                            
+                            <sort_order>722</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_requote_cron>1</use_requote_cron></depends>
+                        </requote_order_qty>
+
+                        <!--    
+                        <requote_frequency>
+                            <label>Order Requote frequency</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/config_cron_options</source_model>
+                            <backend_model>quote/adminhtml_system_config_backend_cron</backend_model>
+                            <sort_order>723</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_requote_cron>1</use_requote_cron></depends>
+                            <comment>Minutes</comment>
+                        </requote_frequency>
+                        -->
+                        
+                        <skip_return_modes>
+                            <label>Use skip return modes on requote?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>725</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <depends><use_requote>1</use_requote></depends>
+                            <show_in_store>1</show_in_store>
+                        </skip_return_modes>                       
+
+                        <ship_method_column translate="label">
+                            <label>Adicionar coluna Shipping Method no grid de pedidos?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>730</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ship_method_column>
+                        
+                        <free_shipping_fallback>
+                            <label>Free Shipping Only Fallback</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>749</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <can_be_empty>0</can_be_empty>
+                            <comment>Magento FreeShipping Rule</comment>
+                        </free_shipping_fallback>
+                        
+                        <fallback_lead_time translate="label">
+                            <label>Fallback lead time</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>750</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <can_be_empty>0</can_be_empty>
+                            <comment>Fallback lead time</comment>
+                        </fallback_lead_time>
+
+                        <table_name translate="label">
+                            <label>Contingency table</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>800</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Specifies which contingency table is used in a case of fallia Intelipost of the system. Following tables available: https://github.com/intelipost/fallback-tables (ex = esedex.sp price and term of e-Sedex originating SP)]]></comment>
+                        </table_name>
+
+                        <import_process translate="button_label">
+                            <label></label>
+                            <button_label>Import Process</button_label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>quote/import</frontend_model>
+                            <sort_order>850</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </import_process>
+
+                        <fallback_frontend_title translate="label comment">
+                            <label>Fallback Frontend Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>900</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <can_be_empty>0</can_be_empty>
+                            <comment><![CDATA[Title displayed to customer at checkout]]></comment>
+                        </fallback_frontend_title>
+                        
+                        <shipping_rate>
+                            <label>Enable Intelipost Shipping Rate</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>999</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <comment><![CDATA[With this option enabled, all rates returned by Intelipost would be save in Intelipost Shipping Rate table]]></comment>
+                        </shipping_rate>
+                        
+                        <debug translate="label comment">
+                            <label>Intelipost Debug</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>999</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <comment><![CDATA[Debug for develop mode]]></comment>
+                        </debug>
+
+                        <price_config translate="label comment">
+                            <label>Price Configuration</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/adminhtml_system_config_source_price</source_model>
+                            <sort_order>1100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <comment>Price Configuration</comment>
+                        </price_config>
+
+                        <copy_single_method>
+                            <label>Copy single method?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>    
+                            <comment>Recommended only for who uses economic/express return modes at Intelipost</comment>
+                        </copy_single_method>
+                        <extra_time_economic_express translate="label comment">
+                            <label>Extra time For Economic Method (when it is express Method also)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>     
+                            <depends><copy_single_method>1</copy_single_method></depends>                       
+                        </extra_time_economic_express>
+
+                        <extra_value_economic_express translate="label comment">
+                            <label>Extra valeu to be added for Economic Method (when it is express Method also)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>   
+                            <depends><copy_single_method>1</copy_single_method></depends>                         
+                        </extra_value_economic_express>
+
+                        <title_for_express>
+                            <label>Title for express method. The new one created.</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>   
+                            <depends><copy_single_method>1</copy_single_method></depends>     
+                        </title_for_express>
+
+                        <express_method_id_prefix>
+                            <label>Express method Id Prefix Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>   
+                            <depends><copy_single_method>1</copy_single_method></depends>     
+                        </express_method_id_prefix>
+
+                        <extra_time_showed>
+                            <label>Extra time showed</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <comment>Extra time showed in methods frontend descriptions</comment>
+                        </extra_time_showed>
+
+                        <!--<has_customer_freeshipping translate="label">
+                            <label>Has Premium Customer FreeShipping</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </has_customer_freeshipping>
+                        <premium_customer_freeshipping translate="label">
+                            <label>Select Premium Customer FreeShipping</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>quote/config_customer_groups</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><has_customer_freeshipping>1</has_customer_freeshipping></depends>
+                        </premium_customer_freeshipping>-->
+
+                        <!--<order_methods translate="label">
+                            <label>Select Ordering Type</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>quote/config_methods_order</source_model>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_methods>
+                        <rewrite_ordering_methods translate="label">
+                            <label>Rewrite Ordering methods text</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>      
+                        </rewrite_ordering_methods>                        
+                        <methods_qty translate="label">
+                            <label>Select Quantity Returned Methods</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>quote/config_methods_qty</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </methods_qty>
+
+                        <frete_embutido translate="label">
+                            <label>Usar frete embutido?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </frete_embutido>-->
+                    </fields>
+                </intelipost>
+            </groups>
+        </carriers>
+    </sections>
+</config>
+

@@ -1,0 +1,147 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Cart cross sell items template
+ *
+ * @see Mage_Checkout_Block_Cart_Crosssell
+ */
+?>
+
+<?php if($this->getItemCount()): ?>
+<div class="crosssell products-grid">
+    <h2><?php echo $this->__('Recomendados para você') ?></h2>
+    <ul id="crosssell-products-list">
+    <?php foreach ($this->getItems() as $_item): ?>
+        <li style="position:relative;" class="item">
+            <a class="loading" style="height: 50%;width: 100%;position: absolute;left: 0;bottom: 0;" href="<?php echo $_item->getProductUrl() ?>"></a>
+            <?php
+            $price = $_item->getData('price');
+            $price_final = $_item->getData('final_price');
+            $_discountPercentage = round((($price-$price_final)/$price)*100);
+            ?>
+            <?php $categoryIds = $_item->getCategoryIds(); ?>
+
+            <?php if($_item->getFreteGratisDropdown()): ?>
+                <div class="frete_gratis_icon">
+                    <a href="#frete-gratis-condicoes" class="open-modal">
+                        <?php echo $_item->getAttributeText('frete_gratis_dropdown'); ?>
+                    </a>
+                </div>
+            <?php endif; ?>
+
+            <?php if($_item->getPromo1()): ?>
+                <div class="selo_promo">
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('promo1')->toHtml(); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if($_item->getPromo2()): ?>
+                <div class="selo_promo">
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('promo2')->toHtml(); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if($_item->getPromo3()): ?>
+                <div class="selo_promo">
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('promo3')->toHtml(); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if($_item->getPagueLeve()): ?>
+                <div class="frete_gratis_icon page_leve">
+                    <?php echo $_item->getAttributeText('pague_leve'); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if($_discountPercentage > 0){  ?>
+                <div class="desconto_icon"><?php echo '-' . $_discountPercentage . '%' ?></div>
+            <?php }else{ ?>
+                <div style="background-color:#fff;font-size:0;" class="desconto_icon"><?php echo '-' . $_discountPercentage . '%' ?></div>
+            <?php } ?>
+
+            <!-- Imagem -->
+            <?php $_categoryIds = $_item->getCategoryIds(); ?>
+            <?php $_imgSize = 300; ?>
+            <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_item, 'small_image'), null, true) ?>" class="product-image">
+                <?php if (in_array(26, $_categoryIds)): ?>
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-controlados')->toHtml(); ?>
+                <?php elseif(in_array(295, $_categoryIds)): ?>
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-antimicrobianos')->toHtml(); ?>
+                <?php elseif(in_array(14, $_categoryIds) && in_array(28, $_categoryIds)): ?>
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem-genericos')->toHtml(); ?>
+                <?php elseif(in_array(28, $_categoryIds)): ?>
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('medicamento-sem-imagem')->toHtml(); ?>
+                <?php else: ?>
+                    <img id="product-collection-image-<?php echo $_item->getId(); ?>"
+                         src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->resize(125); ?>"
+                         alt="<?php echo $this->stripTags($this->getImageLabel($_item, 'small_image'), null, true) ?>" witdh="180px" height="180px" />
+                <?php endif; ?>
+            </a>
+
+            <div class="product-details">
+                <h3 class="product-name"><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->escapeHtml($_item->getName()) ?></a></h3>
+                <?php if ($_item->getTypeId() != "configurable") : ?>
+                    <span class="product-sku">SKU: <?php echo $_item->getSku(); ?></span><br>
+                <?php endif; ?>
+                <?php echo $this->getPriceHtml($_item, true) ?>
+
+                <?php $maximo = floor($_item->getFinalPrice() / 50); ?>
+                <?php if($maximo>=3){ ?>
+                    <div class="parcelas_produto">3x de <?php echo Mage::helper('core')->currency($_item->getFinalPrice() / 3, true, false); ?> sem juros</div>
+                <?php } elseif($maximo==1 || $maximo==0) { ?>
+
+                <?php } else { ?>
+                    <div class="parcelas_produto"><?php echo $maximo; ?>x de <?php echo Mage::helper('core')->currency($_item->getFinalPrice() / $maximo, true, false); ?> sem juros</div>
+                <?php } ?>
+                <?php $summaryData = Mage::getModel('review/review_summary')->setStoreId(Mage::app()->getStore()->getId())->load($_item->getId()); ?>
+
+                <?php if($summaryData['reviews_count']): ?>
+                    <?php echo $this->getReviewsSummaryHtml($_item, 'short') ?>
+                <?php endif; ?>
+
+                <?php if (in_array(26, $categoryIds) || in_array(295, $categoryIds)): ?>
+                <?php else: ?>
+                    <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_item) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                <?php endif; ?>
+
+                
+                <ul class="add-to-links">
+                    <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                        <li><a href="<?php echo $this->getAddToWishlistUrl($_item) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                    <?php endif; ?>
+                    <?php if($_compareUrl=$this->getAddToCompareUrl($_item)): ?>
+                        <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+    <script type="text/javascript">decorateList('crosssell-products-list', 'none-recursive')</script>
+</div>
+<?php endif; ?>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+     <modules>
+        <Netreviews_Pla>
+            <active>false</active>
+            <codePool>local</codePool>
+			<depends>
+                <Netreviews_Avisverifies />
+            </depends> 
+        </Netreviews_Pla>
+     </modules>
+</config>

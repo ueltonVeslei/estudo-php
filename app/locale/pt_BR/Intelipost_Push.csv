@@ -1,0 +1,69 @@
+Use cron for automatically create Intelipost Ship Order?,Cron para 'Criar pedido de envio' na Intelipost
+Save data in order comments?,Salvar dados nos comentários do pedido?
+General,Geral
+Order status to automatically update Nfe,"Status do Pedido para cron ""atualizar dados da nota fiscal""."
+Order status to automatically set orders ready to ship,"Status do Pedido para o cron ""pronto para despacho"""
+Use cron for automatically update nfe at Intelipost?,Cron para atualizar dados da nota fiscal na Intelipost?
+"If set to True, it will filter only order with nfes generated in Intelipost - Manage Orders","Caso habilitada essa opção, serão mostrados apenas pedidos com NFE cadastradas."
+NFE Required?,Obrigatório NFE?
+Choose status order to display,Escolher status permitidos dos pedidos para serem exibidos
+Manage Intelipost Push Orders,Intelipost - Gerenciar Pedidos
+eSedex Card number,Numero Cartão - eSedex
+eSedex Contract number,Numero Contrato - eSedex
+Romaneio eSedex Informations,Romaneio - Informações eSedex
+Sedex Card number,Numero Cartao - Sedex
+Sedex Contract number,Numero Contrato - Sedex
+Romaneio Sedex Informations,Romaneio - Informações Sedex
+Service Code,Codigo Serviço
+Post Unity,Unidade de Postagem
+PAC Card number,Numero Cartão - PAC
+Card Number,Numero Cartão
+PAC Contract number,Numero Contrato - PAC
+Contract Number,Numero Contrato
+Romaneio Pac Informations,Romaneio - Informações PAC
+Company Logo,Logo Empresa
+Company cnpj printed in Romaneio file,CNPJ da empresa impresso no arquivo de Romaneio
+Company Cnpj,CNPJ Empresa
+Company name printed in Romaneio file,Nome da empresa impresso no arquivo de Romaneio
+Company Name,Nome Empresa
+Romaneio Company Informations,Romaneio - Informações da Empresa
+Attributes,Atributos
+Romaneio Details,Romaneio Detalhes
+%d orders shipments were created successfully.,[Intelipost] %d pedidos foram marcados como prontos para serem enviados.
+%d orders shipments were ready for shipped.,[Intelipost] %d pedidos foram marcados para envio.
+Order %d: Can't set ready shipped orders,[Intelipost] Pedido %d: Erro. Pedido já marcado para envio.
+Order %d: Orders not invoiced. Please invoice orders before shipment request.,[Intelipost] Pedido %d: Pedido n�o faturado. Favor fature o pedido para criar o envio.
+Order %d: Can't set shipped order for 'waiting' or 'shipped' status,[Intelipost] Pedido %d: Não é possivel marcar pedido enviado para pedidos já enviados ou que não foram gerados a entrega.
+Manage Trackings (manually),Gerenciar Tracking Code (Manualmente)
+Manage NFEs (manually),Gerenciar NFEs (Manualmente)
+Ready For Shipment,Envio pronto para despacho
+Grand Total, Venda
+Delivery Quote Id, Quote
+Shipped,Envio despachado
+Created,Envio criado
+Waiting,Aguardando envio
+Create Orders,Criar pedido de envio
+Generate Shipments,Marcar como despachado
+Generate Romaneio,Gerar Romaneio
+%d orders were successfully sent.,[Intelipost] %d pedidos foram enviados com sucesso.
+Use cron for automatically set ready to ship orders at Intelipost?,"Cron para ""pronto para despacho"""
+Use cron for automatically gerenate shipment at Intelipost?,"Cron para Gerar entregas & ""despachado"""
+Order status to automatically generate shipment at Intelipost,Status do pedido para gerar entregas.
+Used if cron to generate shipment is enabled,Usado se o cron de gerar entrega estiver habilitado.
+Create order at Intelipost on invoice?,Criar pedido de envio na Intelipost ao faturar o pedido?
+Choose status order to contingency generate shipment,Status do pedido para atualizar ao gerar entrega (contingencia)
+%d orders updated status successfully.,[Intelipost] Atualizado o status de %d pedidos.
+Required NFE to create order at Intelipost?,Obrigatório NFE para criar pedido de envio na Intelipost?
+Delivery Method Id,Método
+Order status to create Intelipost Ship Order,Status pedido para 'criar pedido de envio'
+Create ship order frequency,Frequencia para criar pedido de envio
+Update nfe frequency,Frequencia para atualizar nota fiscal
+Ready to ship frequency,Frequencia para preparar para despacho
+Generate shipment frequency,Frequencia para despachar pedido
+Minutes,Minutos
+Order Quantity to Create,Quantidade de pedidos (cron criar pedido de envio)
+Order Quantity to generate shipment,Quantidade de pedidos (cron gerar entrega/despachar pedido)
+Order Quantity to ready to ship,Quantidade de pedidos (cron preparar para despacho)
+Order Quantity to get Nfe,Quantidade de pedidos (cron atualizar nota fiscal)
+Send invoice date on create order at Intelipost?,Mandar data de faturamento na criação do pedido?
+Set Shipped on create order at Intelipost?,Despachar pedido ao criar na Intelipost?

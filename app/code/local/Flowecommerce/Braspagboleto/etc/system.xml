@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+/**
+ * @category   Mage
+ * @package    Mage_Boleto
+ * @copyright  Copyright (c) 2008 Igor
+ * @author	   Igor Pfeilsticker (igorsop@gmail.com)
+ */
+-->
+<config>
+   <sections>
+        <payment>
+            <groups>
+               <braspagboleto translate="label">
+                    <label>[Braspag] Boleto Bancário</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Habilitado</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Titulo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </title>
+						<LojaID translate="label">
+                            <label>Loja ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </LojaID>
+						<EmailDeProcessamento translate="label">
+                            <label>Enviar E-mail Para</label>
+                            <comment>E-mail para envio com os dados do processamento automático dos pedidos.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </EmailDeProcessamento>
+						<DiasParaCancelar translate="label">
+                            <label>Dias Para Cancelar Pedido</label>
+                            <comment>Depois de quantos dias o pedido será cancelado.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </DiasParaCancelar>
+						<MensagemDeCancelamento translate="label">
+                            <label>Mensagem de Cancelamento</label>
+                            <comment>Mensagem enviada para o cliente no cancelamento do Pedido.</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </MensagemDeCancelamento>     
+						<DiasParaLembrete translate="label">
+                            <label>Dias Para Lembrete de Boleto</label>
+                            <comment>Depois de quantos dias o lembrete de pagamento será enviado.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </DiasParaLembrete>
+						<MensagemDeLembrete translate="label">
+                            <label>Mensagem do Lembrete</label>
+                            <comment>Mensagem enviada para o cliente como lembrete de pagamento do Pedido.</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </MensagemDeLembrete>   
+                        <banco translate="label">
+                            <label>Banco</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Flowecommerce_Braspagboleto_Model_Source_boletotype</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </banco>
+                        <sort_order translate="label">
+                            <label>Ordem</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_order>
+                    </fields>
+                </braspagboleto>
+            </groups>
+        </payment>       
+    </sections>
+</config>

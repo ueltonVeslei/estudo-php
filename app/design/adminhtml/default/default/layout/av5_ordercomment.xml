@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout>
+    <av5_ordercomment_adminhtml_index_index>
+        <update handle="av5_ordercomment_index_index"/>
+        <reference name="content">
+            <block type="adminhtml/template" name="updaterForm" template="av5_ordercomment/index.phtml"/>
+        </reference>
+    </av5_ordercomment_adminhtml_index_index>
+    <av5_ordercomment_adminhtml_index_progress>
+        <reference name="content">
+            <block type="adminhtml/template" name="progress" template="av5_ordercomment/progress.phtml"/>
+        </reference>
+    </av5_ordercomment_adminhtml_index_progress>
+</layout>

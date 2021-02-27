@@ -1,0 +1,102 @@
+<?php
+// instance order object and get order info
+$order = $this->getOrder();
+$order_id = $order->getId();
+$order_status = $order->getStatus();
+$customer_name = $order->getCustomerName();
+$customer_email = $order->getCustomerEmail();
+$ordered_products_collection = $order->getAllItems();
+$ordered_products = array();
+foreach($ordered_products_collection as $ordered_prod) {
+	$sku = $ordered_prod->getSku();
+	$_prod = Mage::getModel(‘catalog/product’)->loadByAttribute(‘sku’, $sku);
+	if ($_prod->getTypeId() == "simple") {
+		$parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($_prod->getId());
+		if (!$parentIds) {
+			$parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($_prod->getId());
+		}
+		if (isset($parentIds[0])) {
+			$parent = Mage::getModel('catalog/product')->load($parentIds[0]);
+			$parent_sku = $parent->getSku();
+			if (!in_array($parent_sku, $ordered_products)) {
+				$ordered_products[] = $parent_sku;
+			}
+		} else {
+			if (!in_array($sku, $ordered_products)) {
+				$ordered_products[] = $sku;
+			}
+		}
+	} // end of product TYPE IF
+}
+$ordered_products = implode(", ", $ordered_products);
+// instance clientlog model and load current order
+$clientlog_coll = Mage::getModel('reviewplus/clientlog')->getCollection()->addFieldToFilter('order_id', $order_id);
+if (count($clientlog_coll) == 1) {
+	foreach($clientlog_coll as $entry) {
+		$clientlog_db = Mage::getModel('reviewplus/clientlog')->load($entry->getId());
+		$status = $clientlog_db->getData('status');
+		$due_date = $clientlog_db->getData('due_date');
+	}
+} else {
+	$due_date = 'undefined';
+	$status = '';
+}
+?>
+<div class="box-left">
+	<div class="entry-edit">
+	    <div class="entry-edit-head">
+	        <h4><?php echo $this->__('ReviewPlus Followup Email Status'); ?></h4>
+	    </div>
+	    <div class="fieldset">
+			<table class="form-list" cellspacing="0">
+				<tbody>
+					<tr>
+						<td class="label"><?php echo $this->__('ReviewPlus Followup email'); ?></td>
+						<td class="value"><?php if ($status == 1) { echo "<strong style='color:green;'>Sent</strong>"; } else { echo "<strong style='color:red;'>Not sent</strong>"; } ?></td>
+					</tr>
+					<tr>
+						<td class="label"><?php echo $this->__('Send time'); ?></td>
+						<td class="value"><?php if ($send_time == 'undefined') { echo "<strong>-</strong>"; } else { echo "<strong>".date('d M Y', $due_date)."</strong>"; } ?></td>
+					</tr>
+					<?php
+					// check IF clientlog status is 0 && extensions is enabled && current order status is among allowed list from extension config
+					$reviewplus_enable = Mage::getStoreConfig('reviewplus_options/reviewplus_config/enable_disable', Mage::app()->getStore());
+					$config_statuses = Mage::getStoreConfig('reviewplus_options/reviewplus_config/select_status', Mage::app()->getStore());
+					$config_statuses_arr = explode(',', $config_statuses);
+					// if all true, show LOG NOW button
+					if ($status == 0 && $reviewplus_enable == 1 && in_array($order_status, $config_statuses_arr) == true) {
+						// if order is logged already, do not show button
+						if (count($clientlog_coll) == 1) {
+							// do nothing
+						} else {
+						?>
+						<tr>
+							<td class="label"><?php echo $this->__('Log order'); ?></td>
+							<td class="value">
+								<form id="reviewplus-lognow-form" name="reviewplus-lognow-form" action="<?php echo $this->getUrl('adminhtml/ordertab/lognow'); ?>" method="post">
+									<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+									<input type="hidden" name="reviewplus-lognow[order_id]" value="<?php echo $order_id; ?>">
+									<input type="hidden" name="reviewplus-lognow[customer_name]" value="<?php echo $customer_name; ?>">
+									<input type="hidden" name="reviewplus-lognow[customer_email]" value="<?php echo $customer_email; ?>">
+									<input type="hidden" name="reviewplus-lognow[ordered_products]" value="<?php echo $ordered_products ?>">
+									<button title="<?php echo $this->__('Log now'); ?>" class="scalable" type="button" onclick="lognowConfirm();"><span><span><?php echo $this->__('Log now'); ?></span></span></button>
+								</form>
+								<script type="text/javascript">
+									var lognow = new varienForm('reviewplus-lognow-form');
+									function lognowConfirm() {
+										var answer = confirm('Log order?');
+										if (answer == true) {
+									  		lognow.submit();
+									  	} else {
+									  		// do nothing
+									  	} 
+									}
+								</script>
+							</td>
+						</tr>
+					<?php }} ?>
+				</tbody>
+			</table>
+	    </div>
+	</div>
+</div>

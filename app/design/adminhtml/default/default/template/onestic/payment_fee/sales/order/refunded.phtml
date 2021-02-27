@@ -1,0 +1,28 @@
+<?php
+/**
+ * Criado por Brander
+ * Baseado no módulo "Magentix" (https://github.com/magentix/Fee)
+ *
+ * @category   Brander
+ * @package    Brander_PaymentFee
+ * @author     Felipe Macedo (f.macedo@onestic.com)
+ * @license    Módulo gratuito, pode ser redistribuido e/ou modificado
+ */
+?>
+
+<?php if($this->getSource() instanceof Mage_Sales_Model_Order): ?>
+    <?php if ((float)$this->getSource()->getFeeAmountRefunded() > 0): ?>
+        <tr>
+            <td class="label"><strong><?php echo Mage::helper('payment_fee')->__('Taxa reembolsada ao consumidor') ?></strong></td>
+            <td><strong><?php echo $this->getSource()->getFeeAmountRefunded(); ?></strong></td>
+        </tr>
+    <?php endif; ?>
+<?php else: ?>
+    <?php if ((float)$this->getSource()->getFeeAmount()): ?>
+        <tr>
+            <td class="label"><strong><?php echo Mage::helper('payment_fee')->__('Taxa Reembolsada') ?></strong></td>
+            <td><strong><?php echo $this->getSource()->getFeeAmount(); ?></strong></td>
+        </tr>
+    <?php endif;  ?>
+<?php endif; ?>
+

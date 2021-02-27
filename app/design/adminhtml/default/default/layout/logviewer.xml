@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<logviewer_adminhtml_logs_index>
+		<reference name="content">
+			<block type="logviewer/adminhtml_logs" name="loglist" />
+		</reference>
+	</logviewer_adminhtml_logs_index>
+	<logviewer_adminhtml_logs_view>
+		<reference name="content">
+			<block type="logviewer/adminhtml_backend" name="viewlog" template="logviewer/view.phtml"/>
+		</reference>
+	</logviewer_adminhtml_logs_view>
+	<logviewer_adminhtml_report_index>
+		<reference name="content">
+			<block type="logviewer/adminhtml_report" name="reportslist" />
+		</reference>
+	</logviewer_adminhtml_report_index>
+	<logviewer_adminhtml_report_view>
+		<reference name="content">
+			<block type="logviewer/adminhtml_backend" name="viewreport" template="logviewer/view.phtml"/>
+		</reference>
+	</logviewer_adminhtml_report_view>
+	<logviewer_adminhtml_exports_index>
+		<reference name="content">
+			<block type="logviewer/adminhtml_exports" name="exportslist" />
+		</reference>
+	</logviewer_adminhtml_exports_index>
+	<logviewer_adminhtml_exports_view>
+		<reference name="content">
+			<block type="logviewer/adminhtml_backend" name="viewexport" template="logviewer/view.phtml"/>
+		</reference>
+	</logviewer_adminhtml_exports_view>
+</layout>

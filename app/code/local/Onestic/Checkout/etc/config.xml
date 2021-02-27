@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<!--
+This file is part of Checkout.
+
+Checkout is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Checkout is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Checkout.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<config>
+	<modules>
+		<Onestic_Checkout>
+			<version>1.5.0</version>
+		</Onestic_Checkout>
+	</modules>
+	<global>
+		<blocks>
+			<onestic_checkout>
+				<class>Onestic_Checkout_Block</class>
+			</onestic_checkout>
+			<checkout>
+				<rewrite>
+					<onepage>Onestic_Checkout_Block_Onepage</onepage>
+					<onepage_shipping>Onestic_Checkout_Block_Onepage_Shipping</onepage_shipping>
+					<onepage_billing>Onestic_Checkout_Block_Onepage_Billing</onepage_billing>
+					<onepage_progress>Onestic_Checkout_Block_Onepage_Progress</onepage_progress>
+				</rewrite>
+			</checkout>
+			<payment>
+				<rewrite>
+					<form_cc>Onestic_Checkout_Block_Form_Cc</form_cc>
+				</rewrite>
+			</payment>
+			<giftmessage>
+				<rewrite>
+					<message_inline>Onestic_Checkout_Block_GiftMessage_Message_Inline</message_inline>
+				</rewrite>
+			</giftmessage>
+			<page>
+				<rewrite>
+					<html_head>Onestic_Checkout_Block_Page_Html_Head</html_head>
+				</rewrite>
+			</page>
+            <radweb_stripe>
+				<rewrite>
+					<form>Onestic_Checkout_Block_Form_Stripe</form>
+				</rewrite>
+			</radweb_stripe>
+		</blocks>
+		<models>
+			<onestic_checkout>
+				<class>Onestic_Checkout_Model</class>
+			</onestic_checkout>
+			<customer>
+				<rewrite>
+					<customer>Onestic_Checkout_Model_Customer</customer>
+				</rewrite>
+			</customer>
+			<paypal>
+				<rewrite>
+					<config>Onestic_Checkout_Model_Paypal_Config</config>
+				</rewrite>
+			</paypal>
+		</models>
+		<resources>
+			<onestic_checkout_setup>
+				<setup>
+					<module>Onestic_Checkout</module>
+					<class>Mage_Eav_Model_Entity_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</onestic_checkout_setup>
+			<onestic_checkout_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</onestic_checkout_write>
+			<onestic_checkout_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</onestic_checkout_read>
+		</resources>
+		<helpers>
+			<onestic_checkout>
+				<class>Onestic_Checkout_Helper</class>
+			</onestic_checkout>
+		</helpers>
+		<rewrite>
+			<onestic_checkout_onepage_index>
+				<from><![CDATA[#^/checkout/onepage(.*)#]]></from>
+				<to>/onestic_checkout/onepage$1</to>
+			</onestic_checkout_onepage_index>
+		</rewrite>
+	</global>
+	<frontend>
+		<secure_url>
+			<onestic_checkout_onepage>/onestic_checkout/onepage</onestic_checkout_onepage>
+		</secure_url>
+		<routers>
+			<onestic_checkout>
+				<use>standard</use>
+				<args>
+					<module>Onestic_Checkout</module>
+					<frontName>onestic_checkout</frontName>
+				</args>
+			</onestic_checkout>
+		</routers>
+		<layout>
+			<updates>
+				<onestic_checkout module="onestic_checkout">
+					<file>onestic_checkout.xml</file>
+				</onestic_checkout>
+				<!-- onestic_checkout_virtual_support module="onestic_checkout">
+					<file>onestic_checkout/virtual_support.xml</file>
+				</onestic_checkout_virtual_support -->
+			</updates>
+		</layout>
+		<translate>
+			<modules>
+				<Onestic_Checkout>
+					<files>
+						<default>Onestic_Checkout.csv</default>
+					</files>
+				</Onestic_Checkout>
+			</modules>
+		</translate>
+		<events>
+			<checkout_submit_all_after>
+				<observers>
+					<onestic_checkout_model_observer>
+						<class>onestic_checkout/observer</class>
+						<method>checkout_submit_all_after</method>
+					</onestic_checkout_model_observer>
+				</observers>
+			</checkout_submit_all_after>
+			<checkout_controller_onepage_save_giftmessage>
+				<observers>
+					<giftmessage>
+						<type>model</type>
+						<class>giftmessage/observer</class>
+						<method>checkoutEventCreateGiftMessage</method>
+					</giftmessage>
+				</observers>
+			</checkout_controller_onepage_save_giftmessage>
+			<controller_action_layout_load_before>
+				<observers>
+					<onestic_checkout_model_observer>
+						<class>Onestic_Checkout_Model_Observer</class>
+						<method>addLayoutHandleForPaymentExtensionsCompatibility</method>
+					</onestic_checkout_model_observer>
+				</observers>
+			</controller_action_layout_load_before>
+			<sales_order_place_after>
+				<observers>
+					<onestic_checkout_newsletter>
+						<class>Onestic_Checkout_Model_Observer</class>
+						<method>subscribeNewsletter</method>
+					</onestic_checkout_newsletter>
+				</observers>
+			</sales_order_place_after>
+			<controller_action_predispatch_sagepaysuite_payment_onepageSaveOrder>
+				<observers>
+					<onestic_checkout_model_observer>
+						<class>onestic_checkout/observer</class>
+						<method>dispatchGiftMessageEventForWhenSagepayTakesOverTheAction</method>
+					</onestic_checkout_model_observer>
+				</observers>
+			</controller_action_predispatch_sagepaysuite_payment_onepageSaveOrder>
+			<core_layout_update_updates_get_after>
+				<observers>
+					<onestic_checkout_add_layouts>
+						<type>singleton</type>
+						<class>onestic_checkout/observer</class>
+						<method>layoutUpdate</method>
+					</onestic_checkout_add_layouts>
+				</observers>
+			</core_layout_update_updates_get_after>
+		</events>
+	</frontend>
+	<adminhtml>
+		<translate>
+			<modules>
+				<Onestic_Checkout>
+					<files>
+						<default>Onestic_Checkout.csv</default>
+					</files>
+				</Onestic_Checkout>
+			</modules>
+		</translate>
+	</adminhtml>
+	<default>
+		<checkout>
+			<options>
+				<pincode_maxlength>9</pincode_maxlength>
+				<require_phone>0</require_phone>
+				<link_guest_orders>1</link_guest_orders>
+				<separate_shipping_method_step>0</separate_shipping_method_step>
+				<disable_estimated_shipping>0</disable_estimated_shipping>
+				<disable_postcode_autocomplete>0</disable_postcode_autocomplete>
+			</options>
+			<shipping_method>
+				<no_shipping_rates_error_message>A loja atualmente não enviamos para o seu endereço. Por favor, modifica o seu endereço de entrega.</no_shipping_rates_error_message>
+			</shipping_method>
+			<watermarks>
+				<email>john@example.com</email>
+				<fullname>John Smith</fullname>
+				<telephone>(231) 231-2312</telephone>
+				<company>Example, Inc.</company>
+				<street1>123 Acme Drive</street1>
+				<street2>Suite 45</street2>
+				<postcode>20001</postcode>
+				<city>New York</city>
+				<state>NY</state>
+			</watermarks>
+			<inline_validation_messages>
+				<email_description>What's your email address?</email_description>
+				<email_error>You missed an @ or a .com.</email_error>
+				<password_description>The password for your account</password_description>
+				<password_error>Should be minimum 6 characters</password_error>
+				<fullname_description>Enter your first and last name.</fullname_description>
+				<fullname_error>You gave only your first or last name. We need both.</fullname_error>
+				<address_description>How you write it on an envelope.</address_description>
+				<address_error>Need atleast a street number and street name.</address_error>
+				<postcode_description>Please enter in your postal code without hyphens.</postcode_description>
+				<postcode_error>You might have added a character or missed a digit.</postcode_error>
+				<telephone_description>Area code first and then your 7 digit number.</telephone_description>
+				<telephone_error>Please check your phone number.</telephone_error>
+			</inline_validation_messages>
+			<newsletter>
+				<enable>0</enable>
+				<ask_the_user>1</ask_the_user>
+			</newsletter>
+		</checkout>
+	</default>
+</config>

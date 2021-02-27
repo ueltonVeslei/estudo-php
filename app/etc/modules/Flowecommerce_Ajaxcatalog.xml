@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Flow eCommerce - Ajaxcatalog
+ *
+ * @category   Ajaxcatalog
+ * @package    Ajaxcatalog
+ * @copyright  Copyright (c) 2010 Flow Ecommerce
+ * @author	   Flow eCommerce (gabriel@flowecommerce.com)
+ */
+-->
+<config>
+    <modules>
+        <Flowecommerce_Ajaxcatalog>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Flowecommerce_Ajaxcatalog>
+    </modules>
+</config>

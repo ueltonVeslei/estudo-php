@@ -1,0 +1,385 @@
+<?php if (Mage::helper('avisverifies/Data')->isActive()): // Our Display.   ?>
+    <?php $o_av = Mage::getModel('avisverifies/reviews'); // our custom reviews model   ?>
+    <?php $ProductId = $this->getData('productId'); ?>
+    <?php $o_av->idProduct = $ProductId; ?>
+    <?php $o_av->page = 1; ?>
+    <?php $statsProduct = $o_av->getStatsProduct(); ?>
+    <?php $countReviews = $statsProduct->getData('nb_reviews'); ?>
+    <?php $getNote = $o_av->formatNote($statsProduct->getData('rate')); ?>
+    <?php $maxPages = $o_av->getProductReviews(); ?>
+    <?php $maxPages = $maxPages->getLastPageNumber(); ?>
+    <?php $nbAvisByRate = $o_av->getNbAvisByRate(); ?>
+    <?php $rateSize = array( 0, 0, 0, 0, 0 ) ?>
+    
+    <!--  URL certificat  -->
+    <?php $href = Mage::getStoreConfig('avisverifies/system/urlcertificat'); ?>
+        
+    <?php if ($countReviews): ?>
+
+        <?php foreach ( $nbAvisByRate as $rows ): ?>
+            <?php if ( $rows->getRate() == 5 ) : ?>
+                <?php $rateSize[4] = $rows->getRatingsize() ?>
+            <?php elseif ( $rows->getRate() == 4 ) : ?>
+                <?php $rateSize[3] = $rows->getRatingsize() ?>
+            <?php elseif ( $rows->getRate() == 3 ) : ?>
+                <?php $rateSize[2] = $rows->getRatingsize() ?>
+            <?php elseif ( $rows->getRate() == 2 ) : ?>
+                <?php $rateSize[1] = $rows->getRatingsize() ?>
+            <?php elseif ( $rows->getRate() == 1 ) : ?>
+                <?php $rateSize[0] = $rows->getRatingsize() ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <?php // Helpful / Helpless block
+            $API = Mage::helper('avisverifies/API');
+            $DATA = Mage::helper('avisverifies/Data');
+            
+            $platform = explode( "/", $href );
+            if ( strpos( $platform[2], 'www' ) !== false) {
+                $avHelpfulURL = $platform[0] . "//" . $platform[2] . "/index.php?action=act_api_product_reviews_helpful";
+            } else {
+                // FR by default - Perhaps "Ce compte n'existe pas"
+                $avHelpfulURL = "https://www.avis-verifies.com/index.php?action=act_api_product_reviews_helpful";
+            }
+            
+            $currentStoreId = Mage::app()->getStore()->getStoreId();
+            $idWebsite = $DATA -> getModuleIdWebsite( $currentStoreId ); // Used to send the value to the js function.
+            $secretKey = $DATA -> getModuleSecretKey( $idWebsite ); // Used to send the value to the js function.
+            $ip = $API -> av_get_client_ip(); // Used to send the value to the js function.
+            
+//            echo "currentStoreId = $currentStoreId <br>
+//                idProduitDemo = $idProduitDemo <br>
+//                ip = $ip <br>
+//                idWebsite = $idWebsite <br>
+//                secretKey = $secretKey <br>
+//                sign = $sign <br>";
+        ?>
+
+        <!-- Ajax item -->
+        <?php $tmp = Mage::getUrl('AvisVerifies/index/ajaxload', array('id_product' => $o_av->idProduct)) ?>
+        <input id="avisVarifiesAjaxUrl" type="hidden" value="<?php echo $tmp ?>" />
+        <input id="avisVarifiesLastSort" type="hidden" value="horodate_DESC" />
+
+        <!-- Netreviews tab -->
+        <?php $responsiveDiv = Mage::getStoreConfig('avisverifies/extra/responsive_div_design') == 1 ? "nrResponsive" : ""; ?>
+        <div id="netreviews_reviews_tab" class="<?php echo $responsiveDiv ?>">
+
+            <!-- global rating section -->
+            <div id="av_magento1" class="netreviews_rating_section">
+                <div class="netreviews_rating_header">
+                    <?php
+                    
+                    // Display logo according to the language.
+                    $locale = Mage::app()->getLocale()->getLocaleCode();
+                    $lang = explode("_", $locale);
+                    $logoLink = explode("/", $href);
+                    ?>
+                    <a target="_blank" href="<?php echo "https://" . $logoLink[2] . "/index.php?page=mod_actualites" ?>" >
+                        <?php if ($lang[0] == "en"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_en.png') ?>">
+                        <?php elseif ($lang[0] == "fr"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_fr.png') ?>">
+                        <?php elseif ($lang[0] == "es"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_es.png') ?>">
+                        <?php elseif ($lang[0] == "de"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_de.png') ?>">
+                        <?php elseif ($lang[0] == "it"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_it.png') ?>">
+                        <?php elseif ($lang[0] == "pt"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_pt.png') ?>">
+                        <?php elseif ($lang[0] == "gb"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_gb.png') ?>">
+                        <?php else : ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_en.png') ?>">
+                        <?php endif; ?>
+                     </a>
+                    <div>
+                        <a class="netreviews_certification" target="_blank" href="<?php echo $href ?>" ><?php echo $this->__('View the trust certificate') ?></a>
+                        <label id="netreviews_informations_label">
+                            <?php echo $this->__("Reviews subject to control"); ?>&nbsp;
+                            <img class="netreviews_icone_info" src="<?php echo $this->getSkinUrl('images/avisverifies/icone_information.png'); ?>"/>
+                        </label>
+                        <span id="netreviews_informations">
+                            <img class="netreviews_icone_info" src="<?php echo $this->getSkinUrl('images/avisverifies/icone_information.png'); ?>"/>
+                            <img class="netreviews_exit_info" src="<?php echo $this->getSkinUrl('images/avisverifies/exit_information.png'); ?>"/>
+                            <p>
+                                - <?php echo $this->__("For further information on the nature of the review controls, as well as the possibility of contacting the author of the review please consult our"); ?>&nbsp;<a href="http://www.<?php echo $this->__('verified-reviews.com'); ?>/index.php?page=mod_conditions_utilisation" target="_blank"><?php echo $this->__("GCU"); ?></a>.
+                            </p>
+                            <p>
+                                - <?php echo $this->__("No inducements have been provided for these reviews"); ?>.
+                            </p>
+                            <p>
+                                - <?php echo $this->__("Reviews are published and kept for a period of five years"); ?>.
+                            </p>
+                            <p>
+                                - <?php echo $this->__("Reviews can not be modified: If a customer wishes to modify their review then they can do so by contacting Verified Reviews directly to remove the existing review and publish an amended one"); ?>.
+                            </p>
+                            <p>
+                                - <?php echo $this->__("The reasons for deletion of reviews are available"); ?>&nbsp;<a href="http://www.<?php echo $this->__('verified-reviews.com'); ?>/index.php?page=mod_conditions_utilisation#Rejet_de_lavis_de_consommateur" target="_blank"><?php echo $this->__("here"); ?></a>.
+                            </p>
+                        </span>
+                    </div>
+                </div>
+                <div class="netreviews_rating_content">
+                    <div class="netreviews_global_rating">
+                        <p class="netreviews_note_generale">
+                            <?php echo $getNote ?><span>&nbsp;/5</span>
+                        </p>
+                        <div class="netreviews_bg_stars_big netreviews_bg_stars_big_gold">
+                            <span style="width:<?php echo ($getNote * 20) . "%" ?>;"></span>
+                        </div>
+                        <p class="netreviews_subtitle">
+                            <?php echo $this->__('Based on %d customer reviews', $countReviews) ?>
+                        </p>
+                    </div>
+                    <div class ="netreviews_global_rating_details">
+                        <ul class="netreviews_rates_list">
+                            <li class="netreviews_rate_list_item" onclick="window.avisVerifies.filterAjax('rate_1')" >
+                                <span>1</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent"
+                                          style="height: <?php echo round( ($rateSize[0] * 100 / $countReviews), 2, PHP_ROUND_HALF_UP ) . "%" ?>;">
+                                        <span class="netreviews_rate_total"><?php echo $rateSize[0] ?></span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="netreviews_rate_list_item" onclick="window.avisVerifies.filterAjax('rate_2')" >
+                                <span>2</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent"
+                                          style="height: <?php echo round( ($rateSize[1] * 100 / $countReviews), 2, PHP_ROUND_HALF_UP ) . "%" ?>;">
+                                        <span class="netreviews_rate_total"><?php echo $rateSize[1] ?></span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="netreviews_rate_list_item" onclick="window.avisVerifies.filterAjax('rate_3')" >
+                                <span>3</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent"
+                                          style="height: <?php echo round( ($rateSize[2] * 100 / $countReviews), 2, PHP_ROUND_HALF_UP ) . "%" ?>;">
+                                        <span class="netreviews_rate_total"><?php echo $rateSize[2] ?></span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="netreviews_rate_list_item" onclick="window.avisVerifies.filterAjax('rate_4')" >
+                                <span>4</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent"
+                                          style="height: <?php echo round( ($rateSize[3] * 100 / $countReviews), 2, PHP_ROUND_HALF_UP ) . "%" ?>;">
+                                        <span class="netreviews_rate_total"><?php echo $rateSize[3] ?></span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="netreviews_rate_list_item" onclick="window.avisVerifies.filterAjax('rate_5')" >
+                                <span>5</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent"
+                                          style="height: <?php echo round( ($rateSize[4] * 100 / $countReviews), 2, PHP_ROUND_HALF_UP ) . "%" ?>;">
+                                        <span class="netreviews_rate_total"><?php echo $rateSize[4] ?></span>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- filtering section -->
+                <div class="netreviews_filtering_section">
+                    <?php echo $this->__('Sort reviews by:') ?>
+                    <select id="netreviews_filter_selectbox" onchange="window.avisVerifies.filterAjax( this.value );">
+                        <option value="no_filter" disabled="disabled" ><?php echo $this->__('---') ?></option>
+                        <option value="horodate_DESC" ><?php echo $this->__('Newest first') ?></option>
+                        <option value="horodate_ASC" ><?php echo $this->__('Oldest first') ?></option>
+                        <option value="rate_DESC" ><?php echo $this->__('Highest rating') ?></option>
+                        <option value="rate_ASC" ><?php echo $this->__('Lowest rating') ?></option>
+                        <?php if ( Mage::getStoreConfig('avisverifies/extra/add_review_helpful_button') == 1 ): ?>
+                            <option value="helpfulrating_DESC" ><?php echo $this->__('The most helpful') ?></option>
+                        <?php endif; ?>
+                    </select>
+                </div>
+            
+                <!-- Other reviews wait button -->
+                <img id="avisVarifiesAjaxImage" src="<?php echo $this->getSkinUrl('images/avisverifies/spinner.gif') ?>" style="display:none; position:relative; left:51%; top:50%; margin:2% auto auto 0;" />
+
+            </div>
+            
+            <!-- end global rating section -->
+
+            <?php
+            echo Mage::app()->getLayout()->createBlock('core/template')
+                    ->setData('productId', $o_av->idProduct)
+                    ->setTemplate('avisverifies/pagination.phtml')
+                    ->toHtml();
+            ?>
+
+            <!-- more reviews button -->
+            <div id="av_load_next_page" data-page="1" data-page-last="<?php echo $maxPages ?>" >
+                <a id="av_load_next_page_link" onclick="window.avisVerifies.Ajax();" class="netreviews_button">
+                    <span class="display"><?php echo $this->__('More Reviews') ?></span>
+                </a>
+            </div>
+            
+            <script type="text/javascript">
+                // Helpful variables.
+                var avHelpfulIdwebsite = '<?php echo $idWebsite; ?>';
+                var avHelpfulURL = '<?php echo $avHelpfulURL; ?>';
+                var avHelpfulIp = '<?php echo $ip; ?>';
+                var avhelpfulExec = false;
+                var avInitialFingerPrint = '';
+                var avHelpfulCookie = {};
+                var avHelpfulErrorMessage = '<?php echo __( "Something went wrong." ); ?>';
+                var avHelpfulSuccessMessage = '<?php echo __( "Thank you, your vote will be published soon." ); ?>';
+                    
+                (function() {
+                    // Internet Explorer 6-11
+                    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+                    // Edge 20+
+                    var isEdge = !isIE && !!window.StyleMedia;
+                    
+                    if ( isIE != true && isEdge != true ) {
+                        window.avisVerifies.avLoadCookies();
+
+                        // Go to reviews button.
+                        window.avisVerifies.jQuery('#AV_button').attr('href', 'javascript:void(0)').click(function() {
+                            window.avisVerifies.scrollTo();
+                        });
+
+                        // Hide button if there are not more reviews when page load.
+                        var $click = window.avisVerifies.jQuery("#av_load_next_page");
+                        var page = parseInt($click.attr('data-page'));
+                        var maxPage = parseInt($click.attr("data-page-last"));
+                        if (page === maxPage) {
+                            $click.hide();
+                        }
+                    }
+                })();
+            </script>
+            
+        <!-- netreviews_reviews_tab continue in pagination.phtml -->
+        
+        
+        
+        
+        
+    <!-- Without reviews -->
+    <?php elseif ( $countReviews == 0 && Mage::getStoreConfig('avisverifies/extra/show_empty_product_message') == 1  ): ?>
+<!--        <div class="netreviews_review_part">
+            <p class="netreviews_no_reviews_block">
+                <?php echo $this->__('There are no reviews.') ?>
+            </p>
+        </div>-->
+        <!-- Netreviews tab -->
+        <div id="netreviews_reviews_tab">
+
+            <!-- global rating section -->
+            <div class="netreviews_rating_section">
+                <div class="netreviews_rating_header">
+                    <?php
+                    
+                    // Display logo according to the language.
+                    $locale = Mage::app()->getLocale()->getLocaleCode();
+                    $lang = explode("_", $locale);
+                    $logoLink = explode("/", $href);
+                    ?>
+                    <a target="_blank" href="<?php echo "https://" . $logoLink[2] . "/index.php?page=mod_actualites" ?>" >
+                        <?php if ($lang[0] == "en"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_en.png') ?>">
+                        <?php elseif ($lang[0] == "fr"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_fr.png') ?>">
+                        <?php elseif ($lang[0] == "es"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_es.png') ?>">
+                        <?php elseif ($lang[0] == "de"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_de.png') ?>">
+                        <?php elseif ($lang[0] == "it"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_it.png') ?>">
+                        <?php elseif ($lang[0] == "pt"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_pt.png') ?>">
+                        <?php elseif ($lang[0] == "gb"): ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_gb.png') ?>">
+                        <?php else : ?>
+                            <img class="netreviews_logo" src="<?php echo $this->getSkinUrl('images/avisverifies/logo_full_en.png') ?>">
+                        <?php endif; ?>
+                     </a>
+                    <a class="netreviews_certification" target="_blank" href="<?php echo $href ?>" ><?php echo $this->__('View the trust certificate') ?></a>
+                </div>
+                <div class="netreviews_rating_content">
+                    <div class="netreviews_global_rating">
+                        <p class="netreviews_note_generale">
+                            <!--&#9958--><span><?php echo $this->__('VerifiedReviews') ?></span>
+                        </p>
+                        <div class="netreviews_bg_stars_big netreviews_bg_stars_big_gold">
+                            <span style="width: 100%;"></span>
+                        </div>
+                    </div>
+                    <div class ="netreviews_global_rating_details">
+                        <ul class="netreviews_rates_list">
+                            <li class="netreviews_rate_list_item">
+                                <span>1</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent" style="height: 0%;">
+                                        <span class="netreviews_rate_total">0</span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="netreviews_rate_list_item">
+                                <span>2</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent" style="height: 0%;">
+                                        <span class="netreviews_rate_total">0</span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="netreviews_rate_list_item">
+                                <span>3</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent" style="height: 0%;">
+                                        <span class="netreviews_rate_total">0</span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="netreviews_rate_list_item">
+                                <span>4</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent" style="height: 0%;">
+                                        <span class="netreviews_rate_total">0</span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="netreviews_rate_list_item">
+                                <span>5</span>
+                                <img class="netreviews_rate_list_star_image" src="<?php echo $this->getSkinUrl('images/avisverifies/etoileseule1.png') ?>">
+                                <div class="netreviews_rate_graph">
+                                    <span class="netreviews_rate_percent" style="height: 0%;">
+                                        <span class="netreviews_rate_total">0</span>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Other reviews wait button -->
+                <!--<img id="avisVarifiesAjaxImage" src="<?php // echo $this->getSkinUrl('images/avisverifies/pagination-loader.gif') ?>" style="display:none;margin: 0 auto;" />-->
+            </div>
+            
+            
+            <!-- end global rating section -->
+
+            <?php
+            echo Mage::app()->getLayout()->createBlock('core/template')
+                    ->setData('productId', $o_av->idProduct)
+                    ->setTemplate('avisverifies/pagination.phtml')
+                    ->toHtml();
+            ?>
+    <?php endif; ?>
+<?php endif; ?>

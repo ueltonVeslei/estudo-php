@@ -1,0 +1,492 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * AV5 Tecnologia
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL).
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Integrator
+ * @package    Onestic_Skyhub
+ * @copyright  Copyright (c) 2016 Onestic
+ * @author     AV5 Tecnologia <anderson@av5.com.br>
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Onestic_Skyhub>
+            <version>0.5.0</version>
+        </Onestic_Skyhub>
+    </modules>
+    <global>
+    	<models>
+            <onestic_skyhub>
+                <class>Onestic_Skyhub_Model</class>
+                <resourceModel>onestic_skyhub_mysql4</resourceModel>
+            </onestic_skyhub>
+            <onestic_skyhub_mysql4>
+				<class>Onestic_Skyhub_Model_Mysql4</class>
+				<entities>
+		  			<orders>
+						<table>skyhub_orders</table>
+					</orders>
+					<products>
+						<table>skyhub_products</table>
+					</products>
+				</entities>
+	      	</onestic_skyhub_mysql4>
+    	</models>
+        <resources>
+            <onestic_skyhub_setup>
+                <setup>
+                    <module>Onestic_Skyhub</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+                <onestic_skyhub_write>
+	                <connection>
+	                    <use>core_write</use>
+	                </connection>
+	            </onestic_skyhub_write>
+	            <onestic_skyhub_read>
+	                <connection>
+	                    <use>core_read</use>
+	                </connection>
+	            </onestic_skyhub_read>
+            </onestic_skyhub_setup>
+		</resources>
+		<blocks>
+            <onestic_skyhub>
+                <class>Onestic_Skyhub_Block</class>
+            </onestic_skyhub>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_totals>Onestic_Skyhub_Block_Adminhtml_Sales_Order_Totals</sales_order_totals>
+                    <sales_order_invoice_totals>Onestic_Skyhub_Block_Adminhtml_Sales_Order_Invoice_Totals</sales_order_invoice_totals>
+                    <sales_order_creditmemo_totals>Onestic_Skyhub_Block_Adminhtml_Sales_Order_Creditmemo_Totals</sales_order_creditmemo_totals>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+		<helpers>
+            <onestic_skyhub>
+                <class>Onestic_Skyhub_Helper</class>
+            </onestic_skyhub>
+        </helpers>
+		<events>
+	    	<sales_order_save_after>
+	            <observers>
+	                <onestic_skyhub_sales_order_save_after>
+						<type>model</type>
+	                    <class>onestic_skyhub/observer</class>
+	                    <method>updateOrder</method>
+	                </onestic_skyhub_sales_order_save_after>
+	            </observers>
+	        </sales_order_save_after>
+            <model_save_after>
+                <observers>
+                    <onestic_skyhub_model_save_after>
+                        <type>model</type>
+                        <class>onestic_skyhub/observer</class>
+                        <method>updateProductByModel</method>
+                    </onestic_skyhub_model_save_after>
+                </observers>
+            </model_save_after>
+	    </events>
+        <sales>
+            <quote>
+                <totals>
+                    <interest>
+                        <class>onestic_skyhub/quote_address_interest</class>
+                        <after>shipping</after>
+                        <before>grand_total</before>
+                    </interest>
+                </totals>
+            </quote>
+            <order>
+                <totals>
+                    <interest>
+                        <class>onestic_skyhub/quote_address_interest</class>
+                        <after>shipping</after>
+                        <before>grand_total</before>
+                    </interest>
+                </totals>
+            </order>
+            <order_invoice>
+                <totals>
+                    <interest>
+                        <class>onestic_skyhub/order_invoice_interest</class>
+                        <after>shipping</after>
+                        <before>grand_total</before>
+                    </interest>
+                </totals>
+            </order_invoice>
+            <order_creditmemo>
+                <totals>
+                    <interest>
+                        <class>onestic_skyhub/order_creditmemo_interest</class>
+                        <after>shipping</after>
+                        <before>grand_total</before>
+                    </interest>
+                </totals>
+            </order_creditmemo>
+        </sales>
+        <fieldsets>
+            <sales_convert_quote_address>
+                <interest>
+                    <to_order>*</to_order>
+                </interest>
+                <base_interest>
+                    <to_order>*</to_order>
+                </base_interest>
+            </sales_convert_quote_address>
+            <sales_convert_order>
+                <interest>
+                    <to_invoice>*</to_invoice>
+                    <to_shipment>*</to_shipment>
+                    <to_cm>*</to_cm>
+                </interest>
+                <base_interest>
+                    <to_invoice>*</to_invoice>
+                    <to_shipment>*</to_shipment>
+                    <to_cm>*</to_cm>
+                </base_interest>
+            </sales_convert_order>
+        </fieldsets>
+    </global>
+    <frontend>
+		<routers>
+			<onestic_skyhub>
+				<use>standard</use>
+				<args>
+					<frontName>skyhub</frontName>
+					<module>Onestic_Skyhub</module>
+				</args>
+			</onestic_skyhub>
+		</routers>
+	</frontend>
+	<admin>
+		<routers>
+			<onestic_skyhub>
+				<use>admin</use>
+				<args>
+					<frontName>skyhub</frontName>
+					<module>Onestic_Skyhub</module>
+				</args>
+			</onestic_skyhub>
+		</routers>
+	</admin>
+    <adminhtml>
+    	<events>
+			<adminhtml_catalog_product_grid_prepare_massaction>
+				<observers>
+					<add_massaction_products_grid>
+						<class>onestic_skyhub/observer</class>
+						<method>addProductsMassaction</method>
+					</add_massaction_products_grid>
+				</observers>
+			</adminhtml_catalog_product_grid_prepare_massaction>
+			<adminhtml_block_html_before>
+				<observers>
+					<add_massaction_orders_grid>
+						<class>onestic_skyhub/observer</class>
+						<method>addOrdersMassaction</method>
+					</add_massaction_orders_grid>
+				</observers>
+			</adminhtml_block_html_before>
+			<catalog_product_delete_before>
+                <observers>
+                    <sales_quote_observer>
+                        <class>onestic_skyhub/observer</class>
+                        <method>updateProduct</method>
+                    </sales_quote_observer>
+                </observers>
+            </catalog_product_delete_before>
+		</events>
+    	<acl>
+	        <resources>
+	            <admin>
+	                <children>
+	                	<system>
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <onestic_skyhub translate="title" module="onestic_skyhub">
+	                                        <title>Onestic Skyhub</title>
+	                                    </onestic_skyhub>
+	                                </children>
+	                            </config>
+	                        </children>
+	                    </system>
+	                    <sales>
+                            <children>
+                                <onestic_skyhub_orders>
+                                    <title>Pedidos Skyhub</title>
+                                </onestic_skyhub_orders>
+                            </children>
+                        </sales>
+                        <catalog>
+                            <children>
+                                <onestic_skyhub_products>
+                                    <title>Produtos Skyhub</title>
+                                </onestic_skyhub_products>
+                            </children>
+                        </catalog>
+	                </children>
+	            </admin>
+	        </resources>
+	    </acl>
+	    <menu>
+            <sales>
+                <children>
+                    <onestic_skyhub_orders translate="title" module="onestic_skyhub">
+                        <title>Pedidos Skyhub</title>
+                        <action>onestic_skyhub/adminhtml_order</action>
+                        <sort_order>1500</sort_order>
+                    </onestic_skyhub_orders>
+                </children>
+            </sales>
+            <catalog>
+                <children>
+                    <onestic_skyhub_products translate="title" module="onestic_skyhub">
+                        <title>Produtos Skyhub</title>
+                        <action>onestic_skyhub/adminhtml_product</action>
+                        <sort_order>1500</sort_order>
+                    </onestic_skyhub_products>
+                </children>
+            </catalog>
+        </menu>
+        <layout>
+            <updates>
+                <onestic_skyhub>
+                    <file>onestic_skyhub.xml</file>
+                </onestic_skyhub>
+            </updates>
+        </layout>
+    </adminhtml>
+	<default>
+        <carriers>
+            <onestic_entrega>
+                   <active>1</active>
+                   <allowspecific>0</allowspecific>
+	    		   <model>onestic_skyhub/shipping</model>
+                   <name>Skyhub</name>
+                   <title>Forma de envio padrão Skyhub</title>
+                   <handling_type>F</handling_type>
+                   <type>I</type>
+                   <showmethod>1</showmethod>    
+            </onestic_entrega>
+        </carriers>
+        <payment>
+            <skyhub_payment>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_payment>
+            <skyhub_walmart>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Walmart</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_walmart>
+            <skyhub_submarino>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Submarino</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_submarino>
+            <skyhub_shoptime>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Shoptime</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_shoptime>
+            <skyhub_casasbahia>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Casas Bahia</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_casasbahia>
+            <skyhub_rakuten>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Rakuten</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_rakuten>
+            <skyhub_extra>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Extra</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_extra>
+            <skyhub_mercadolivre>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Mercado Livre</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_mercadolivre>
+            <skyhub_meli>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Mercado Livre</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_meli>
+            <skyhub_cdiscount>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub CDiscount</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_cdiscount>
+            <skyhub_pontofrio>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Ponto Frio</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_pontofrio>
+            <skyhub_lojasamericanas>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Lojas Americanas</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_lojasamericanas>
+            <skyhub_zoom>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Zoom</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_zoom>
+            <skyhub_amazon>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Amazon</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_amazon>
+            <skyhub_magazineluiza>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Magazine Luiza</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_magazineluiza>
+            <skyhub_carrefour>
+                <model>onestic_skyhub/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Carrefour</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_carrefour>
+        </payment>
+    </default>
+    <!-- crontab>
+    	<jobs>
+    		<onestic_skyhub_products>
+    			<schedule>
+    				<cron_expr>*/5 * * * *</cron_expr>
+    			</schedule>
+    			<run>
+    				<model>onestic_skyhub/products_updater::products</model>
+    			</run>
+    		</onestic_skyhub_products>
+    		<onestic_skyhub_orders>
+    			<schedule>
+    				<cron_expr>*/15 * * * *</cron_expr>
+    			</schedule>
+    			<run>
+    				<model>onestic_skyhub/updater::orders</model>
+    			</run>
+    		</onestic_skyhub_orders>
+    		<onestic_skyhub_statusmonitor>
+    			<schedule>
+    				<cron_expr>*/45 * * * *</cron_expr>
+    			</schedule>
+    			<run>
+    				<model>onestic_skyhub/updater::statusMonitoring</model>
+    			</run>
+    		</onestic_skyhub_statusmonitor>
+    		<onestic_skyhub_syncexported>
+    			<schedule>
+    				<cron_expr>*/30 * * * *</cron_expr>
+    			</schedule>
+    			<run>
+    				<model>onestic_skyhub/updater::syncExported</model>
+    			</run>
+    		</onestic_skyhub_syncexported>
+    		<onestic_skyhub_syncinvoice>
+    			<schedule>
+    				<cron_expr>*/45 * * * *</cron_expr>
+    			</schedule>
+    			<run>
+    				<model>onestic_skyhub/updater::syncInvoice</model>
+    			</run>
+    		</onestic_skyhub_syncinvoice>
+    		<onestic_skyhub_syncshipment>
+    			<schedule>
+    				<cron_expr>*/45 * * * *</cron_expr>
+    			</schedule>
+    			<run>
+    				<model>onestic_skyhub/updater::syncShipment</model>
+    			</run>
+    		</onestic_skyhub_syncshipment>
+    		<onestic_skyhub_syncdelivery>
+    			<schedule>
+    				<cron_expr>*/45 * * * *</cron_expr>
+    			</schedule>
+    			<run>
+    				<model>onestic_skyhub/updater::syncDelivery</model>
+    			</run>
+    		</onestic_skyhub_syncdelivery>
+    	</jobs>
+    </crontab -->
+</config>

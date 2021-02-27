@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <block type="av5_recaptcha/index" name="av5.recaptcha.js"
+               template="av5/recaptcha/js.phtml"/>
+        <block type="av5_recaptcha/index" name="av5.recaptcha.widget"
+               template="av5/recaptcha/widget.phtml"/>
+        <reference name="before_body_end" ifconfig="av5_recaptcha/config/allpages">
+            <action method="append" ifconfig="av5_recaptcha/config/allpages">
+                <block>av5.recaptcha.js</block>
+            </action>
+            <action method="append" ifconfig="av5_recaptcha/config/allpages">
+                <block>av5.recaptcha.widget</block>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addItem" ifconfig="av5_recaptcha/config/allpages">
+                <type>skin_js</type>
+                <name>js/av5/recaptcha/recaptcha.js</name>
+            </action>
+        </reference>
+    </default>
+
+    <customer_account_create>
+        <reference name="before_body_end" ifconfig="av5_recaptcha/config/createaccount">
+            <action method="append" ifconfig="av5_recaptcha/config/createaccount">
+                <block>av5.recaptcha.js</block>
+            </action>
+            <action method="append" ifconfig="av5_recaptcha/config/createaccount">
+                <block>av5.recaptcha.widget</block>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addItem" ifconfig="av5_recaptcha/config/createaccount">
+                <type>skin_js</type>
+                <name>js/av5/recaptcha/recaptcha.js</name>
+            </action>
+        </reference>
+    </customer_account_create>
+
+    <customer_account_forgotpassword>
+        <reference name="before_body_end" ifconfig="av5_recaptcha/config/forgotpassword">
+            <action method="append" ifconfig="av5_recaptcha/config/forgotpassword">
+                <block>av5.recaptcha.js</block>
+            </action>
+            <action method="append" ifconfig="av5_recaptcha/config/forgotpassword">
+                <block>av5.recaptcha.widget</block>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addItem" ifconfig="av5_recaptcha/config/forgotpassword">
+                <type>skin_js</type>
+                <name>js/av5/recaptcha/recaptcha.js</name>
+            </action>
+        </reference>
+    </customer_account_forgotpassword>
+
+    <contacts_index_index>
+        <reference name="before_body_end" ifconfig="av5_recaptcha/config/contactpage">
+            <action method="append" ifconfig="av5_recaptcha/config/contactpage">
+                <block>av5.recaptcha.js</block>
+            </action>
+            <action method="append" ifconfig="av5_recaptcha/config/contactpage">
+                <block>av5.recaptcha.widget</block>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addItem" ifconfig="av5_recaptcha/config/contactpage">
+                <type>skin_js</type>
+                <name>js/av5/recaptcha/recaptcha.js</name>
+            </action>
+        </reference>
+    </contacts_index_index>
+</layout>

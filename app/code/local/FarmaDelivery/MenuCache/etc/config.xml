@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <FarmaDelivery_MenuCache>
+            <version>0.1.0</version>
+        </FarmaDelivery_MenuCache>
+    </modules>
+    <global>
+        <helpers>
+            <fd_menucache>
+                <class>FarmaDelivery_MenuCache_Helper</class>
+            </fd_menucache>
+        </helpers>
+    </global>
+</config>

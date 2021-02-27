@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <onestic>
+            <label>Onestic</label>
+            <sort_order>200</sort_order>
+        </onestic>
+    </tabs>
+    <sections>
+        <vidalink translate="label" module="onestic_vidalink">
+            <label>Vidalink Delivery</label>
+            <tab>onestic</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <geral translate="label" module="core">
+                    <label>Geral</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <cnpj translate="label" module="cms">
+                            <label>CNPJ Emissor NF</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Informe o CNPJ emissor de notas fiscais</comment>
+                        </cnpj>
+                        <pdv translate="label" module="cms">
+                            <label>Nro. PDV</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Número do PDV para venda concretizada</comment>
+                        </pdv>
+                    </fields>
+                </geral>
+            </groups>
+        </vidalink>
+    </sections>
+</config>

@@ -1,0 +1,220 @@
+<?php
+// get parameters
+$get = $this->getRequest()->getParams();
+$order_id = $get['oid'];
+$get_hash = $get['hash'];
+$rtng = (int)$get['rtng'];
+// retrieve order data
+$order = Mage::getModel('sales/order')->load($order_id);
+$increment_id = $order->getIncrementId();
+$nickname = $order->getCustomerName();
+$customer_email = $order->getCustomerEmail();
+$items = $order->getAllItems();
+// check hash for security reasons
+$salt = "Magento extension created by Briel Software";
+$check_hash = md5($nickname.$order_id.$salt);
+if ($get_hash == $check_hash) {
+	// assemble an array of skus from order details
+	$product_skus = array();
+	foreach ($items as $item_id => $item) {
+		$sku = trim($item->getSku());
+		$_prod = Mage::getModel('catalog/product')->loadByAttribute('sku', array('eq' => $sku));
+		if ($_prod->getTypeId() == "simple") {
+			$parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($_prod->getId());
+			if (!$parentIds) {
+				$parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($_prod->getId());
+			}
+			if (isset($parentIds[0])) {
+				$parent = Mage::getModel('catalog/product')->load($parentIds[0]);
+				$parent_sku = $parent->getSku();
+				if (!in_array($parent_sku, $product_skus)) {
+					$product_skus[] = $parent_sku;
+				}
+			} else {
+				if (!in_array($sku, $product_skus)) {
+					$product_skus[] = $sku;
+				}
+			}
+		} // end of product TYPE IF
+	} // end ITEMS FOREACH
+	// get collections for IF cases
+	$reviews_collection = Mage::getModel('reviewplus/reviews')->getCollection()->addFieldToFilter('order_id', $order_id);
+	foreach ($reviews_collection as $value) {
+		$detail_contents = Mage::getModel('reviewplus/reviews')->load($value->getId())->getData('product_review');
+		$review_status = Mage::getModel('reviewplus/reviews')->load($value->getId())->getData('review_status');
+	}
+	$clientlog_collection = Mage::getModel('reviewplus/clientlog')->getCollection()->addFieldToFilter('order_id', $order_id);
+?>
+
+<div class="reviewplus-wrapper">
+	<?php if (count($reviews_collection) == 0) { ?>
+		<form name="review_form" action="<?php echo $this->getUrl('reviewplus/index/rate') ?>" method="post">
+			<table class="data-table">
+				<thead style="display:none;">
+					<tr>
+					<th width="35%"></th>
+					<th width="65%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach($product_skus as $val) {
+						// get PRODUCT ID by sku
+						$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $val);
+						$product_id = $product->getId();
+						// write data to REVIEWPLUS REVIEWS table
+						$reviewplus_reviews_db = Mage::getModel('reviewplus/reviews');
+						$reviewplus_reviews_db->setData('order_id', $order_id)->save();
+						$reviewplus_reviews_db->setData('product_sku', $val)->save();
+						$reviewplus_reviews_db->setData('customer_name', $nickname)->save();
+						$reviewplus_reviews_db->setData('customer_email', $customer_email)->save();
+						$reviewplus_reviews_db->setData('product_rating', $rtng)->save();
+						$reviewplus_reviews_db->setData('product_review', '')->save();
+						$reviewplus_reviews_db->setData('review_status', 'pending')->save();
+						$reviewplus_reviews_db->setData('store_id', Mage::app()->getStore()->getId())->save();
+						$reviewplus_reviews_db->setData('posted_time', time())->save();
+						$reviewplus_reviews_id = $reviewplus_reviews_db->getId();
+					?>
+						<tr>
+						<td style="padding:20px;">
+							<div class="form-list" style="margin-bottom:10px;">
+								<label><?php echo $product->getName(); ?></label>
+							</div>
+							<br />
+							<div class="product-image">
+								<img src="<?php echo $product->getSmallImageUrl(); ?>" alt="<?php echo $val; ?>" style="width:100px; height:100px; border: 1px solid #b6b6b6;" />
+							</div>
+						</td>
+						<td style="padding:20px;">
+							<input type="hidden" name="sku[<?php echo $val; ?>]" value="<?php echo $val; ?>">
+							<input type="hidden" name="nickname[<?php echo $val; ?>]" value="<?php echo $nickname; ?>">
+							<input type="hidden" name="rating-id[<?php echo $val; ?>]" value="<?php echo $reviewplus_reviews_id; ?>">
+							<div class="form-list">
+								<label class="required rating-label" for=""><em> *</em><?php echo $this->__('Rating'); ?></label>
+								<ul id="rating_stars_<?php echo $product_id; ?>" class="star-rating">
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="1" class="one-star <?php if ($rtng == 1) { echo 'current-rating'; } ?>">1</a></li>			
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="2" class="two-stars <?php if ($rtng == 2) { echo 'current-rating'; } ?>">2</a></li>						
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="3" class="three-stars <?php if ($rtng == 3) { echo 'current-rating'; } ?>">3</a></li>								
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="4" class="four-stars <?php if ($rtng == 4) { echo 'current-rating'; } ?>">4</a></li>								
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="5" class="five-stars <?php if ($rtng == 5) { echo 'current-rating'; } ?>">5</a></li>
+									<input type="hidden" name="rating[<?php echo $val; ?>]" value="<?php echo $rtng; ?>">
+								</ul>
+								<label class="required review-label" for=""><em> *</em><?php echo $this->__('Title'); ?></label>
+								<div class="input-box">
+									<input type="text" name="title[<?php echo $val; ?>]" class="input-box required-entry" style="padding: 5px 10px; border: 1px solid #b6b6b6;"></textarea>
+								</div>
+								<label class="required review-label" for=""><em> *</em><?php echo $this->__('Review'); ?></label>
+								<div class="input-box">
+									<textarea name="detail[<?php echo $val; ?>]" class="required-entry" style="width:390px; height:70px; padding:10px;"></textarea>
+								</div>
+							</div>
+						</td>
+						</tr>
+					<?php } // end FOREACH ?>
+				</tbody>
+				<tfoot>
+					<tr>
+					<td style="border-top:1px solid #BEBCB7;"></td>
+					<td style="border-top:1px solid #BEBCB7; padding:10px 20px; text-align:right; vertical-align:middle;">
+						<button id="review-submit-btn" onclick="review_form.submit();" class="button" type="button" title="<?php echo $this->__('Submit'); ?>"><span><span><?php echo $this->__('Submit'); ?></span></span></button>
+					</td>
+					</tr>
+				</tfoot>
+			</table>
+		</form>
+	<?php } else if (count($reviews_collection) == count($product_skus) && strlen($detail_contents) == 0 && $review_status == 'pending') { ?>
+		<form name="review_form" action="<?php echo $this->getUrl('reviewplus/index/rate') ?>" method="post">
+			<table class="data-table">
+				<thead style="display:none;">
+					<tr>
+					<th width="35%"></th>
+					<th width="65%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach($product_skus as $val) { 
+						$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $val);
+						$product_id = $product->getId();
+						$reviewplus_reviews_coll = Mage::getModel('reviewplus/reviews')->getCollection();
+						$reviewplus_reviews_coll->addFieldToFilter('order_id', $order_id)->addFieldToFilter('product_sku', $val);
+						foreach ($reviewplus_reviews_coll as $reviewplus_reviews_entry) {
+							$reviewplus_reviews_id = $reviewplus_reviews_entry->getId();
+						}
+					?>
+						<tr>
+						<td style="padding:20px;">
+							<div class="form-list" style="margin-bottom:10px;">
+								<label><?php echo $product->getName(); ?></label>
+							</div>
+							<br />
+							<div class="product-image">
+								<img src="<?php echo $product->getSmallImageUrl(); ?>" alt="<?php echo $val; ?>" style="width:100px; height:100px; border: 1px solid #b6b6b6;" />
+							</div>
+						</td>
+						<td style="padding:20px;">
+							<input type="hidden" name="sku[<?php echo $val; ?>]" value="<?php echo $val; ?>">
+							<input type="hidden" name="nickname[<?php echo $val; ?>]" value="<?php echo $nickname; ?>">
+							<input type="hidden" name="rating-id[<?php echo $val; ?>]" value="<?php echo $reviewplus_reviews_id; ?>">
+							<div class="form-list">
+								<label class="required rating-label" for=""><em> *</em><?php echo $this->__('Rating'); ?></label>
+								<ul id="rating_stars_<?php echo $product_id; ?>" class="star-rating">
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="1" class="one-star <?php if ($rtng == 1) { echo 'current-rating'; } ?>">1</a></li>			
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="2" class="two-stars <?php if ($rtng == 2) { echo 'current-rating'; } ?>">2</a></li>						
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="3" class="three-stars <?php if ($rtng == 3) { echo 'current-rating'; } ?>">3</a></li>								
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="4" class="four-stars <?php if ($rtng == 4) { echo 'current-rating'; } ?>">4</a></li>								
+									<li><a href="javascript:void(0);" onclick="setRating(this);" title="5" class="five-stars <?php if ($rtng == 5) { echo 'current-rating'; } ?>">5</a></li>
+									<input type="hidden" name="rating[<?php echo $val; ?>]" value="<?php echo $rtng; ?>">
+								</ul>
+								<label class="required review-label" for=""><em> *</em><?php echo $this->__('Title'); ?></label>
+								<div class="input-box">
+									<input type="text" name="title[<?php echo $val; ?>]" class="input-box required-entry" style="padding: 5px 10px; border: 1px solid #b6b6b6;"></textarea>
+								</div>
+								<label class="required review-label" for=""><em> *</em><?php echo $this->__('Review'); ?></label>
+								<div class="input-box">
+									<textarea name="detail[<?php echo $val; ?>]" class="required-entry" style="width:390px; height:70px; padding:10px;"></textarea>
+								</div>
+							</div>
+						</td>
+						</tr>
+					<?php } // end FOREACH ?>
+				</tbody>
+				<tfoot>
+					<tr>
+					<td style="border-top:1px solid #BEBCB7;"></td>
+					<td style="border-top:1px solid #BEBCB7; padding:10px 20px; text-align:right; vertical-align:middle;">
+						<button id="review-submit-btn" onclick="review_form.submit();" class="button" type="button" title="<?php echo $this->__('Submit'); ?>"><span><span><?php echo $this->__('Submit'); ?></span></span></button>
+					</td>
+					</tr>
+				</tfoot>
+			</table>
+		</form>
+	<?php } else if (count($reviews_collection) == count($product_skus) && strlen($detail_contents) == 0 && $review_status == 'approved') { ?>
+		<ul class="messages">
+			<li class="success-msg"><ul><li><span><?php echo $this->__('Your review has been logged. Thank you for your time!'); ?></span></li></ul></li>
+		</ul>
+	<?php } else if (count($reviews_collection) == count($product_skus) && strlen($detail_contents) >= 2) { ?>
+		<ul class="messages">
+			<li class="success-msg"><ul><li><span><?php echo $this->__('Your review has been logged. Thank you for your time!'); ?></span></li></ul></li>
+		</ul>
+	<?php } // end of collection IF ELSE IF ?>
+</div>
+
+<script type="text/javascript">
+	review_form = new VarienForm('review_form', false);
+	
+	function setRating(elmnt) {
+		var parent_ul_id = $(elmnt).up('li').up('ul').readAttribute('id');
+		var super_selector = '#' + parent_ul_id + ' a.current-rating';
+		$$(super_selector).each(function(e) {
+			e.removeClassName('current-rating');
+		});
+		$(elmnt).addClassName('current-rating');
+		$(elmnt).up('li').next('input').value = $(elmnt).readAttribute('title');
+	}
+</script>
+
+
+<?php } else { ?>
+	<ul class="messages">
+		<li class="error-msg"><ul><li><span><?php echo $this->__('Access denied!'); ?></span></li></ul></li>
+	</ul>
+<?php } // end HASH check IF ELSE ?>

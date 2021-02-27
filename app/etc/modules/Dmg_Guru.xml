@@ -1,0 +1,8 @@
+<config>
+  <modules>
+    <Dmg_Guru>
+      <active>true</active>
+      <codePool>community</codePool>
+    </Dmg_Guru>
+  </modules>
+</config>

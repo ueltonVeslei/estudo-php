@@ -1,0 +1,86 @@
+<div class="content-header">
+	<h3><?php echo $this->__('Help'); ?></h3>
+	<div class="a-right">
+		<button type="button" class="scalable back" title="<?php echo $this->__('Back'); ?>" onclick="javascript: history.back();"><span><?php echo $this->__('Back'); ?></span></button>
+	</div>
+</div>
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h4>General Overview</h4>
+	</div>
+	<div class="box">
+		<p>ReviewPlus will help boost product reviews by sending a review notification email to customers. Once the recipient opens the email and clicks on the rating he will be redirected to a product review form. </p>
+		<ul style="list-style: square; margin-bottom: 10px;">
+			<li style="margin-left: 20px;">Once installed and properly configured, the extension will start logging magento orders as per extension settings.</li>
+			<li style="margin-left: 20px;">Each day it will automatically compile a list of clients that will receive a product review notification email. This is based on when the order was placed and on extension settings.</li>
+			<li style="margin-left: 20px;">You can also send emails manually from Magento admin, through <strong>Briel ReviewPlus > Manage Customer Log</strong>, by using the <strong>Send followup email</strong> massaction on the upper right corner of the grid.</li>
+			<li style="margin-left: 20px;">When a client opens and email and clicks on one of the star ratings he/she is redirected to a review form, from where he/she can fill in a review (and change ratings if need be). <br /><span style="color: grey;">NOTE: If the client bought two products, the extension will display two forms, one for each product.</span></li>
+			<li style="margin-left: 20px;">All you have to do is go to <strong>Briel ReviewPlus > Product Reviews</strong> and approve the reviews via the <strong>Approve</strong> massaction in the upper right corner of the grid. Now your reviews will appear on your store's product page, just as Magento reviews do.</li>
+		</ul>
+		<p>That's it. You should see a dramatic increase in product reviews for your store, helping build customer confidence in your products and services.</p>
+		<p>Now we will take a step by step look of <strong>how to properly configure the extension</strong>, so that you get the maximum out of it.</p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 1</h4>
+	</div>
+	<div class="box">
+		<p>Go to <strong>System > Transactional Emails</strong>. Select the entry called <strong>ReviewPlus 1.0.0 Transactional</strong>. This is the email that will be sent out to customers. Edit any texts to your needs, just be sure to <strong style="color: #eb5e00;">keep the variables intact</strong>.</p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 2</h4>
+	</div>
+	<div class="box">
+		<p>Once you are done with Step 1, we need to configure the extension to work properly. Go to <strong>Briel ReviewPlus > Settings</strong>.</p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 3</h4>
+	</div>
+	<div class="box">
+		<p>Set the extension to Enabled.</p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 4</h4>
+	</div>
+	<div class="box">
+		<p>The <strong>Followup Email Days Delay</strong> setting sets the number of days after which the client will receive the review notification email.</p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 5</h4>
+	</div>
+	<div class="box">
+		<p><strong>Start Hour</strong> sets the hour of the day when the extension will start sending emails to customers. This field accepts a value between 0 and 23. So if you want emails to start going out at 2:00 PM, just fill in 14.</p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 6</h4>
+	</div>
+	<div class="box">
+		<p>
+			Automated email sending works on a CRON job. It is set to run every five minutes, after the Start Hour. <strong>Emails per CRON</strong> controls how many emails it sends on every CRON job. So for example, if set to 3 it will send 3 emails every 5 minutes, amounting to 36 emails per hour.<br />
+			<span style="color: gray">NOTE: Make sure CRON is set up on your server and cron.php from Magento root is set to run every five minutes. This file compiles a list of scheduled tasks that Magento needs to run on the next CRON job. You can also set to run every 10 minutes for example, but then the amount of emails sent in an hour will be halved.</span>
+		</p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 7</h4>
+	</div>
+	<div class="box">
+		<p>The <strong>Bcc</strong> setting expects and email address (or multiple email addresses, separated by commas). Basically, these addresses will receive a carbon copy of every email sent out by the extension. </p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 8</h4>
+	</div>
+	<div class="box">
+		<p><strong>Email Template</strong> is <strong style="color: #eb5e00;">the most vital setting</strong>. Please select from the dropdown the entry named <strong>ReviewPlus 1.0.0 Transactional</strong>. It's the transactional email we edited on step 1. </p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>Step 9</h4>
+	</div>
+	<div class="box">
+		<p>Equally important is the last setting on the list: <strong>Select Order Status</strong>. Orders are logged by ReviewPlus when they reach the order status selected in this field. You can select multiple statuses by CTRL+Click. </p>
+	</div>
+	<div class="entry-edit-head">
+		<h4>That's it!</h4>
+	</div>
+	<div class="box">
+		<p>Now that everything is configured, all you need to do is sit back and let the extension log orders and send review notification emails. Incoming reviews can be approved or edited from <strong>Briel ReviewPlus > Product Reviews</strong> grid. <span style="color: grey;">Please note that only pending reviews can be edited.</span></p>
+	</div>
+</div>

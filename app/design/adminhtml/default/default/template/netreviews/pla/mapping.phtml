@@ -1,0 +1,35 @@
+<?php
+$data = Mage::helper('netreviews_pla')->getGoogleContentArray();
+$rows_count = count($data);
+Netreviews_Pla_Block_Adminhtml_Edit_Content::loadFeed();
+?>
+<?php for ($i = 0; $i < $rows_count; $i++): ?>
+    <tr class="<?php echo ($i % 2 == 0) ? 'even' : 'odd' ?>">
+        <td>
+            <div class="aefeaf">
+                <?php
+                    if ($data[$i]['name'] == "description") { // Mark required field
+                ?>
+                        <input readonly="readonly" class="rutyeg" type="text" class="input-text" name="field[<?php echo $i; ?>][name]" value="<?php echo __("product_name"); ?>" />
+                <?php
+                    } else {
+                ?>
+                        <input readonly="readonly" class="rutyeg" type="text" class="input-text" name="field[<?php echo $i; ?>][name]" value="<?php echo $data[$i]['name']; ?>" />
+                    <?php } ?>
+            </div>
+        </td>
+        <td>
+            <div>
+                <select style="width: 200px"  id="mapping-<?php echo $i; ?>-static-value" type="text" class="input-text" name="field[<?php echo $i; ?>][static_value]" >
+                    <?php echo Netreviews_Pla_Block_Adminhtml_Edit_Content::getAttributeSelect($data[$i]['name']); // Recover value saved ?>
+                </select>
+                <?php
+                if ($data[$i]['name'] == "id") { // Mark required field
+                    echo "*";
+                }
+                ?>
+            </div>
+        </td>
+    </tr>
+<?php endfor; ?>
+

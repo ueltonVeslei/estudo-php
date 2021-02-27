@@ -1,0 +1,186 @@
+<?xml version="1.0" ?>
+<config>
+    <tabs>
+        <avisverifies module="avisverifies" translate="label">
+            <label>VerifiedReviews</label>
+            <sort_order>100</sort_order>
+        </avisverifies>
+    </tabs>
+    <sections>
+        <avisverifies module="avisverifies" translate="label tab">
+            <label>Configuration</label>
+            <tab>VerifiedReviews</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>200</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <introtext translate="label">
+                    <label>General Info</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>1</sort_order>
+                    <expanded>0</expanded>
+                    <comment><![CDATA[You must set the configuration VerifiedReviews according to a website module. Select from the list on the left, the website that you want to set.]]></comment>
+                </introtext>
+                <system translate="label">
+                    <label>System integration</label>
+                    <show_in_default>0</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>10</sort_order>
+                    <fields>
+                        <enabledwebsite translate="label comment">
+                            <label>Enable Module on this Website</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>8</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[By activating the module, you will reap your reviews sites. To harvest the products reviews, go to the last part of the configuration.]]></comment>
+                        </enabledwebsite>
+                        <idwebsite translate="label">
+                            <label>IdWebsite</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </idwebsite>
+                        <secretkey translate="label">
+                            <label>Secret Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </secretkey>
+                    </fields>
+                </system>
+                <extra>
+                    <label>Advanced configuration</label>
+                    <show_in_default>0</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <sort_order>20</sort_order>
+                    <fields>
+<!--                        <use_product_sku translate="label comment">
+                            <label>Use product SKU instead the product ID</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This configuration is used to identify product by their sku instead of their sql ids.]]></comment>
+                        </use_product_sku>-->
+                        <use_product_url translate="label comment">
+                            <label>Use product url in product list stars link</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Select Yes to redirect to the product page instead to redirect to the reviews page.]]></comment>
+                        </use_product_url>
+                        <add_review_to_product_page translate="label comment">
+                            <label>Add reviews to product page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This configuration is used to add the product reviews block to the product page.]]></comment>
+                        </add_review_to_product_page>
+                        <number_reviews_in_product_page translate="label comment">
+                            <label>Number of product reviews to display:</label>
+                            <comment>Choose the number of product reviews that you want to display by default.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>avisverifies/system_config_source_dropdown_numbervalues</source_model>
+                            <sort_order>41</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_reviews_in_product_page>
+                        <add_review_helpful_button translate="label comment">
+                            <label>Add review helpful button?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>42</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This option allow to add the helpful review button below each product review.]]></comment>
+                        </add_review_helpful_button>
+                        <product_light_widget translate="label comment">
+                            <label>Use the product light widget</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>45</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Use this configuration to change the type of product widget to small design.]]></comment>
+                        </product_light_widget>
+                        <has_jquery translate="label comment">
+                            <label>jQuery is present on the website?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Change to Yes if jQuery is used in the website.]]></comment>
+                        </has_jquery>
+            <force_product_parent_id translate="label comment">
+                    <label>Get product parent IDs</label>
+                    <frontend_type>select</frontend_type>
+                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                    <sort_order>70</sort_order>
+                    <show_in_default>0</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[This configuration is used to tell our module to only get the parent id of the child id.]]></comment>
+            </force_product_parent_id>
+                        <show_empty_product_message translate="label comment">
+                            <label>Show 'No product reviews' message</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This configuration is used to tell our module to show a 'No product reviews' message.]]></comment>
+                        </show_empty_product_message>
+                        <activate_rich_snippets translate="label comment">
+                            <label>Enable Rich-Snipets in the product page?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Netreviews_Avisverifies_Model_RichsnippetsList</source_model>
+                            <sort_order>270</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This configuration is used to add Rich-Snippets on your product page, please note that this feature may go into conflict with your integration of Rich-Snippets.]]></comment>
+                        </activate_rich_snippets>
+                        <responsive_div_design translate="label comment">
+                            <label>Use tiny responsive design in product reviews?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>275</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This will hide the graph filters. Select Yes only if the product reviews are displaying in a small block (for example: 400px.).]]></comment>
+                        </responsive_div_design>
+                    </fields>
+                </extra>
+            </groups>
+        </avisverifies>
+    </sections>
+</config>

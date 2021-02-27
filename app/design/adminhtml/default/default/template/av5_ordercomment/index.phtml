@@ -1,0 +1,36 @@
+<?php 
+$helper = Mage::helper("av5_ordercomment");
+?>
+<div class="content-header">
+    <table class="grid-header">
+        <tr>
+            <td><h3>Comentários em Massa</h3></td>
+            <td class="a-right">
+            	<button onclick="editForm.submit()" class="scalable save" type="button"><span>Executar</span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+    <form id="edit_form" name="edit_form" method="post" action="<?php echo $this->getUrl('*/*/post')?>" target="_self"  enctype="multipart/form-data">
+        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+        <div class="fieldset " id="importer_form">
+		    <div class="hor-scroll">
+		    	<table cellspacing="0" class="form-list">
+		        	<tbody>
+						<tr>
+						    <td class="label"><label for="nome">Arquivo para importação <span class="required">*</span></label></td>
+						    <td class="value">
+						        <input id="arquivo" name="arquivo" class="required-entry file required-entry" type="file" />
+						    </td>
+		    			</tr>
+		    		</tbody>
+		    	</table>
+		    </div>
+		</div>
+    </form>
+</div>
+<script type="text/javascript">
+    var editForm = new varienForm('edit_form');
+</script>
+

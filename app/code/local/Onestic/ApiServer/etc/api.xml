@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <api>
+        <resources>
+        	<apiserver translate="title" module="onestic_apiserver">
+        		<title>ApiServer</title>
+        		<model>onestic_apiserver/api</model>
+        		<acl>apiserver</acl>
+        		<methods>
+                    <consultarEstoque translate="title" module="onestic_apiserver">
+                        <title>Consulta Estoque de Determinado Produto</title>
+                        <acl>apiserver/consultarEstoque</acl>
+                    </consultarEstoque>				
+                    <consultarEstoqueProdutos translate="title" module="onestic_apiserver">
+                        <title>Consulta estoque dos produtos</title>
+                        <acl>apiserver/consultarEstoqueProdutos</acl>
+                    </consultarEstoqueProdutos>
+                    <consultarProdutos translate="title" module="onestic_apiserver">
+                        <title>Consulta produtos</title>
+                        <acl>apiserver/consultarProdutos</acl>
+                    </consultarProdutos>
+        			<enviarPedido translate="title" module="onestic_apiserver">
+        				<title>Envia pedido para registro</title>
+        				<acl>apiserver/enviarPedido</acl>
+        			</enviarPedido>
+        			<syncInvoice translate="title" module="onestic_apiserver">
+        				<title>Consulta nota fiscal de pedido</title>
+        				<acl>apiserver/syncInvoice</acl>
+        			</syncInvoice>
+        			<syncShipment translate="title" module="onestic_apiserver">
+        				<title>Consulta entrega de pedido</title>
+        				<acl>apiserver/syncShipment</acl>
+        			</syncShipment>
+        			<importProduct translate="title" module="onestic_apiserver">
+        				<title>Importa produtos</title>
+        				<acl>apiserver/importProduct</acl>
+        			</importProduct>
+        			<updateProduct translate="title" module="onestic_apiserver">
+        				<title>Atualiza Produtos</title>
+        				<acl>apiserver/updateProduct</acl>
+        			</updateProduct>
+        		</methods>
+        	</apiserver>
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <apiserver>apiserver</apiserver>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <apiserver translate="title" module="onestic_apiserver">
+	        		<title>ApiServer</title>
+                    <consultarEstoque translate="title" module="onestic_apiserver">
+                        <title>Consulta Estoque de Determinado Produto</title>
+                    </consultarEstoque>						
+                    <consultarEstoqueProdutos translate="title" module="onestic_apiserver">
+                        <title>Consulta estoque dos produtos</title>
+                    </consultarEstoqueProdutos>
+                    <consultarProdutos translate="title" module="onestic_apiserver">
+                        <title>Consulta produtos</title>
+                    </consultarProdutos>
+                    <enviarPedido translate="title" module="onestic_apiserver">
+                        <title>Envia pedido para registro</title>
+                    </enviarPedido>
+                    <syncInvoice translate="title" module="onestic_apiserver">
+                        <title>Consulta nota fiscal de pedido</title>
+                    </syncInvoice>
+                    <syncShipment translate="title" module="onestic_apiserver">
+                        <title>Consulta entrega de pedido</title>
+                    </syncShipment>
+                    <importProduct translate="title" module="onestic_apiserver">
+                        <title>Importa produtos</title>
+                    </importProduct>
+                    <updateProduct translate="title" module="onestic_apiserver">
+                        <title>Atualiza Produtos</title>
+                    </updateProduct>
+	        	</apiserver>
+            </resources>
+        </acl>
+    </api>
+</config>

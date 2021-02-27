@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Biostore_Pontosweb>
+			<version>0.1.0</version>
+		</Biostore_Pontosweb>
+	</modules>
+	<frontend>
+        <routers>
+            <biostore_pontos>
+                <use>standard</use>
+                <args>
+                    <module>Biostore_Pontosweb</module>
+                    <frontName>pontosweb</frontName>
+                </args>
+            </biostore_pontos>
+        </routers>  
+    </frontend>
+</config>

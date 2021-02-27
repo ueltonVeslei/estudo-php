@@ -1,0 +1,45 @@
+<?php 
+/**
+ * @project     LEImageSlider
+ * @package     LitExtension_LEImageSlider
+ * @author      LitExtension
+ * @email       litextension@gmail.com
+ */
+?>
+<?php
+if ($data != "") {
+    $leimageslider_id = "leimageslider-".$group_config['leimageslider_group_id'];
+    $leimageslider_wrap_id = "leimageslider-wrap-".$group_config['leimageslider_group_id'];
+    ?>
+    <div class="slider-wrapper <?php echo "theme-" . $group_config['theme']; ?>" id="<?php echo $leimageslider_wrap_id;?>">
+        <div id="<?php echo $leimageslider_id;?>" class="nivoSlider">
+            <?php
+            echo $data;
+            ?>
+        </div>
+    </div>
+
+    <style type="text/css">#<?php echo $leimageslider_id;?>{}#<?php echo $leimageslider_id;?> .nivo-caption{opacity:<?php echo $group_config['bgtransparency'] ?>!important;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=<?php echo $group_config['bgtransparency']*100;?>)";-moz-opacity:<?php echo $group_config['bgtransparency']?>;-khtml-opacity:<?php echo $group_config['bgtransparency']?>;background:#<?php echo $group_config['bgcolor']?>!important;font-size:<?php echo $group_config['textsize']?>px!important;color:#<?php echo $group_config['textcolor']?>!important;padding:<?php echo $group_config['textmargin']?>px!important;}#<?php echo $leimageslider_wrap_id?>{width:<?php echo ($group_config['width'])?>!important;}</style>
+    <script type="text/javascript">
+        var $j = jQuery.noConflict();
+        $j(document).ready(function() { 
+            $j('#<?php echo $leimageslider_id;?>').nivoSlider({
+                effect:"<?php echo $group_config['effect'];?>",
+                animSpeed:<?php echo $group_config['animspeed'];?>,
+                pauseTime:<?php echo $group_config['pausetime'];?>,
+                startSlide:<?php echo $group_config['startslide'];?>,
+                directionNav:<?php echo ($group_config['dirnav']==1)?"true":"false";?>,
+                controlNav:<?php echo ($group_config['controlnav']==1)?"true":"false";?>,
+                pauseOnHover:<?php echo ($group_config['pausehorver']==1)?"true":"false";?>,
+                manualAdvance:<?php echo ($group_config['autoplay']==1)?"false":"true";?>,
+                prevText:"<?php echo $group_config['pretext'];?>",
+                nextText:"<?php echo $group_config['nexttext'];?>",
+            });
+            <?php if ($group_config['theme']!='bar'){ ?>
+                $j("#<?php echo $leimageslider_id;?> a.nivo-prevNav").text("");
+                $j("#<?php echo $leimageslider_id;?> a.nivo-nextNav").text("");
+            <?php } ?>  
+        });
+    </script>
+<?php
+}

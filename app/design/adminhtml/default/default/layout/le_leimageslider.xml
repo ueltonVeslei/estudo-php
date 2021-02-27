@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @project     LEImageSlider
+ * @package     LitExtension_LEImageSlider
+ * @author      LitExtension
+ * @email       litextension@gmail.com
+ */
+-->
+<layout>
+    <default>
+    </default>
+
+    <adminhtml_leimageslider_slide_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="leimageslider/adminhtml_slide_grid" name="leimageslider_grid"/>
+        </block>
+    </adminhtml_leimageslider_slide_grid>
+
+    <adminhtml_leimageslider_slide_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>leimageslider/leimageslider</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="leimageslider/adminhtml_slide_edit" name="leimageslider_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="leimageslider/adminhtml_slide_edit_tabs" name="leimageslider_tabs"></block>
+        </reference>
+    </adminhtml_leimageslider_slide_edit>
+
+
+    <adminhtml_leimageslider_group_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>leimageslider/leimageslider</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="leimageslider/adminhtml_group" name="leimageslider_group" />
+        </reference>
+    </adminhtml_leimageslider_group_index>
+
+    <adminhtml_leimageslider_group_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="leimageslider/adminhtml_group_grid" name="leimageslider_group_grid"/>
+        </block>
+    </adminhtml_leimageslider_group_grid>
+
+    <adminhtml_leimageslider_group_edit>
+        <update handle="editor"/>
+        <reference name="head">
+            <action method="addJs">
+                <file>le_imageslider/le_pb_validation.js</file>
+            </action>
+            <action method="addJs">
+                <file>le_imageslider/jscolor/jscolor.js</file>
+            </action>
+        </reference>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>leimageslider/leimageslider</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="leimageslider/adminhtml_group_edit" name="leimageslider_group_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="leimageslider/adminhtml_group_edit_tabs" name="leimageslider_group_tabs"></block>
+        </reference>
+    </adminhtml_leimageslider_group_edit>
+
+</layout>

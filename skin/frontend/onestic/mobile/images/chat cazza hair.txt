@@ -1,0 +1,79 @@
+[12/09/2011 17:39:10] simone_rasquinho: Olá, leonardogmontenegro! Gostaria de adicioná-lo ao Skype. Simone da Cazza Hair
+[09:30:53] simone_rasquinho: Olá, Leonardo.
+[09:31:00] simone_rasquinho: Vou ficar online hoje.
+[09:33:10] simone_rasquinho: Quanto ao problema do Pag Seguro, o mesmo só esta dando para os cleintes que utilizam cupom, pois o Subtotal é um valor muito baixo, tipo menos de R$ 10,00, pois mesmo com esse erro tem vários pedidos confirmados lá.
+[10:59:48] leonardogmontenegro: leonardogmontenegro dividiu informações de contato com simone_rasquinho
+[11:00:49] leonardogmontenegro: bom, entao temos um ponto a seguir: o erro acontece com o cupon de desconto
+[11:01:18] leonardogmontenegro: vou dar uma olhada. só me dá um minuto que eu já te chamo
+[11:19:15] simone_rasquinho: Ok, falei que era somente com pedidos de valores pequenos, mas teve uma cliente que falou que fez um pedido de R$ 152,00 e deu erro.
+[11:20:17] leonardogmontenegro: Esta anotado aqui, vou testar todos os casos, ok?
+[11:20:30] simone_rasquinho: ok.
+[12:04:50] leonardogmontenegro: simone, me passa o numero do pedido desse cliente que fez um pedido de 152,00?
+[12:14:25] simone_rasquinho: é 9111 da Elisangela
+[12:14:35] leonardogmontenegro: ok
+[12:57:46] leonardogmontenegro: tem um minuto?
+[13:11:06] simone_rasquinho: Oi, pode falar
+[13:11:30] leonardogmontenegro: criei um cupon chamado PAGCARRINHO
+[13:12:09] leonardogmontenegro: usei em algumas compras q fiz e:
+[13:12:18] leonardogmontenegro: deu certo em algumas
+[13:12:30] leonardogmontenegro: em outras o desconto naofoi
+[13:12:48] leonardogmontenegro: mas o erro apresentado nao apareceu
+[13:13:18] leonardogmontenegro: vou continuar a procurar esse erro
+[13:13:31] simone_rasquinho: vou fazer um teste e ver se o erro ainda persisti
+[13:13:38] leonardogmontenegro: ok
+[13:16:45] simone_rasquinho: O erro ainda persisti, fiz o mesmo pedido, o subtotal deu R$ 68,85, coloquei o cupom de R$ 60,00 e ficou R$ 8,85 mais o valor do frete de R$ 11,40, cliquei em finalizar e foi direcionado ou Pag Seguro e deu o erro.
+[13:17:43] simone_rasquinho: Uma vez, na primeira promoção de cupom que teve no site, deu esse erro, mas avisaram que só daria se o valor do pedido sem o frete estivesse zerado, mas neste caso ele não esta.
+[13:18:30] simone_rasquinho: se quiser eu te passo o login e senha do Pag seguro para você averiguar
+[13:19:02] leonardogmontenegro: entendi... sabe me dizer existe outras regras que possam estar mexendo com o valor do produto, além do desconto?
+[13:19:32] leonardogmontenegro: por favor, pode me passar o login e senha do pagseguro para leonardo.montenegro@egbr.com.br
+[13:19:35] simone_rasquinho: não, só tem o cupom de R$ 60,00, outra regra só vale para pagamento por boleto.
+[13:19:55] leonardogmontenegro: os testes q estou fazendo sao por boleto
+[13:20:49] simone_rasquinho: mas o desconto só vale se a pessoa escolher como forma de pagamento Boleto Bancário não Pag Seguro.
+[13:21:38] leonardogmontenegro: simone, ja volto a falar com vc. aguardo seu email. vou fazer outros testes. até logo
+[13:21:56] simone_rasquinho: já estou enviando, até
+[14:51:40] simone_rasquinho: Leonardo, gostaria de te pedir uma favor.
+[14:52:20] simone_rasquinho: Gostaria se possível de entrar em contato com o Bruno, pois pedi umas mudanças para ele e gostaria de saber quando ficaram prontas. Já enviei um monte de e-mail e ele não me respondeu nenhuma.
+[14:52:38] simone_rasquinho: O Sr. Florival esta me cobrando e não sei mais o que faço.
+[14:54:03] leonardogmontenegro: Simone
+[14:54:23] leonardogmontenegro: o Bruno nao veio hj, faleceu o tio dele
+[14:54:24] simone_rasquinho: sim
+[14:55:11] leonardogmontenegro: se o problema for referente a meio de pagamento
+[14:55:14] leonardogmontenegro: é só com ele
+[14:55:32] leonardogmontenegro: se vc tiver os numeros dos tickets, eu vejo aqui no sistema
+[14:55:37] simone_rasquinho: solicitei isso dia 11/08
+[14:55:44] simone_rasquinho: e não me deram se quer um prazo
+[14:55:48] simone_rasquinho: a única mudança foi na conta para depósito
+[14:55:53] leonardogmontenegro: vc tem o numero do ticket?
+[14:55:58] simone_rasquinho: e isso semana passada
+[14:56:05] simone_rasquinho: tenho
+[14:56:47] simone_rasquinho: [Ticket#2011090610000077] [Ticket#2011081610000149]
+[15:13:56] leonardogmontenegro: Simone,
+amanha vou cobrar pessoalmente do bruno e vejo pq não foi feito ainda. Só encontrei as interações conhecidas. Amanha eu passo um feed back.
+[15:22:07] simone_rasquinho: ok, muito obrigado.
+[16:18:13] leonardogmontenegro: simone, td bem?
+[16:18:19] leonardogmontenegro: esta ai?
+[16:35:37] simone_rasquinho: voltei agora
+[16:43:38] leonardogmontenegro: olha so, quero fazer um teste com vc. vou colocar o cupon pra desabilitar as outras regras
+[16:43:55] leonardogmontenegro: tenta fazer a recompra daquele pedido que tem o valor alto, por favor
+[16:44:03] leonardogmontenegro: ok?
+[16:44:23] simone_rasquinho: ok
+[16:45:23] leonardogmontenegro: espera eu fazer a mudanca
+[16:46:08] leonardogmontenegro: ja salvei a regra
+[16:46:11] leonardogmontenegro: pode testar?
+[16:46:15] simone_rasquinho: ok
+[16:50:16] simone_rasquinho: Deu erro. Fiz a mesma compra de um shampoo e um condicionador da Redken de litro e no Pag Seguro não apareceu o shampoo, apareceu outro condicionador e o primeiro com o valor completamente errado, de R$ 111,60 foi para R$ 434,88.
+[16:50:46] simone_rasquinho: Assim:PRODUTO  QUANTIDADE  VALOR  TOTAL
+Redken Real Con  1  R$ 434,88  R$ 434,88
+Redken Real Con  1  R$ 111,60  R$ 111,60
+
+Total: R$ 546,48
+[16:55:42] leonardogmontenegro: simone, vamos combinar o seguinte?
+vou tirar o pagseguro como meio de pagamento e deixar o restante.
+Enquanto o pagseguro fica fora, vou ver o que pode estar acontecendo.
+
+Combinado?
+[16:57:01] simone_rasquinho: Ok, apesar da promoção do cupom já esta terminando, mas por via das dúvidas é melhor ficar desabilitado.
+[16:57:41] leonardogmontenegro: eu vou ver com outras pessoas o que pode estar acontecendo, acho melhor desabilitar, ok?
+[16:58:18] simone_rasquinho: Ok
+[16:59:49] leonardogmontenegro: bom, muito obrigado pela sua atenção. Assim q eu tiver uma resposta eu retornarei
+simone_rasquinho

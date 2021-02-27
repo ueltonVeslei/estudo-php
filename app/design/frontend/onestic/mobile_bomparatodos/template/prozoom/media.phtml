@@ -1,0 +1,99 @@
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/prototype.prozoom.js') ?>"></script>
+
+<?php
+$_product = $this->getProduct();
+$_helper = $this->helper('catalog/output');
+$main_img = '';
+$thumb_image_size = array(56, 56);
+$small_image_size = array(275, 275);
+?>
+<?php
+if ($_product->getImage() != 'no_selection' && $_product->getImage()):
+    $main_img = $this->helper('catalog/image')->init($_product, 'image')->__toString();
+    ?>
+    <a href="<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>" onclick="return false" class="prozoom-image" title=" bom para todos <?php echo $this->htmlEscape($_product->getImageLabel()) ?>">
+        <?php
+        $_img = '<img id="image" src="' . $this->helper('catalog/image')->init($_product, 'image')->resize($small_image_size[0], $small_image_size[1]) . '" alt=" bom para todos ' . $this->htmlEscape($_product->getImageLabel()) . '" title=" bom para todos ' . $this->htmlEscape($_product->getImageLabel()) . '" />';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+        ?>
+    </a>
+    <?php
+else:
+    $_img = '<img src="' . $this->helper('catalog/image')->init($_product, 'image')->resize($small_image_size[0], $small_image_size[1]) . '" alt=" bom para todos ' . $this->htmlEscape($_product->getImageLabel()) . '" title=" bom para todos ' . $this->htmlEscape($_product->getImageLabel()) . '" />';
+    echo $_helper->productAttribute($_product, $_img, 'image');
+endif;
+?>
+
+<p class="msg-image">
+    <span>*</span> Imagem meramente ilustrativa.<br />
+    <span>*</span> O tom da cor do produto pode variar conforme seu monitor.<br />
+    <span>*</span> Promoção válida enquanto durar o estoque.
+</p>
+
+<?php if (count($this->getGalleryImages()) > 0): ?>
+    <div class="more-views">
+        <ul class="more-views-list">
+            <?php
+            $i = 0;
+            foreach ($this->getGalleryImages() as $_image):
+                $cur_img = $this->helper('catalog/image')->init($_product, 'image', $_image->getFile());
+                ?>
+                <li class="<?php echo $main_img == $cur_img->__toString() ? 'active' : '' ?>">
+                    <a class="prozoom-small-image" onclick="return false" href="<?php echo $cur_img ?>" title=" bom para todos <?php echo $this->htmlEscape($_image->getLabel()) ?>">
+                        <img class="small-image" 
+                             style="display: none;" 
+                             src="<?php echo $cur_img->resize($small_image_size[0], $small_image_size[1]) ?>"
+                             alt=" bom para todos <?php echo $this->htmlEscape($_image->getLabel()) ?>"
+                             title=" bom para todos <?php echo $this->htmlEscape($_image->getLabel()) ?>"
+                             />
+                        <img src="<?php echo $cur_img->resize($thumb_image_size[0], $thumb_image_size[1]) ?>" 
+                             alt=" bom para todos <?php echo $this->htmlEscape($_image->getLabel()) ?>"
+                             title=" bom para todos <?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
+                    </a>
+                </li>
+                <?php $i++; ?>
+                <?php if (is_int($i / 4)): ?>
+                </ul><ul class="more-views-list">
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<?php $_prozoomConfig = Mage::getStoreConfig('prozoom') ?> 
+
+<script type="text/javascript">
+    function initProzoom(){
+        new Prozoom('a.prozoom-image', { 
+            zoomType: "<?php echo $_prozoomConfig['general']['zoomType'] ?>",
+            imageOpacity: <?php echo $_prozoomConfig['general']['imageOpacity'] ?>,
+            alwaysOn: <?php echo (int) $_prozoomConfig['general']['alwaysOn'] ?>,
+            preloadImages: <?php echo (int) $_prozoomConfig['general']['preloadImages'] ?>,
+            showPreload: <?php echo (int) $_prozoomConfig['general']['showPreload'] ?>,
+            preloadText: "<?php echo $_prozoomConfig['general']['preloadText'] ?>",
+            lens: <?php echo (int) $_prozoomConfig['lens']['enabled'] ?>,
+            lensCursor: "<?php echo $_prozoomConfig['lens']['cursor'] ?>",
+            lensReset: <?php echo (int) $_prozoomConfig['lens']['reset'] ?>,
+            lensOpacity: <?php echo $_prozoomConfig['lens']['opacity'] ?>,
+            position: "<?php echo $_prozoomConfig['stage']['position'] ?>",
+            zoomWidth: <?php echo (int) $_prozoomConfig['stage']['width'] ?>,
+            zoomHeight: <?php echo (int) $_prozoomConfig['stage']['height'] ?>,
+            xOffset: <?php echo (int) $_prozoomConfig['stage']['xOffset'] ?>,
+            yOffset: <?php echo (int) $_prozoomConfig['stage']['yOffset'] ?>,
+            title: <?php echo (int) $_prozoomConfig['stage']['showTitle'] ?>,
+            showEffect: "<?php echo $_prozoomConfig['stage']['showEffect'] ?>",
+            hideEffect: "<?php echo $_prozoomConfig['stage']['hideEffect'] ?>",
+            showSpeed: <?php echo $_prozoomConfig['stage']['showSpeed'] ?>,
+            hideSpeed: <?php echo $_prozoomConfig['stage']['hideSpeed'] ?>
+        });
+    }
+    if (Prototype.Browser.IE) {
+        Event.observe(window, 'load', function(){ //KB927917 fix
+            initProzoom();
+        });
+    } else {
+        document.observe("dom:loaded", function(){
+            initProzoom();
+        });
+    }
+</script>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ShopInDev
+ *
+ * @category    ShopInDev
+ * @package     ShopInDev_SuperXmlFeed
+ * @copyright   Copyright (c) 2016 ShopInDev
+ * @license     http://opensource.org/licenses/GPL-3.0 GNU General Public License (GPL)
+ */
+-->
+<layout>
+    <adminhtml_superxmlfeed_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadRulesJs"><flag>1</flag></action>
+        </reference>
+        <reference name="js">
+            <block type="adminhtml/template" name="superxmlfeed.scripts" template="shopindev/superxmlfeed/scripts.phtml"/>
+        </reference>
+    </adminhtml_superxmlfeed_edit>
+</layout>

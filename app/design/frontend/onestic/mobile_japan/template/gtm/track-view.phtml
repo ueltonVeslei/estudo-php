@@ -1,0 +1,61 @@
+<?php
+$customer = '';
+if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+  $customer = Mage::getSingleton('customer/session')->getCustomer();
+}
+?>
+
+<?php
+$product_Sku = Mage::registry('current_product')->getSku();
+$currentCatIds = Mage::registry('current_product')->getCategoryIds();
+$categoryCollection = Mage::getResourceModel('catalog/category_collection')
+                     ->addAttributeToSelect('name')
+                     ->addAttributeToSelect('url')
+                     ->addAttributeToFilter('entity_id', $currentCatIds)
+                     ->addIsActiveFilter();
+
+$categoriesNames = '';
+$categoriesIds = '';
+$sizeOf = sizeof($categoryCollection);
+$index = 1;
+
+$productPrice = Mage::registry('current_product')->getPrice();
+$productPrice = Mage::helper('core')->currency($productPrice, true, FALSE);
+$productPrice = filter_var($productPrice, FILTER_SANITIZE_NUMBER_INT);
+$productPrice = $productPrice . '.00';
+
+$productFinalPrice = Mage::registry('current_product')->getPrice();
+$productFinalPrice = Mage::helper('core')->currency($productFinalPrice, true, FALSE);
+$productFinalPrice = filter_var($productFinalPrice, FILTER_SANITIZE_NUMBER_INT);
+$productFinalPrice = $productFinalPrice . '.00';
+
+foreach($categoryCollection as $k => $categorie){
+  $categoriesNames = $categoriesNames . $categorie->getName();
+  $categoriesIds = $categoriesIds . $categorie->getId();
+  if ($index < $sizeOf){
+    $categoriesNames = $categoriesNames . ',';
+    $categoriesIds = $categoriesIds . ',';
+  }
+  $index++;
+}
+?>
+
+<script type="text/javascript">
+    dataLayer = [{
+        pageName: "product",
+        productId: "<?php echo Mage::registry('current_product')->getSku(); ?>",
+        productName: "<?php echo Mage::registry('current_product')->getName(); ?>",
+        productPriceDefault: "<?php echo $productPrice; ?>",
+        productPrice: "<?php echo $productFinalPrice; ?>",
+        productStock: "<?php echo Mage::getModel('cataloginventory/stock_item')->loadByProduct(Mage::registry('current_product'))->getIsInStock(); ?>",
+        productCategoryId: "<?php echo $categoriesIds; ?>",
+        productDesc: "",
+        productPhoto: "<?php echo Mage::registry('current_product')->getImageUrl(); ?>",
+        productDepartment: "",
+        productCategory: "<?php echo $categoriesNames; ?>",
+        productSubCategory: "",
+        productBrand: "<?php echo Mage::registry('current_product')->getAttributeText('manufacturer'); ?>",
+        clientEmail: "<?php if($customer): ?><?php echo $customer->getEmail(); ?><?php endif; ?>",
+        event: "isProduct"
+    }];
+</script>

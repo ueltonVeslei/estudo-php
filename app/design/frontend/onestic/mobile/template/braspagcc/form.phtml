@@ -1,0 +1,399 @@
+<?php
+if ($_SERVER['SERVER_PORT'] == 443)
+    $baseURL = "https://" . $_SERVER["HTTP_HOST"];
+else
+    $baseURL = "http://" . $_SERVER["HTTP_HOST"];
+
+try {
+    $base = Mage::getSingleton('checkout/session')->getQuote()->getData();
+    $quote = Mage::getSingleton('checkout/session')->getQuote();
+    $shipping_price = $quote->getShippingAddress()->getShippingAmount();
+    $total = $quote->getGrandTotal();
+    //$valor_total = 0;
+    $valor_total = $total;
+} catch (Exception $e) {
+    
+}
+
+$_code = $this->getMethodCode();
+$method = $this->getMethod();
+$availableFlags = $this->getEnabledFlags();
+?>
+<script>
+    function showOpParc(flagCode, flagName){
+<?php foreach ($availableFlags as $flag): ?>
+                            document.getElementById('parc_<?php print $flag->getName(); ?>').style.display = (flagName == '<?php print $flag->getName(); ?>') ? 'block' : 'none';
+<?php endforeach; ?>
+
+<?php /*
+  if ( flagName == 'hipercard' ){
+  document.getElementById('li_cc_cid').style.display = 'block';
+  $('cc_cid').className = "required-entry input-text validate-cc-cvn";
+  $('braspagcc_cc_number').writeAttribute("maxlength", "19");
+  }else if ( flagName == 'aura' ){
+  document.getElementById('li_cc_cid').style.display = 'none';
+  $('cc_cid').className = "input-text";
+  $('braspagcc_cc_number').writeAttribute("maxlength", "20");
+  }else{
+  document.getElementById('li_cc_cid').style.display = 'block';
+  $('cc_cid').className = "required-entry input-text validate-cc-cvn";
+  $('braspagcc_cc_number').writeAttribute("maxlength", "16");
+  }
+ */ ?>
+		
+                    if (<?php
+$i = 1;
+if (count((array) $this->getEnabledSoapFlags())):
+    foreach ($this->getEnabledSoapFlags() as $flag):
+        if ($flag->getUseSoap()):
+            ?>
+                                                    flagName == '<?php print $flag->getName(); ?>' 
+            <?php if ($i != count($this->getEnabledSoapFlags())) print "||" ?>
+            <?php
+        endif;
+        $i++;
+    endforeach;
+else:
+    print "false";
+endif;
+?>){
+                        //document.getElementById('card_data').style.display = 'block';
+                        // Sempre que exibir um cartão, esconde oi paggo
+                        // document.getElementById('boxoipaggo').style.display = 'none';
+                        setMageCcCode(flagName);
+                    }
+                    document.getElementById('payment[nome_bandeira]').value = flagName;
+                    document.getElementById('payment[bandeira]').value = flagCode;
+                }
+
+                function setParcelamento(numero_parcelas, valor_parcela, juros, nome_bandeira){
+                    document.getElementById('payment[numero_parcelas]').value = numero_parcelas;
+                    document.getElementById('payment[valor_parcela]').value = valor_parcela;
+                    document.getElementById('payment[juros]').value = juros;
+                    $MW_Onestepcheckout.get(
+                        '<?php echo str_replace('http','https',Mage::getUrl()) ?>onestepcheckout/index/loadreview?np=' + numero_parcelas + '&vp=' + valor_parcela + '&j=' + juros,
+                        {},
+                        function(data){
+                            $MW_Onestepcheckout('#checkout-review-load').html(data);			
+                        }
+                    );
+                }
+
+                function setMageCcCode(flagName){
+                    var mageCcCode = "";
+                    switch(flagName){
+                        case "visa":{
+                                mageCcCode = "VI";
+                                break;
+                            }
+                        case "mastercard":{
+                                mageCcCode = "MC";
+                                break;
+                            }
+                        case "amex":{
+                                mageCcCode = "AE";
+                                break;
+                            }
+                        case "diners":{
+                                mageCcCode = "DI";
+                                break;
+                            }
+                        case "aura":{
+                                mageCcCode = "AU";
+                                break;
+                            }
+                        case "hipercard":{
+                                mageCcCode = "HI";
+                                break;
+                            }
+                        case "elo":{
+                                mageCcCode = "EL";
+                                break;
+                            }		
+                        default:{
+                                break;
+                            }
+                    }
+                    // document.getElementById("cartao_description").innerHTML = "<strong>"+flagName.charAt(0).toUpperCase() + flagName.slice(1)+"</strong>";
+                    document.getElementById("cc_type").value = mageCcCode;
+                }
+</script>
+<div id="payment_form_<?php echo $_code ?>">
+    <p id="mensagem-pagamento">Selecione o parcelamento desejado e informe os dados de seu cartão</p>
+    <!-- Quantidade de parcelas -->
+    <input type="hidden" name="payment[numero_parcelas]" id="payment[numero_parcelas]" value="" />
+    <input type="hidden" name="payment[valor_parcela]" id="payment[valor_parcela]" value="" />
+    <input type="hidden" name="payment[juros]" id="payment[juros]" value="0" />
+    <input type="hidden" name="payment[nome_bandeira]" id="payment[nome_bandeira]" value="" />
+    <input type="hidden" name="payment[bandeira]" id="payment[bandeira]" value="" />
+
+    <div id="boxparcelas">
+        <div class="loading-parcelas" style="display:none"></div>
+<?php foreach ($availableFlags as $flag): ?>
+            <div id="parc_<?php echo $flag->getName(); ?>" class="block_parcelas" style="display:none;">
+                <table width='245' class="parcelas-table">
+                    <tr>
+                        <td width='50%' colspan="2" align='center'><strong>Parcelas</strong></td>
+                        <td align='center' width='50%'><strong>Valor da Parcela</strong></td>
+                    </tr>
+                    <?php
+                    $arrParcelamento = $flag->getParcelamento($valor_total);
+                    foreach ($arrParcelamento as $parcelamento) {
+                        $valor_parcela = number_format($parcelamento["valorParcela"], 2, '.', '');
+
+                        if ($parcelamento["temJuros"]) {
+                            $comSem = "com";
+                            $color = 'color:#666;';
+                        } else {
+                            $comSem = "sem";
+                            $color = 'color:#ca0000;';
+                        }
+
+                        if (($parcelamento["temJuros"] % 2) == 0) {
+                            $bg = " style='$color' ";
+                        } else {
+                            $bg = "style='$color'";
+                        }
+                        ?>
+                        <tr>
+                            <td align='center' <?= $bg ?>>
+                                <input type="radio" id="<?= $flag->getName(); ?>_parcelamento_<?php echo $parcelamento["numeroParcelas"] ?>" name="<?php echo $flag->getLabel(); ?>" onClick="setParcelamento(this.getAttribute('numero_parcelas'), this.getAttribute('valor_parcela'), this.getAttribute('juros'), '<?php echo $flag->getName(); ?>')" valor_parcela="<? echo $valor_parcela; ?>" numero_parcelas="<? echo $parcelamento["numeroParcelas"]; ?>" juros="<?php echo $parcelamento['temJuros']; ?>" <?
+						if ($parcelamento["numeroParcelas"] == 1) {
+                            echo "checked";
+                        }
+                        ?> >
+                            </td>
+                            <td align='center'><?= $parcelamento["numeroParcelas"]; ?> X <? echo $comSem ?> juros</td>
+                            <td align='center' <?= $bg ?>><strong>R$ <?= $valor_parcela ?></strong></td>
+                        </tr>
+                        <?
+                    }
+                    ?>
+                </table>
+            </div>
+    <?php endforeach ?>
+    </div>
+
+    <?php /* $i = 1; ?>
+      <div id="flags-bandeiras">
+      <?php foreach ($availableFlags as $flag): ?>
+      <input type="radio" id="bandeira_<?php echo $flag->getName(); ?>" name="payment[bandeira]" value="<?php echo $flag->getCode(); ?>" onclick="showOpParc(<?php echo $flag->getCode(); ?>, '<?php echo $flag->getName(); ?>')"  <?php if ($i == 1) print 'class="radio validate-one-required-by-name"'; ?> />
+      <?php $i++; ?>
+      <?php endforeach; ?>
+      </div>
+      <?php */ ?>
+    <ul id="dados-cartao">
+        <li>
+            <div class="input-box">
+                <label for="<?php echo $_code ?>_cc_number"><span class="required">*</span> <?php echo $this->__('N&uacute;mero do cart&atilde;o') ?>:</label>
+                <input maxlength="19" type="text" autocomplete="off" id="<?php echo $_code ?>_cc_number" name="payment[cc_number]" title="<?php echo $this->__('Número do cartão') ?>" class="input-text required-entry " value=""/>
+
+                <div id="icons_bandeira">
+<?php foreach ($availableFlags as $flag): ?>
+                             <?php if ($flag->getName() != 'oipaggo'): ?>
+                            <img src="<?php echo $this->getSkinUrl("images/_cards/parcelamento/" . $flag->getName() . ".png") ?>" 
+                                 id="icons_bandeira_<?php echo $flag->getName(); ?>" style="display: none;"/>
+    <?php endif; ?>
+<?php endforeach; ?>
+                    <img src="<?php echo $this->getSkinUrl("images/_cards/parcelamento/cartao_desconhecido.png") ?>" 
+                         id="icons_bandeira_desconhecido" style="display: none;"/>
+                </div>
+                <span id="bandeira_erro_msg" style="display: none">Número do cartão não reconhecido</span>
+            </div>
+        </li>
+        <li>
+            <div class="input-box">
+                <label for="<?php echo $_code ?>_expiration"><span class="required">*</span> <?php echo $this->__('Validade') ?>:</label>
+                <div class="v-fix">
+                    <select id="<?php echo $_code ?>_expiration" style="width:120px; height:30px" name="payment[cc_exp_month]" class="required-entry">
+                            <?php $_ccExpMonth = $this->getInfoData('cc_exp_month') ?>
+                            <?php foreach ($this->getCcMonths() as $k => $v): ?>
+                            <option value="<?php echo $k ? $k : '' ?>"<?php if ($k == $_ccExpMonth): ?> selected="selected"<?php endif ?>>
+    <?php echo ($v == 'Month') ? 'Mês' : $v; ?></option>
+<?php endforeach ?>
+                    </select>
+                </div>
+                <div class="v-fix" style="padding-left:5px;">
+                        <?php $_ccExpYear = $this->getInfoData('cc_exp_year') ?>
+                    <select id="<?php echo $_code ?>_expiration_yr" style="width:70px; height:30px" name="payment[cc_exp_year]" class="required-entry">
+                            <?php foreach ($this->getCcYears() as $k => $v): ?>
+                            <option value="<?php echo $k ? $k : '' ?>"<?php if ($k == $_ccExpYear): ?> selected="selected"<?php endif ?>>
+    <?php echo ($v == 'Year') ? 'Ano' : $v; ?></option>
+<?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="input-box">
+                <label for="<?php echo $_code ?>_cc_number"><span class="required">*</span> <?php echo $this->__('Nome do titular') ?>:</label>
+                <input type="text" id="<?php echo $_code ?>_cc_holder" name="payment[holder]" title="<?php echo $this->__('Nome do Portador do Cartão') ?>" class="input-text required-entry" value=""/>
+            </div>
+        </li>
+        <li id="li_cc_cid">
+            <div class="input-box">
+                <label for="<?php echo $_code ?>_cc_cid"><span class="required">*</span> <?php echo $this->__('Código de Segurança') ?>:</label>
+                <div class="v-fix"><input maxlength="4" type="text" title="<?php echo $this->__('Código de verificação') ?>" class="required-entry input-text validate-cc-cvn" id="cc_cid" name="payment[cc_cid]" style="width:3em;" value=""/></div>
+            </div>
+        </li>
+    </ul>
+
+    <input type="hidden" id="cc_type" name="payment[cc_type]" class="required-entry">
+</div>
+
+<script language="JavaScript">
+
+showOpParc(71, 'visa');
+                    
+function validateRange(cc, min, max) {
+    if ((cc < min) || (cc > max)) {
+        return false;
+    } else 
+        return true;
+}
+
+$j(document).ready(function(){
+
+    // Efetua a validaçao dos numeros dos cartões
+    $j('#braspagcc_cc_number').keyup(function(){
+
+        $j('.block_parcelas').addClass('opacidade');
+        $j('.loading-parcelas').show();
+
+        $j('#icons_bandeira_desconhecido').hide();
+        $j('#bandeira_erro_msg').hide();
+        $j(this).removeClass('bandeira_erro');
+
+        document.getElementById('payment[nome_bandeira]').value = '';
+			
+        var cardNumber = $j(this).val();
+        if(cardNumber.length >= 13 && cardNumber.length <= 19){
+            $j('#icons_bandeira img').hide();
+
+            var parcelamento = (document.getElementById('payment[numero_parcelas]').value == '')? 1: document.getElementById('payment[numero_parcelas]').value;
+				
+            if (/^(34|37)/.test(cardNumber) && cardNumber.length == 15){
+                $j('#icons_bandeira_amex').show();
+                showOpParc(182, 'amex');
+                $j('#amex_parcelamento_'+parcelamento).click();
+                $j(this).removeClass('bandeira_erro');
+                $j('#bandeira_erro_msg').hide();
+                document.getElementById('payment[nome_bandeira]').value = 'amex';
+                $j('#li_cc_cid').show().find('imput').addClass('required-entry');
+            }
+
+            if (/^(51|52|53|54|55)/.test(cardNumber) && cardNumber.length == 16){
+                $j('#icons_bandeira_mastercard').show();
+                showOpParc(120, 'mastercard');
+                $j('#mastercard_parcelamento_'+parcelamento).click();
+                $j(this).removeClass('bandeira_erro');
+                $j('#bandeira_erro_msg').hide();
+                document.getElementById('payment[nome_bandeira]').value = 'mastercard';
+                $j('#li_cc_cid').show().find('imput').addClass('required-entry');
+            }
+				
+            if (/^(4)/.test(cardNumber) && (cardNumber.length == 13 || cardNumber.length == 16)){
+                $j('#icons_bandeira_visa').show();
+                showOpParc(71, 'visa');
+                $j('#visa_parcelamento_'+parcelamento).click();
+                $j(this).removeClass('bandeira_erro');
+                $j('#bandeira_erro_msg').hide();
+                document.getElementById('payment[nome_bandeira]').value = 'visa';	
+                $j('#li_cc_cid').show().find('imput').addClass('required-entry');	
+            }
+
+            /*
+                                if (/^(2014|2149)/.test(cardNumber) && cardNumber.length == 15){
+                                        $j('#icons_bandeira_enroute').show();
+                                        $j('#bandeira_enroute').click();
+                                        $j('#enroute_parcelamento_'+parcelamento).click();
+                                        $j(this).removeClass('bandeira_erro');
+                                        $j('#bandeira_erro_msg').hide();
+                                        document.getElementById('payment[nome_bandeira]').value = 'enroute'
+                                        $j('#li_cc_cid').show().find('imput').addClass('required-entry');
+                                }
+             */
+
+            if (/^(384100|384140|384160)/.test(cardNumber) && cardNumber.length == 19){
+                $j('#icons_bandeira_hipercard').show();
+                showOpParc(62, 'hipercard');
+                $j('#hipercard_parcelamento_'+parcelamento).click();
+                $j(this).removeClass('bandeira_erro');
+                $j('#bandeira_erro_msg').hide();
+                document.getElementById('payment[nome_bandeira]').value = 'hipercard';
+                $j('#li_cc_cid').show().find('imput').addClass('required-entry');
+            }
+
+            if (/^(606282)/.test(cardNumber) && cardNumber.length == 16){
+                $j('#icons_bandeira_hipercard').show();
+                showOpParc(62, 'hipercard');
+                $j('#hipercard_parcelamento_'+parcelamento).click();
+                $j(this).removeClass('bandeira_erro');
+                $j('#bandeira_erro_msg').hide();
+                document.getElementById('payment[nome_bandeira]').value = 'hipercard';
+                $j('#li_cc_cid').show().find('imput').addClass('required-entry');
+            }
+
+            if (/^(300|301|302|303|304|305|36|38)/.test(cardNumber) && cardNumber.length == 14){
+                $j('#icons_bandeira_diners').show();
+                showOpParc(20, 'diners');
+                $j('#diners_parcelamento_'+parcelamento).click();
+                $j(this).removeClass('bandeira_erro');
+                $j('#bandeira_erro_msg').hide();
+                document.getElementById('payment[nome_bandeira]').value = 'diners';
+                $j('#li_cc_cid').show().find('imput').addClass('required-entry');
+            }
+
+            if (/^(5078)/.test(cardNumber) && cardNumber.length == 19){
+                $j('#icons_bandeira_aura').show();
+                showOpParc(37, 'aura');
+                $j('#aura_parcelamento_'+parcelamento).click();
+                $j(this).removeClass('bandeira_erro');
+                $j('#bandeira_erro_msg').hide();
+                document.getElementById('payment[nome_bandeira]').value = 'aura';
+                $j('#li_cc_cid').hide().find('imput').removeClass('required-entry');
+            }
+
+            /*
+                                if (/^(907605)/.test(cardNumber) || validateRange(v, '5126735500008000', '5126736000008999')){
+                                        $j('#icons_bandeira_amoedo').show();
+                                        $j(this).removeClass('bandeira_erro');
+                                        $j('#bandeira_erro_msg').hide();
+                                        return;
+                                }
+				
+                                showOpParc(126, 'elo')
+                                showOpParc(37, 'aura')
+             */
+
+            if(document.getElementById('payment[nome_bandeira]').value.length > 0){
+                $j('.block_parcelas').removeClass('opacidade');
+                $j('.loading-parcelas').hide();
+            }
+				
+        }else if(cardNumber.length == 0){
+            $j('.block_parcelas').removeClass('opacidade');
+            $j('.loading-parcelas').hide();
+        }else{
+            $j('#icons_bandeira img').hide();
+        }
+    }).blur(function(){
+        $j('.block_parcelas').removeClass('opacidade');
+        $j('.loading-parcelas').hide();
+        var cardNumber = $j(this).val();
+        if(cardNumber.length >= 13 && cardNumber.length <= 19){
+            if(document.getElementById('payment[nome_bandeira]').value.length == 0){
+                $j('#icons_bandeira_desconhecido').show();
+                $j('#bandeira_erro_msg').show();	
+                $j(this).addClass('bandeira_erro');
+            }
+        }else{
+            $j('#icons_bandeira_desconhecido').show();
+            $j('#bandeira_erro_msg').show();
+            $j(this).addClass('bandeira_erro');
+            $j(this).val('');
+        }
+    });
+		
+}); 
+</script>

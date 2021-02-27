@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Integração com o Flowseo
+ *
+ * @category   Flowecommerce
+ * @package    Flowecommerce_Flowseo
+ * @copyright  Author Flow-ecommerce (gabriel@flowecommerce.com)
+ * @copyright  Copyright (c) 2008
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Flowecommerce_Busca>
+            <version>0.1.0</version>
+        </Flowecommerce_Busca>
+    </modules>
+    <global>
+        <blocks>
+            <busca>
+                <class>Flowecommerce_Busca_Block</class>
+            </busca>
+            <catalogsearch>
+                <rewrite>
+                    <term>Flowecommerce_Busca_Block_Rewrite_CatalogSearch_Term</term>
+                </rewrite>
+            </catalogsearch>
+            <catalog>
+                <rewrite>
+                    <product_list_toolbar>Flowecommerce_Busca_Block_Rewrite_Catalog_Toolbar</product_list_toolbar>
+                </rewrite>
+            </catalog>
+        </blocks>
+        <helpers>
+            <busca>
+                <class>Flowecommerce_Busca_Helper</class>
+            </busca>
+        </helpers>
+        <models>
+            <class>Flowecommerce_Busca_Model</class>
+        </models>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <busca>
+                    <file>busca.xml</file>
+                </busca>
+            </updates>
+        </layout>
+        <routers>
+            <busca>
+                <use>standard</use>
+                <args>
+                    <module>Flowecommerce_Busca</module>
+                    <frontName>busca</frontName>
+                </args>
+            </busca>
+        </routers>
+    </frontend>
+    <busca>
+        <layout>
+            <updates>
+                <busca>
+                    <file>busca.xml</file>
+                </busca>
+            </updates>
+        </layout>
+        <routers>
+            <busca>
+                <use>standard</use>
+                <args>
+                    <module>Flowecommerce_Busca</module>
+                    <frontName>busca</frontName>
+                </args>
+            </busca>
+        </routers>
+    </busca>
+    <default>
+        <web>
+            <routers> <!-- declare default routers-->
+                <busca><area>busca</area><class>Flowecommerce_Busca_Controller_Router_Busca</class></busca>
+            </routers>
+        </web>
+    </default>
+</config>

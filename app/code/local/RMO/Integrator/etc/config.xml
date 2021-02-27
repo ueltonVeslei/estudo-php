@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <RMO_Integrator>
+            <version>1.0.2</version>
+        </RMO_Integrator>
+    </modules>
+    <global>
+        <blocks>
+                <rmointegrator>
+                    <class>RMO_Integrator_Block</class>
+                </rmointegrator>
+                <googleanalytics>
+                    <rewrite>
+                         <ga>RMO_Integrator_Block_Ga</ga>
+                    </rewrite>                     
+                </googleanalytics>
+            </blocks>
+        <models>
+            <fastsimpleimport>
+                <rewrite>
+                    <import_entity_product>RMO_Integrator_Model_ImportExport_Import_Entity_Product</import_entity_product>
+                </rewrite>
+            </fastsimpleimport>
+            <rmointegrator>
+                <class>RMO_Integrator_Model</class>
+                <resourceModel>rmointegrator_resource</resourceModel>
+            </rmointegrator>
+            <rmointegrator_resource>
+                <class>RMO_Integrator_Model_Resource</class>
+                 <entities>
+                    <catalog_product_integrator>
+                        <table>integrator_product</table>
+                    </catalog_product_integrator>
+                 </entities>
+            </rmointegrator_resource>
+        </models>
+        <resources>
+            <rmointegrator_setup>
+                <setup>
+                    <module>RMO_Integrator</module>
+                    <class>RMO_Integrator_Model_Resource_Setup</class>
+                </setup>
+            </rmointegrator_setup>
+        </resources>
+        <helpers>
+            <rmointegrator>
+                <class>RMO_Integrator_Helper</class>
+            </rmointegrator>
+        </helpers>
+        <fieldsets>
+            <sales_convert_quote>
+                <skyhub_code>
+                    <to_order>*</to_order>
+                </skyhub_code>
+            </sales_convert_quote>
+            <sales_convert_order>
+                <skyhub_code>
+                    <to_quote>*</to_quote>
+                </skyhub_code>
+            </sales_convert_order>
+            <sales_convert_quote_address>
+                <celular>
+                    <to_order_address>*</to_order_address>
+                    <to_customer_address>*</to_customer_address>
+                </celular>
+            </sales_convert_quote_address>
+            <customer_address>
+                <celular>
+                    <to_quote_address>*</to_quote_address>
+                </celular>
+            </customer_address>
+        </fieldsets>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <skyhub>
+                    <file>skyhub.xml</file>
+                </skyhub>
+            </updates>
+        </layout>
+        <routers>
+            <rmointegrator>
+                <use>standard</use>
+                <args>
+                    <module>RMO_Integrator</module>
+                    <frontName>integrator</frontName>
+                </args>
+            </rmointegrator>
+        </routers>
+    </frontend>
+    
+          
+    <default>
+        
+        <rmointegrator>
+            <sale>
+                <order_webstore>default</order_webstore>
+            </sale>
+            <catalog>
+                <catalog_webstore>default</catalog_webstore>
+                <import_disabled>true</import_disabled>
+                <export_configurable_without_variations>false</export_configurable_without_variations>
+                <length_attribute_code>volume_comprimento</length_attribute_code>
+                <height_attribute_code>volume_altura</height_attribute_code>
+                <width_attribute_code>volume_largura</width_attribute_code>
+                <visibilities_to_export>4</visibilities_to_export>
+            </catalog>
+        </rmointegrator>
+
+        
+        <carriers>
+            <skyhub_shipping>
+                    <active>1</active>
+                    <sallowspecific>0</sallowspecific>
+		    <model>rmointegrator/sale_shipping</model>
+                    <name>Skyhub</name>
+                    <title>Formas de envio configurados na Skyhub</title>
+                    <handling_type>F</handling_type>
+                    <type>I</type>
+                    <showmethod>1</showmethod>    
+            </skyhub_shipping>
+        </carriers>
+
+        <payment>
+            <skyhub_payment>
+                <model>rmointegrator/sale_payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_payment>
+
+            <skyhub_submarino>
+                <model>rmointegrator/sale_payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Submarino</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_submarino>
+
+            <skyhub_lojas>
+                <model>rmointegrator/sale_payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Lojas Americanas</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_lojas>
+            
+            <skyhub_shoptime>
+                <model>rmointegrator/sale_payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Shoptime</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_shoptime>
+
+            <skyhub_extra>
+                <model>rmointegrator/sale_payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Extra</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_extra>
+
+            <skyhub_walmart>
+                <model>rmointegrator/sale_payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>Skyhub Extra</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </skyhub_walmart>
+        </payment>
+    </default>
+</config>

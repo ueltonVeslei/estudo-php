@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+ <modules>
+   <Onestic_Performa>
+       <active>true</active>
+       <codePool>local</codePool>
+   </Onestic_Performa>
+ </modules>
+</config>

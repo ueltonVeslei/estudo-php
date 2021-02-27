@@ -1,0 +1,7 @@
+<?php
+$cart = Mage::getModel('checkout/cart')->getQuote();
+foreach ($cart->getAllItems() as $item) {
+    $product_Sku = $item->getProduct()->getSku();
+?>
+
+<?php } ?>

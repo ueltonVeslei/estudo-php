@@ -1,0 +1,14 @@
+<?php
+
+class Flowecommerce_Braspag_Block_Sales_Order_Braspag extends Mage_Core_Block_Template {
+
+    public function getOrder(){
+    	
+    	$order_id = $this->getRequest()->getParam('order_id');
+    	$model = Mage::getModel('sales/order')->load($order_id);
+    	
+    	return $model;
+    	
+    }
+
+}

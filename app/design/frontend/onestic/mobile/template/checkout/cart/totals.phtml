@@ -1,0 +1,19 @@
+<?php $order = $this->getQuote()->getData();
+$shipping = $order['grand_total'] - $order['subtotal_with_discount'];
+$subtotal = $order['subtotal'];
+$discount = $order['subtotal'] - $order['subtotal_with_discount'];
+$total =$order['grand_total'];?>
+<ul>
+	<li class="subtotal">
+        Subtotal: <?=Mage::helper('core')->currency(($subtotal),true,false) ?>
+   	</li>
+    <li class="subtotal">
+        Frete: <?=Mage::helper('core')->currency(($shipping),true,false) ?>
+   	</li>
+        <li class="subtotal">
+        Add/Desc: <?=Mage::helper('core')->currency(($discount),true,false) ?>
+   	</li>
+   	<li class="total">
+        Total <?=Mage::helper('core')->currency(($total),true,false) ?>
+   	</li>
+</ul>

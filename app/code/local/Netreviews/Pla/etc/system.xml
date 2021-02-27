@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<config>
+    <sections>
+        <avisverifies>
+            <groups>
+                <extra>
+                    <fields>
+                        <use_product_sku>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </use_product_sku>
+                        <force_product_parent_id>
+                            <label>Use parent products data instead simple products data</label>
+                            <comment><![CDATA[Select Yes to get the parent product id and the parent product image.]]></comment>
+                        </force_product_parent_id>
+                    </fields>
+                </extra>
+            </groups>
+        </avisverifies>
+    </sections>
+</config>

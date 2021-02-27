@@ -1,0 +1,12 @@
+<?php
+$info = $this->getInfo();
+
+$parcels = $info->getAdditionalInformation('parcels');
+?>
+<div>
+    <p>
+        <?php if ($parcels): ?>
+        <?php echo "Número de Parcelas: " . $parcels; ?>
+        <?php endif; ?>
+    </p>
+</div>

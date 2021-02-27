@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Onestic
+ * @package    Onestic_FreteProduto
+ * @copyright  Copyright (c) 2017 Ecommerce Developer Blog (http://www.onestic.com.br)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Onestic_FreteProduto>
+            <version>1.0.0</version>
+        </Onestic_FreteProduto>
+    </modules>
+    <global>
+        <models>
+            <onestic_freteproduto>
+                <class>Onestic_FreteProduto_Model</class>
+            </onestic_freteproduto>
+        </models>
+        <blocks>
+            <onestic_freteproduto>
+                <class>Onestic_FreteProduto_Block</class>
+            </onestic_freteproduto>
+        </blocks>
+        <helpers>
+            <onestic_freteproduto>
+                <class>Onestic_FreteProduto_Helper</class>
+            </onestic_freteproduto>
+        </helpers>
+    </global>
+    <frontend>
+        <routers>
+            <onestic_freteproduto>
+                <use>standard</use>
+                <args>
+                    <frontName>freteproduto</frontName>
+                    <module>Onestic_FreteProduto</module>
+                </args>
+            </onestic_freteproduto>
+        </routers>
+        <events>
+            <controller_action_layout_load_before>
+                <observers>
+                    <onestic_freteproduto>
+                        <type>singleton</type>
+                        <model>onestic_freteproduto/observer</model>
+                        <method>observeLayoutHandleInitialization</method>
+                    </onestic_freteproduto>
+                </observers>
+            </controller_action_layout_load_before>
+            <checkout_cart_save_before>
+			    <observers>
+			        <onestic_freteproduto_cart_add>
+			            <class>onestic_freteproduto/observer</class>
+			            <method>addPostcode</method>
+			        </onestic_freteproduto_cart_add>
+			    </observers>
+			</checkout_cart_save_before>
+        </events>
+        <layout>
+            <updates>
+                <onestic_freteproduto>
+                    <file>onestic_freteproduto.xml</file>
+                </onestic_freteproduto>
+            </updates>
+        </layout>
+    </frontend>
+    <onestic>
+        <onestic_freteproduto>
+            <controller_actions>
+                <catalog_product_view />
+            </controller_actions>
+        </onestic_freteproduto>
+    </onestic>
+    <default>
+        <onestic_freteproduto>
+            <settings>
+                <enabled>0</enabled>
+                <display_position>left</display_position>
+                <use_country>1</use_country>
+                <use_region>1</use_region>
+                <use_city>1</use_city>
+                <use_postcode>1</use_postcode>
+                <use_coupon_code>1</use_coupon_code>
+                <use_cart>1</use_cart>
+                <use_cart_default>1</use_cart_default>
+            </settings>
+        </onestic_freteproduto>
+    </default>
+</config>
+

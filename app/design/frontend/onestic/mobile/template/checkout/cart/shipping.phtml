@@ -1,0 +1,205 @@
+<div class="shipping">
+    <label class="rotulo-cep"><?php echo $this->__('Digite seu cep para calcular o valor do frete') ?></label>
+    <form action="<?php echo $this->getUrl('checkout/cart/estimatePost') ?>" method="post" id="shipping-zip-form">
+        <fieldset>
+            <ul class="form-list">
+                <li style="display:none;">
+                    <label for="country"><?php echo $this->__('Country') ?></label><br />
+                    <?php echo Mage::getBlockSingleton('directory/data')->getCountryHtmlSelect($this->getEstimateCountryId()) ?>
+                </li>
+	            <?php //if($this->getStateActive()): ?>
+	                <li style="display:none;">
+	                    <label for="region_id"><?php echo $this->__('State/Province') ?><?php if ($this->isStateProvinceRequired()):?> <span class="required">*</span><?php endif;?></label><br />
+	                    <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" style="display:none;"<?php echo ($this->isStateProvinceRequired() ? ' class="validate-select"' : '') ?>>
+	                        <!--<option value=""><?php echo $this->__('Please select region, state or province') ?></option>-->
+	                    </select>
+	                   <script type="text/javascript">
+	                   //<![CDATA[
+	                   //]]>
+	                   </script>
+	                   <input type="text" id="region" name="region" value="<?php echo $this->htmlEscape($this->getEstimateRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-text" style="display:none;" />
+	                </li>
+	            <?php //endif; ?>
+	            <?php if($this->getCityActive()): ?>
+	                <li>
+	                    <label for="city"><?php echo $this->__('City') ?><?php if ($this->isCityRequired()):?> <span class="required">*</span><?php endif;?></label><br />
+	                    <input class="input-text<?php if ($this->isCityRequired()):?> required-entry<?php endif;?>" id="city" type="text" name="estimate_city" value="<?php echo $this->htmlEscape($this->getEstimateCity()) ?>" />
+	                </li>
+	            <?php endif; ?>
+                <li>
+                    <!--label for="postcode"><?php /*php echo $this->__('Zip/Postal Code') ?><?php if ($this->isZipCodeRequired()):?> <span class="required">*</span><?php endif;*/?></label><br /-->
+                    <input class="input-text validate-digits<?php if ($this->isZipCodeRequired()):?> required-entry<?php endif;?> validate-postcode" type="text" id="postcode" name="estimate_postcode" value="<?php echo $this->htmlEscape($this->getEstimatePostcode()) ?>" />
+                </li>
+            </ul>
+            <button type="button" onclick="coShippingMethodForm.submit()" class="button button-cep"><span><span><?php echo $this->__('Get a Quote') ?></span></span></button>
+        </fieldset>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        $('region_id').setAttribute('defaultValue',  "<?php echo $this->getEstimateRegionId() ?>");
+        new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>);
+    //]]>
+    </script>
+</div>
+
+<?php 
+$order = $this->getQuote()->getData();
+$shipping = $order['grand_total'] - $order['subtotal_with_discount'];
+$msgExtra = false;
+$aux = 1;
+$hasFreeShipping = false;
+$hasShippingError = false;
+?>
+
+
+<?php if (($_shippingRateGroups = $this->getEstimateRates())): ?>
+<form id="co-shipping-method-form" action="<?php echo $this->getUrl('checkout/cart/estimateUpdatePost') ?>">
+    <fieldset class="metodos-envio">
+        <dl class="sp-methods">
+            <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
+                <dt><?php echo $this->getCarrierName($code) ?></dt>
+                <dd>
+                    <ul>
+	                    <?php foreach ($_rates as $_rate): ?>
+                            <?php
+                                if($aux == 1 && $shipping == 0) {
+                                    $shipping = $_rate->getPrice();
+                                }
+                                $aux++;
+                                if($_rate->getPrice() == 0){
+                                    $hasFreeShipping = true;
+                                }
+                            ?>
+							<li class="loading" <?php if ($_rate->getErrorMessage()) echo ' class="error-msg"'; ?>>
+								<?php if ($_rate->getErrorMessage()): ?>
+									<?php echo $_rate->getErrorMessage(); $hasShippingError = true;?>
+								<?php else: ?>
+	                                <input name="estimate_method" type="radio" onclick="this.form.submit();" value="<?php echo $this->htmlEscape($_rate->getCode()) ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio" />
+	                                <label for="s_method_<?php echo $_rate->getCode() ?>">
+	                                	<?php echo ($_rate->getPrice() == 0 && preg_match('/^Frete/', $_rate->getMethodTitle()) == false)? '<span class="tagfretegratis">Frete grátis</span>': null;?>
+	                                	
+	                                	<?php
+	                                	$cepFaixa = $this->htmlEscape($this->getAddress()->getPostcode());
+
+									    /**
+									     * Get the resource model
+									     */
+									    $resource = Mage::getSingleton('core/resource');
+									     
+									    /**
+									     * Retrieve the read connection
+									     */
+									    $readConnection = $resource->getConnection('core_read');
+										
+										/**
+									     * Get the table name
+									     */
+									    $tableName = $resource->getTableName('shipping_correio_restrito');
+									     
+									    $query = "SELECT envio FROM shipping_correio_restrito WHERE inicio <= '$cepFaixa' AND fim >= '$cepFaixa'";
+										//echo $query;die();
+	 
+									    /**
+									     * Execute the query and store the results in $results
+									     */
+									    $results = $readConnection->fetchAll($query);
+									     
+									    /**
+									     * Print out the results
+									     */
+									    //print_r($results);
+	                            		if($results) {
+	                                		if(preg_match('/^SEDEX/', $_rate->getMethodTitle())) {
+	                                			$msgExtra = true;
+	                                			$freteTitulo = "SEDEX " . $results[0]['envio'] . " - 1 a 11 dias úteis";
+												$_rate->setMethodTitle($freteTitulo);
+												
+	                                		} elseif (preg_match('/^PAC/', $_rate->getMethodTitle())) {
+	                                			$msgExtra = true;
+	                                			$freteTitulo = "PAC " . $results[0]['envio'] . " - 3 a 27 dias úteis ";
+												$_rate->setMethodTitle($freteTitulo);
+												
+	                                		} elseif (preg_match('/^E-SEDEX/', $_rate->getMethodTitle())) {
+	                                			$msgExtra = true;
+	                                			$freteTitulo = "E-SEDEX " . $results[0]['envio'] . " - 1 a 11 dias úteis";
+								$_rate->setMethodTitle($freteTitulo);
+												
+	                                		} //elseif (preg_match('/^Motoboy/', $_rate->getMethodTitle())) {
+	                                			// echo $_rate->getMethodTitle();
+	                                		// }
+	                                	}
+
+										//if(!$results) {
+										if(preg_match('/^Frete/', $_rate->getMethodTitle()) == false){
+											echo '<strong>' . preg_replace('/[ ]/',' </strong>',$_rate->getMethodTitle(),1);
+										}else{
+											echo preg_replace('/Frete grátis/','<span class="tagfretegratis">Frete grátis</span>',$_rate->getMethodTitle(),1);
+										}
+										//}
+	                                	
+		                                $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax());
+		                                $_incl = $this->getShippingPrice($_rate->getPrice(), true);
+		                                
+	                                	if($_rate->getPrice() == 0){
+	                                		echo ' '.str_replace('price','price0',$_excl);
+	                                	}else{
+	                                		echo ' '.$_excl;
+	                                	}
+		                                
+		                                if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl):
+		                                    echo $this->__('Incl. Tax'); ?> <?php echo $_incl;
+		                                endif;
+		                                ?>
+	                                </label>
+	                           <?php endif; ?>
+	                        </li>
+						<?php endforeach; ?>
+                    </ul>
+                </dd>
+            <?php endforeach; ?>
+            <dd>
+            	<?php if($msgExtra == true): ?>
+            		<div class="msg-entrega">
+						<p>
+							<strong>O que é Entrega Interna?</strong>
+							Você receberá um comunicado para retirar seu objeto na agência dos correios mais próxima de seu município.
+						</p>
+						<p>
+							<strong>O que é Entrega Domiciliar Diferenciada?</strong> 
+							Seu pedido será entregue pelos correios com escolta.
+						</p>
+					</div>
+            	<?php endif; ?>
+            </dd>
+        </dl>
+    </fieldset>
+</form>
+<?php endif; ?>
+
+<!-- valor do frete -->
+<?php if(($shipping > 0 || $hasFreeShipping) && !$hasShippingError) {?>
+    <strong class="frete"><em>Frete</em> <small><?=Mage::helper('core')->currency(($shipping),true,false) ?></small><span class="clearfix"></span></strong>
+<?php }else{ ?>
+    <strong class="frete"><em>Frete</em> <small style="font-size:inherit;">Digite seu CEP</small><span class="clearfix"></span></strong>
+<?php } ?>
+<!-- valor do frete -->
+
+<script type="text/javascript">
+//<![CDATA[
+    var coShippingMethodForm = new VarienForm('shipping-zip-form');
+    Validation.addAllThese(
+    [
+           ['validate-postcode', 'Insira um CEP válido.', function(v) {
+                var element = $('postcode');
+                if (element && ('' != element.value)) {
+					var regCep = /(^\d{5}-\d{3}|^\d{2}.\d{3}-\d{3}|\d{8}$)/;
+					if (!regCep.test(element.value)) {
+                        return false;
+                    }
+                }
+                return true;
+           }]
+    ]
+    );
+//]]>
+</script>

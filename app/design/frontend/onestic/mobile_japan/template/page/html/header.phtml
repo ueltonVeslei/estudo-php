@@ -1,0 +1,130 @@
+    <div id="topo-site" class="header-container">
+    <div class="header">
+
+        <div id="modal-televendas" class="simple-modal">
+            <div class="simple-modal-overlay"></div>
+            <div class="simple-modal-content">
+                <a href="#modal-televendas" class="simple-modal-close">Fechar</a>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('televendas')->toHtml(); ?>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <div class="header-center">
+                <i id="menu-toggle" class="icon-font icon-ic_menu_black_24px"></i>
+                
+                <?php echo $this->getChildHtml('logo') ?>
+
+                <div id="cart-box">
+                    <i id="icon-cart" class="icon-font icon-title icon-ic_shopping_cart_black_24px"></i>
+                    <?php echo $this->getChildHtml('mini_cart_top') ?>
+                </div>
+                
+                <div id="search-box">
+                    <i id="icon-search" class="icon-font icon-title icon-ic_search_black_24px"></i>
+                    <div class="hide-content">
+                        <?php echo $this->getChildHtml('topSearch') ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-nav">
+            <div class="header-center">
+                
+                <div class="acesso-rapido">
+                    <div class="link-acesso">
+                        <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) { ?>
+                            <a href="<?php echo $this->getUrl('customer/account/index') ?>">Minha Conta</a>
+                            <a href="<?php echo $this->getUrl('customer/account/logout') ?>">Sair</a>
+                        <?php } else { ?>
+                            <a href="<?php echo $this->getUrl('customer/account/login') ?>">login </a>
+                            <a href="<?php echo $this->getUrl('customer/account/create/') ?>">Cadastre-se</a>
+                        <?php } ?>
+                        
+                        <i class="icon-font icon-error"></i>
+                        
+                    </div>
+                </div>
+                
+                <?php echo $this->getChildHtml('catalog.topnav') ?>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="banner-home">
+    <?php echo $this->getChildHtml('banner-principal-mobile-japan') ?>
+</div>
+
+<div class="lightbox">
+  <div class="iframeContainer">
+    <div class="toolbarLB">
+      <span class="closeLB" onclick="lightBoxClose()">x</span>
+    </div>
+    <p style="font-weight: bold">AVISO: </p>
+    <p>Devido ao COVID 19 os envios dos pedidos para o Japão estão suspensos temporariamente.</p>
+    <p style="font-weight: bold">Previsão de retomada 31/10/2020.</p>
+  </div>
+</div>
+
+<script>
+    lightBoxClose = function() {
+        document.querySelector(".lightbox").classList.add("closed");
+    }
+</script>
+
+<style>
+    .lightbox {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, .5);
+        z-index: 99999999;
+    }
+
+    .toolbarLB {
+        text-align: right;
+        padding: 3px;
+    }
+
+    .closeLB {
+        color: #fff;
+        cursor: pointer;
+        background-color: #000;
+        border-radius: 50%;
+        padding: 8px 14px;
+        font-size: 18px;
+        position: relative;
+        top: -13px;
+        left: 18px;
+    }
+
+    .lightbox .iframeContainer {
+        vertical-align: middle;
+        padding: 2px;
+        background: #fff;
+        padding: 2px;
+        height: 350px;
+        width: 350px;
+        border-radius: 5px;
+    }
+
+    .lightbox.closed {
+        display: none;
+    }
+
+    .lightbox p{
+        top: 25%;
+        position: relative;
+        padding: 15px;
+        color: #000;
+        margin: -14px auto;
+    }
+</style>

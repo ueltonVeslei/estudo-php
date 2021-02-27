@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Onestic_Autoversion>
+            <version>0.1.1</version>
+        </Onestic_Autoversion>
+    </modules>
+
+    <global>
+        <models>
+            <core>
+                <rewrite>
+                    <design_package>Onestic_Autoversion_Core_Model_Design_Package</design_package>
+                </rewrite>
+            </core>
+        </models>
+    </global>
+</config>

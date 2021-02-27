@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+  <config>
+  <modules>
+    <Rjs_Checkout>
+      <version>0.0.1</version>      
+    </Rjs_Checkout>
+  </modules>
+    <global>
+       <models>
+          <checkout>
+              <rewrite>
+                  <cart_shipping_api>Rjs_Checkout_Model_Cart_Shipping_Api</cart_shipping_api>
+                  <cart_shipping_api_v2>Rjs_Checkout_Model_Cart_Shipping_Api_V2</cart_shipping_api_v2>                  
+              </rewrite>
+          </checkout>          
+       </models>
+    </global>
+</config>

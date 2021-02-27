@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Flowecommerce_Resultadosdigitais>
+            <version>0.1.7</version>
+        </Flowecommerce_Resultadosdigitais>
+    </modules>
+    <global>
+        <models>
+            <resultadosdigitais>
+                <class>Flowecommerce_Resultadosdigitais_Model</class>
+            </resultadosdigitais>
+        </models>
+        <blocks>
+            <resultadosdigitais>
+                <class>Flowecommerce_Resultadosdigitais_Block</class>
+            </resultadosdigitais>
+        </blocks>
+        <helpers>
+            <resultadosdigitais>
+                <class>Flowecommerce_Resultadosdigitais_Helper</class>
+            </resultadosdigitais>
+        </helpers>
+        <events>
+            <!-- formulário de contato enviado -->
+            <controller_action_postdispatch_contacts_index_post>
+                <observers>
+                    <flowecommerce_resultadosdigitais_contacts_post>
+                        <class>resultadosdigitais/observer</class>
+                        <method>contactPost</method>
+                    </flowecommerce_resultadosdigitais_contacts_post>
+                </observers>
+            </controller_action_postdispatch_contacts_index_post>
+
+            <!-- formulário de contato enviado - fileform - Extensão Exclusiva Flow -->
+            <controller_action_postdispatch_fileform_index_post>
+                <observers>
+                    <flowecommerce_resultadosdigitais_fileform_post>
+                        <class>resultadosdigitais/observer</class>
+                        <method>contactPost</method>
+                    </flowecommerce_resultadosdigitais_fileform_post>
+                </observers>
+            </controller_action_postdispatch_fileform_index_post>
+
+            <!-- Recurring payments - Extensão Exclusiva Flow -->
+            <recurringpayments_subscription_processed>
+                <observers>
+                    <flowecommerce_resultadosdigitais_register_recurring_payment>
+                        <class>resultadosdigitais/observer</class>
+                        <method>registerRecurringPayment</method>
+                    </flowecommerce_resultadosdigitais_register_recurring_payment>
+                </observers>
+            </recurringpayments_subscription_processed>
+
+            <recurringpayments_subscription_plan_changed>
+                <observers>
+                    <flowecommerce_resultadosdigitais_change_recurring_payment_plan>
+                        <class>resultadosdigitais/observer</class>
+                        <method>changeRecurringPaymentPlan</method>
+                    </flowecommerce_resultadosdigitais_change_recurring_payment_plan>
+                </observers>
+            </recurringpayments_subscription_plan_changed>
+
+            <recurringpayments_subscription_canceled>
+                <observers>
+                    <flowecommerce_resultadosdigitais_recurring_payment_plan_canceled>
+                        <class>resultadosdigitais/observer</class>
+                        <method>recurringPaymentPlanCanceled</method>
+                    </flowecommerce_resultadosdigitais_recurring_payment_plan_canceled>
+                </observers>
+            </recurringpayments_subscription_canceled>
+
+            <recurringpayments_subscription_reactivated>
+                <observers>
+                    <flowecommerce_resultadosdigitais_recurring_payment_plan_reactivated>
+                        <class>resultadosdigitais/observer</class>
+                        <method>recurringPaymentPlanReactivated</method>
+                    </flowecommerce_resultadosdigitais_recurring_payment_plan_reactivated>
+                </observers>
+            </recurringpayments_subscription_reactivated>
+
+            <!-- criação de pedido -->
+            <sales_order_place_after>
+                <observers>
+                    <flowecommerce_resultadosdigitais_order_place>
+                        <class>resultadosdigitais/observer</class>
+                        <method>orderPlace</method>
+                    </flowecommerce_resultadosdigitais_order_place>
+                </observers>
+            </sales_order_place_after>
+
+            <!-- criação de conta de usuário -->
+            <customer_register_success>
+                <observers>
+                    <flowecommerce_resultadosdigitais_register_success>
+                        <class>resultadosdigitais/observer</class>
+                        <method>registerSuccess</method>
+                    </flowecommerce_resultadosdigitais_register_success>
+                </observers>
+            </customer_register_success>
+
+            <!-- assinatura da newsletter -->
+            <newsletter_subscriber_save_after>
+                <observers>
+                    <flowecommerce_resultadosdigitais_newsletter_subscribe>
+                        <class>resultadosdigitais/observer</class>
+                        <method>newsletterSubscribe</method>
+                    </flowecommerce_resultadosdigitais_newsletter_subscribe>
+                </observers>
+            </newsletter_subscriber_save_after>
+
+            <!-- adicionar produto ao carrinho -->
+            <checkout_cart_product_add_after>
+                <observers>
+                    <flowecommerce_resultadosdigitais_add_to_cart>
+                        <class>resultadosdigitais/observer</class>
+                        <method>catchAddToCart</method>
+                    </flowecommerce_resultadosdigitais_add_to_cart>
+                </observers>
+            </checkout_cart_product_add_after>
+        </events>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <resultadosdigitais>
+                    <file>resultadosdigitais.xml</file>
+                </resultadosdigitais>
+            </updates>
+        </layout>
+    </frontend>
+    <default>
+        <resultadosdigitais>
+            <general>
+                <jsapurl>https://d335luupugsy2.cloudfront.net/js/integration/stable/rd-js-integration.min.js</jsapurl>
+                <jsanalyticsurl>https://d335luupugsy2.cloudfront.net/js/loader-scripts/</jsanalyticsurl>
+                <enable_analytics>0</enable_analytics>
+            </general>
+        </resultadosdigitais>
+    </default>
+</config>

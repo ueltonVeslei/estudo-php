@@ -1,0 +1,28 @@
+
+<div class="content-header">
+<table cellspacing="0">
+    <tr>
+        <td style="width:50%;"><h3 class="icon-head head-orders">Relatório de Pedidos</h3></td>
+        <td class="a-right">
+
+            <?php
+            $url = $this->getUrl('integracommerce/adminhtml_orders/integrate');
+            $this->_addButton(
+                'add_new',
+                array(
+                    'label'   => $this->escapeHtml('Baixar Pedidos'),
+                    'onclick' => 'setLocation(\'' . $url . '\')',
+                    'class'   => 'add'
+                )
+            );
+            ?>
+
+            <?php echo $this->getButtonsHtml() ?>
+        </td>
+    </tr>
+</table>
+</div>
+
+<div>
+    <?php echo $this->getGridHtml() ?>
+</div>

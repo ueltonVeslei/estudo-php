@@ -1,0 +1,379 @@
+<?
+if ($_SERVER['SERVER_PORT'] == 443)
+	$baseURL = "https://".$_SERVER["HTTP_HOST"];
+else
+    $baseURL = "http://".$_SERVER["HTTP_HOST"];
+
+try{
+    $base = Mage::getSingleton('checkout/session')->getQuote()->getData();
+    $valor_total = 0;
+    $valor_total = $base['grand_total'];
+}
+catch (Exception $e) {}
+
+$_code=$this->getMethodCode();
+$method = $this->getMethod();
+$availableFlags = $this->getEnabledFlags();
+
+?>
+<script>
+function showOpParc(flagCode, flagName)
+{
+	<?php foreach ( $availableFlags as $flag ): ?>
+		document.getElementById('parc_<?php print $flag->getName(); ?>').style.display = (flagName == '<?php print $flag->getName(); ?>') ? 'block' : 'none';
+	<?php endforeach; ?>
+
+  // Reset Form
+	$('braspagcc_cc_number').value = "";
+	$('cc_cid').value = "";
+	
+	if ( flagName == 'aura' )
+	{
+		document.getElementById('li_cc_cid').style.display = 'none';
+		$('cc_cid').className = "input-text";
+		$('braspagcc_cc_number').writeAttribute("maxlength", "20");
+	}
+	else
+	{
+		document.getElementById('li_cc_cid').style.display = 'block';
+		$('cc_cid').className = "required-entry input-text validate-cc-cvn";
+		$('braspagcc_cc_number').writeAttribute("maxlength", "16");
+	}
+	
+	if (<?php
+		$i=1;
+		if ( count( (array) $this->getEnabledSoapFlags() ) ):
+			foreach ( $this->getEnabledSoapFlags() as $flag ):
+				if ( $flag->getUseSoap() ):
+	?>
+		flagName == '<?php print $flag->getName(); ?>' <?php if ($i != count($this->getEnabledSoapFlags())) print "||"?>
+	<?php
+				endif;
+				$i++;
+			endforeach;
+		else:
+			print "false";
+		endif;
+	?> )
+	{
+		
+		document.getElementById('card_data').style.display = 'block';
+		setMageCcCode(flagName);
+	}
+	else
+	{
+		
+		document.getElementById('card_data').style.display = 'none';
+		setMageCcCode(flagName);
+	}
+	
+	document.getElementById('payment[nome_bandeira]').value = flagName;
+}
+
+function setParcelamento(numero_parcelas, valor_parcela, nome_bandeira)
+{
+	document.getElementById('payment[numero_parcelas]').value = numero_parcelas;
+	document.getElementById('payment[valor_parcela]').value = valor_parcela;
+	
+	// Guilherme
+	var data_values = "&payment%5Bnumero_parcelas%5D=" + numero_parcelas + "&payment%5Bvalor_parcela%5D=" + valor_parcela + "&payment%5Bnome_bandeira%5D=" + nome_bandeira;
+	updatePaymentMethod('braspagcc', nome_bandeira, data_values);	
+	//payment_method_changed = this.value;
+}
+
+function setMageCcCode(flagName)
+{
+	var mageCcCode = "";
+	
+	switch(flagName)
+	{
+		case "visa":
+		{
+			mageCcCode = "VI";
+			break;
+		}
+		case "mastercard":
+		{
+			mageCcCode = "MC";
+			break;
+		}
+		case "amex":
+		{
+			mageCcCode = "AE";
+			break;
+		}
+		case "diners":
+		{
+			mageCcCode = "DI";
+			break;
+		}
+		case "aura":
+		{
+			mageCcCode = "AU";
+			break;
+		}
+		case "hipercard":
+		{
+			mageCcCode = "HI";
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+	document.getElementById("cc_type").value = mageCcCode;
+}
+
+
+jQuery.noConflict(); 
+jQuery(function(){
+	jQuery(".listCards a").click(function(){
+		var target = "#" + jQuery(this).attr("rel");
+		updatePaymentMethod('braspagcc', jQuery(this).attr("title"));
+		jQuery("div.pagamento").fadeOut("normal");
+		jQuery(target).slideDown("slow");
+	});
+});
+
+</script>
+<fieldset class="" >
+    <div class="creditcard-flags" id="payment_form_<?php echo $_code ?>" style="display:none">
+		<p>Clique na bandeira desejada</p>
+		<ul class="listCards">
+			
+			<?php foreach( $availableFlags as $flag ): ?>
+				<li>
+					<!--
+					<a rel="pag_<?php echo $flag->getName(); ?>" href="javascript:void(0);" title="<?php echo $flag->getName(); ?>" onclick="showOpParc(<?php echo $flag->getCode(); ?>, '<?php echo $flag->getName(); ?>')">
+					-->
+					<a rel="pag_<?php echo $flag->getName(); ?>" href="javascript:void(0);" title="<?php echo $flag->getName(); ?>" >
+						<img src="<?php print $this->getSkinUrl('images/_cards/parcelamento/' . $flag->getName() . '.png'); ?>" alt="<?php echo $flag->getName(); ?>" />
+						
+					</a>
+					<input type="hidden" id="bandeira_<?php echo $flag->getName(); ?>" name="payment[bandeira]" value="<?php echo $flag->getCode(); ?>" <?php if ($i == 1) print 'class="validate-one-required-by-name"'; ?>/>
+				</li>
+                <?php $i++;?>
+			<?php endforeach; ?>
+			
+		</ul>	
+		
+		<?php $c = 0; ?>
+		<?php foreach( $availableFlags as $flag ): ?>
+		<fieldset>
+			<div class="pagamento c<?php echo $c; ?>" id="pag_<?php echo $flag->getName(); ?>">
+				<p>
+					<strong>Cartão de Crédito <?php echo strtoupper($flag->getName()); ?></strong>
+				</p>
+
+				<input type="hidden" name="payment[numero_parcelas]" id="payment[numero_parcelas]" value="" />
+				<input type="hidden" name="payment[valor_parcela]" id="payment[valor_parcela]" value="" />
+				<input type="hidden" name="payment[nome_bandeira]" id="payment[nome_bandeira]" value="" />
+
+				<table width="100%" cellspacing="2" cellpadding="2" border="0">
+					<tbody>
+						<?php
+							$totalParcelas = count($flag->getParcelamento($valor_total));
+						?>
+						<tr>
+							<td width="24%" align="center"><b>Parcelas</b></td>
+							<td width="12%" align="center" class="valorRight"><b>Valor</b></td>
+							<?php if( $totalParcelas > 1 ) { ?>
+								<td width="10%" align="center" rowspan="7" style="border:none">&nbsp;</td>
+								<td width="24%" align="center"><b>Parcelas</b></td>
+								<td width="12%" align="center"><b>Valor</b></td>
+							<?php } ?>
+						</tr>
+
+						<?php	
+				    		$arrParcelamento = $flag->getParcelamento($valor_total);
+
+							$i = 1;
+							foreach( $arrParcelamento as $parcelamento ):
+				                   $comSem1 = $parcelamento["temJuros"] ? "com" : "sem";
+				                   $classe1 = $comSem1 . "juros";
+				                   $labelNumeroParcelas1 = ($parcelamento["numeroParcelas"] === 1) ? "01 x sem juros" : str_pad( $parcelamento["numeroParcelas"], 2, "0", STR_PAD_LEFT ) . " x " . $comSem1 . " juros";
+
+				                   if ( count ( $arrParcelamento ) >= ($parcelamento["numeroParcelas"] + 6) ) {
+					                   $parcelamento2 = $arrParcelamento["parc" . ($parcelamento["numeroParcelas"] + 6 ) . "x"];
+					                   $comSem2 = $parcelamento2["temJuros"] ? "com" : "sem";
+					                   $classe2 = $comSem2 . "juros";
+					                   $labelNumeroParcelas2 = ($parcelamento2["numeroParcelas"] === 1) ? "À Vista" : str_pad( $parcelamento2["numeroParcelas"], 2, "0", STR_PAD_LEFT ) . " x " . $comSem2 . " juros";
+
+				                       if ( (int) $parcelamento2["valorParcela"] != $parcelamento2["valorParcela"] ) {
+				                           $explode = explode('.', (float) $parcelamento2["valorParcela"]);
+				                           $inteiro = array_key_exists(0, (array) $explode) ? $explode[0] : 0;
+				                           $decimal = array_key_exists(1, (array) $explode) ? $explode[1] : 0;
+				                           $parcelamento2["valorParcela"] = $inteiro . "," . str_pad( substr($decimal,0,2), 2, "0", STR_PAD_RIGHT);
+				                       }
+				                       else {
+				                           $parcelamento2["valorParcela"] = number_format($parcelamento2["valorParcela"], 2, ',', '.');
+				                       }
+				                   }
+
+				                   if ( (int) $parcelamento["valorParcela"] != $parcelamento["valorParcela"] ) {
+										$explode = explode('.', (float) $parcelamento["valorParcela"]);
+										$inteiro = array_key_exists(0, (array) $explode) ? $explode[0] : 0;
+										$decimal = array_key_exists(1, (array) $explode) ? $explode[1] : 0;
+
+										$parcelamento["valorParcela"] = $inteiro . "," . str_pad( substr($decimal,0,2), 2, "0", STR_PAD_RIGHT);
+									}
+									else {
+										$parcelamento["valorParcela"] = number_format($parcelamento["valorParcela"], 2, ',', '.');
+									}
+
+				           ?>
+
+							<tr>
+							    <td class="semjuros">
+									<input type="radio" id="<?=$_code?>_parcelamento" name="<?php echo $flag->getLabel();?>" onClick="setParcelamento(this.getAttribute('numero_parcelas'), this.getAttribute('valor_parcela'), '<?php echo $flag->getName();?>')" valor_parcela="<?php echo $parcelamento["valorParcela"]; ?>" numero_parcelas="<? echo $parcelamento["numeroParcelas"];?>" <?php  if($parcelamento["numeroParcelas"] == 1){ echo "checked=\"checked\""; } ?>>
+									
+									<?php if( $i == 1 ){ ?>
+										<input type="hidden" id="primeira_<?php echo $flag->getName();?>" name="primeira" value="1;<?php echo $parcelamento["valorParcela"]; ?>;<?php echo $flag->getName();?>" />
+									<?php } ?>	
+									
+									<?php echo $labelNumeroParcelas1; ?>
+							    </td>
+								<td class="semjuros preco">R$ <?php echo $parcelamento["valorParcela"]; ?></td>
+
+							<?php if ( count ( (array) $arrParcelamento ) >= ($parcelamento["numeroParcelas"] + 6) ) { ?>
+								<td class="semjuros">
+									<input type="radio" id="<?=$_code?>_parcelamento" name="<?php echo $flag->getLabel();?>" onClick="setParcelamento(this.getAttribute('numero_parcelas'), this.getAttribute('valor_parcela'), '<?php echo $flag->getName();?>')" valor_parcela="<?php echo $parcelamento["valorParcela"]; ?>" numero_parcelas="<? echo $parcelamento["numeroParcelas"];?>">
+									<?php echo $labelNumeroParcelas2; ?></td>
+								<td class="semjuros preco">R$ <?php echo $parcelamento2["valorParcela"]; ?></td>
+							<?php } ?>
+							</tr>
+
+							<?php
+								if ($i == 6) {
+									break;
+								} else {
+									$i++;
+								}	
+								endforeach;
+							?>
+					        </tbody>
+					 
+				</table>
+
+				<fieldset class="form-list" id='card_data'>
+					<p>Pagamento seguro com cartão de crédito</p>
+					<input type="hidden" id="cc_type" name="payment[cc_type]">   
+				    <ul id="payment_form_<?php echo $_code ?>">
+				         <li>
+				            <div class="input-box">
+				                <label for="<?php echo $_code ?>_cc_number"><?php echo $this->__('N&uacute;mero do Cart&atilde;o'); ?>:</label>
+				                <small>Como gravado no cartão</small>
+				                <input maxlength="16" type="text" id="<?php echo $_code ?>_cc_number" name="payment[cc_number]" title="<?php echo $this->__("N&uacute;mero do Cart&atilde;o"); ?>" class="input-text required-entry validate-cc-hipercard" value="" />
+				            </div>
+				        </li>
+				        <li>
+				            <div class="input-box">
+				                <label for="<?php echo $_code ?>_cc_number"><?php echo $this->__('Nome do titular'); ?>:</label>
+				                <input type="text" id="<?php echo $_code ?>_cc_holder" name="payment[holder]" title="Nome do titular" class="input-text required-entry" value="" />
+				            </div>
+				        </li>
+				        <li>
+				            <div class="input-box validade">
+				                <label for="">Validade:</label>
+				                <div class="v-fix">
+						           <select id="<?php echo $_code ?>_expiration" name="payment[cc_exp_month]" class="required-entry">
+										<?php $_ccExpMonth = $this->getInfoData('cc_exp_month') ?>
+						                <?php foreach ($this->getCcMonths() as $k=>$v): ?>
+						                    <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpMonth): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+						                <?php endforeach ?>
+						           </select>
+				                </div>
+				                <div class="v-fix">
+				                	<select id="<?php echo $_code ?>_expiration_yr" name="payment[cc_exp_year]" class="required-entry">
+										<?php $_ccExpYear = $this->getInfoData('cc_exp_year') ?>
+						                <?php foreach ($this->getCcYears() as $k=>$v): ?>
+						                    <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpYear): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+						                <?php endforeach ?>
+				                	</select>
+				                </div>
+				            </div>
+				        </li>
+				        <li id="li_cc_cid">
+				            <div class="input-box">
+				                <label for="<?php echo $_code ?>_cc_cid">Código de segurança</label>
+				                <div class="v-fix">
+				                	<input maxlength="4" type="text" title="Código de segurança" class="required-entry input-text validate-cc-cvn" id="cc_cid" name="payment[cc_cid]" style="width:3em;" value=""/>
+				                </div>
+				                <a href="#" class="cvv-what-is-this">
+				                	<img src="<?php print $this->getSkinUrl('images/info-codigo.png'); ?>" alt="Código de segurança" />
+				                </a>
+				            </div>
+				        </li>
+				    </ul>
+				</fieldset>
+			</div>
+		</fieldset>
+		<?php $c++; ?>
+		<?php endforeach; ?>
+			
+	    </ul>
+    </div>
+</fieldset>
+<script type="text/javascript">
+	//setParcelamento(1, '<?php echo $valor_total;?>');
+
+    function setCcNumberValidation( flag )
+    {
+        $('braspagcc_cc_number').removeClassName('validate-cc-visa');
+        $('braspagcc_cc_number').removeClassName('validate-cc-mastercard');
+        $('braspagcc_cc_number').removeClassName('validate-cc-diners');
+        $('braspagcc_cc_number').removeClassName('validate-cc-amex');
+        $('braspagcc_cc_number').removeClassName('validate-cc-hipercard');
+        $('braspagcc_cc_number').removeClassName('validate-cc-aura');
+        $('braspagcc_cc_number').removeClassName('validate-cc-oipaggo');
+        $('braspagcc_cc_number').removeClassName('validate-cc-amoedo');
+        $('braspagcc_cc_number').removeClassName('validate-cc-elo');
+        $('braspagcc_cc_number').addClassName('validate-cc-' + flag);
+    }
+
+    setParcelamento(1, '<?php echo $valor_total;?>');
+
+    Validation.addAllThese([
+        ['validate-cc-amex', 'Por favor, verifique se o número do cartão foi digitado corretamente.', function(v,elm) {
+						var bin = v.substr(0, 6);
+						// Range1 = 340000 - 349999 // Range2 = 370000 - 379999
+						if ( (bin >= 340000 && bin <= 349999) || (bin >= 370000 && bin <= 379999) )
+							return true;
+						else
+							return false;
+						}],
+        ['validate-cc-hipercard', 'Por favor, verifique se o número do cartão foi digitado corretamente.', function(v,elm) {
+				if ( v.match(/^384100/) || v.match(/^384140/) || v.match(/^384160/) || v.match(/^606282/) && (v.length == 16 || v.length == 19))
+                {
+					if ($F('braspagcc_cc_number').length != 16 && $F('braspagcc_cc_number').length != 19)
+						return false;
+						
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                return false;
+            }],
+        ['validate-cc-amoedo', 'Por favor, verifique se o número do cartão foi digitado corretamente.', function(v,elm) {
+                if ( v.match(/^907605/) || validateRange(v, '5126735500008000', '5126736000008999'))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                return false;
+            }]
+    ]);
+
+    function validateRange(cc, min, max) {
+        if ((cc < min) || (cc > max)) {
+            return false;
+        } else return true;
+    }
+</script>

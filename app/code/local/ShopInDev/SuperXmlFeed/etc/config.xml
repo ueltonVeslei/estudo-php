@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ShopInDev
+ *
+ * @category    ShopInDev
+ * @package     ShopInDev_SuperXmlFeed
+ * @copyright   Copyright (c) 2016 ShopInDev
+ * @license     http://opensource.org/licenses/GPL-3.0 GNU General Public License (GPL)
+ */
+-->
+<config>
+	<modules>
+		<ShopInDev_SuperXmlFeed>
+			<version>1.5.0.3</version>
+		</ShopInDev_SuperXmlFeed>
+	</modules>
+
+	<global>
+		<models>
+			<superxmlfeed>
+				<class>ShopInDev_SuperXmlFeed_Model</class>
+				<resourceModel>superxmlfeed_resource</resourceModel>
+			</superxmlfeed>
+			<superxmlfeed_resource>
+				<class>ShopInDev_SuperXmlFeed_Model_Resource</class>
+				<deprecatedNode>superxmlfeed_mysql4</deprecatedNode>
+				<entities>
+					<xml>
+						<table>super_xml_feed</table>
+					</xml>
+				</entities>
+			</superxmlfeed_resource>
+		</models>
+		<helpers>
+			<superxmlfeed>
+				<class>ShopInDev_SuperXmlFeed_Helper</class>
+			</superxmlfeed>
+		</helpers>
+		<blocks>
+			<superxmlfeed>
+				<class>ShopInDev_SuperXmlFeed_Block</class>
+			</superxmlfeed>
+		</blocks>
+		<resources>
+			<superxmlfeed_setup>
+				<setup>
+					<module>ShopInDev_SuperXmlFeed</module>
+				</setup>
+			</superxmlfeed_setup>
+		</resources>
+	</global>
+
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<ShopInDev_SuperXmlFeed_Adminhtml after="Mage_Adminhtml">ShopInDev_SuperXmlFeed_Adminhtml</ShopInDev_SuperXmlFeed_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+
+	<adminhtml>
+		<translate>
+			<modules>
+				<ShopInDev_SuperXmlFeed>
+					<files>
+						<default>ShopInDev_SuperXmlFeed.csv</default>
+					</files>
+				</ShopInDev_SuperXmlFeed>
+			</modules>
+		</translate>
+		<layout>
+            <updates>
+                <superxmlfeed>
+                    <file>shopindev/superxmlfeed.xml</file>
+                </superxmlfeed>
+            </updates>
+        </layout>
+	</adminhtml>
+
+	<default>
+		<superxmlfeed>
+			<generate>
+				<enabled>0</enabled>
+			</generate>
+		</superxmlfeed>
+	</default>
+
+	<crontab>
+		<jobs>
+			<superxmlfeed_generate>
+				<run>
+					<model>superxmlfeed/cron::scheduledGenerateXmls</model>
+				</run>
+			</superxmlfeed_generate>
+		</jobs>
+	</crontab>
+
+</config>

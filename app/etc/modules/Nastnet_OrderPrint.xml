@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Nastnet_OrderPrint>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Nastnet_OrderPrint>
+    </modules>
+</config>

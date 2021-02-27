@@ -1,0 +1,67 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Onestic
+ * @package    Onestic_FreteProduto
+ * @copyright  Copyright (c) 2017 Ecommerce Developer Blog (http://www.onestic.com.br)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+/**
+ * Estimate shipping results
+ *
+ */
+/* @var $this Onestic_FreteProduto_Block_Estimate_Result */
+$isML = (isset($_POST['origin'])) ? true : false;
+?>
+<div class="block block-shipping-estimate block-shipping-results">
+    <div class="block-content">
+    <?php if ($this->getResult()):?>
+        <dl class="sp-methods">
+            <?php foreach ($this->getResult() as $code => $_rates): ?>
+                <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
+                    <dd>
+                        <ul>
+                            <?php foreach ($_rates as $_rate): ?>
+                                <?php if ($isML && $_rate->getPrice() <= 0) continue;?>
+                                <li <?php if ($_rate->getErrorMessage()) echo ' class="error-msg"';?>>
+                                    <?php if ($_rate->getErrorMessage()): ?>
+                                        <?php echo $this->escapeHtml($_rate->getErrorMessage()) ?>
+                                   <?php else: ?>
+                                        <span class="service-title">
+                                            <?php echo $_rate->getMethodTitle(); ?>
+                                        </span>
+                                        <?php 
+                                            $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax());
+                                        ?>
+                                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                                        <?php echo $_excl; ?>
+                                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                            (<?php echo Mage::helper('onestic_freteproduto')->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                        <?php endif; ?>
+                                    <?php endif ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </dd>
+                <?php endforeach; ?>
+            </dl>
+        <?php else: ?>
+            <?php echo $this->getMessagesBlock()->toHtml(); ?>
+        <?php endif;?>
+    </div>
+</div>
+<script type="text/javascript">
+    var meta = document.createElement('meta');
+    meta.name = "robots";
+    meta.content = "noindex";
+
+    document.getElementsByTagName('head')[0].appendChild(meta);
+</script>

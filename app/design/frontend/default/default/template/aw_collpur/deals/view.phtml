@@ -1,0 +1,451 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Collpur
+ * @version    1.0.2
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ */
+?>
+
+<h2 id="tit-coletiva">Farma Coletiva</h2>
+
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+
+<?php
+$product = $this->getProduct();
+?>
+<?php if (!$product->getId()): ?>
+    <h2 id = "awcp-nodeals-available"><?php echo $this->__('No deals available'); ?></h2>
+    <?php return; ?>
+<?php endif; ?>
+
+<?php
+$deal = $this->getDeal();
+$originalProduct = $this->getOriginalProduct();
+$dealInfo = $this->getDealPricesSpare($originalProduct, $product);
+$container = "awcp_timer_" . rand();
+?>
+
+<div class="awcp-product-name">
+    <h1><span>Oferta do dia:</span> <?php echo $deal->getDealName(); ?></h1>
+</div>
+
+<div id="lateral-deal">
+    <?php if ($deal->isClosed() || !$deal->isRunning()) : ?>
+        <div class="finalizado">Finalizado</div>
+    <?php endif; ?>
+    <form id="product_addtocart_form" method="post" action="<?php echo Mage::getUrl('checkout/cart/add', array('_secure' => true, 'product' => $product->getId(), 'deal_id' => $this->getDeal()->getId())) ?>">
+        <h3>Oferta do dia</h3>
+        <p class="de">
+            <span>de:</span><?php echo Mage::helper('core')->currency($originalProduct->getFinalPrice(), true, false); ?>
+        </p>
+        <p class="por">
+            <span class="por">por:</span><?php echo $dealInfo->getPrice(); ?>
+        </p>
+        <!--
+        <?php echo $this->__('Discount'); ?><?php echo $dealInfo->getPercentDiscount(); ?>%
+        <?php echo $this->__('You save'); ?><?php echo $dealInfo->getSaveAmount(); ?>
+        -->
+        <?php if (!$deal->isClosed()) : ?>
+            <?php if ($deal->isRunning()): ?>
+                <div class="awcp-buy-button <?php if ($this->hasOptions()): ?>awcp-options<?php endif; ?>">
+                    <!-- POPUP -->
+
+                    <div class="awcp-popup awcp-popup-shown" style = "display:none;" id ="awcp-popup-options<?php echo $deal->getId(); ?>">
+                        <div class="awcp-popup-top-left">
+                            <div class="awcp-popup-top-right"></div>
+                        </div>
+                        <div class="awcp-popup-center-left">
+                            <div class="awcp-popup-center-right">
+                                <div class="awcp-popup-content">
+                                    <?php echo $this->getChildHtml('main_collpur_block'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="awcp-popup-bottom-left">
+                            <div class="awcp-popup-bottom-right">
+                                <button class="button awcp-popup-button awcp-buy"><span><span><?php echo $this->__('Buy!'); ?></span></span></button>
+                            </div>
+                        </div>
+
+                        <div class="awcp-popup-tail"></div>
+                    </div>
+
+                    <!-- popup -->
+                    <button class="button awcp-buy" <?php if ($this->hasOptions()): ?>onclick = "Effect.toggle($('awcp-popup-options<?php echo $deal->getId(); ?>'),'appear');return false;"<?php endif; ?>>
+                        <span>
+                            <span>
+                                <img src="<?php echo $this->getSkinImage('awcp-arrow'); ?>" alt="" /><?php echo $this->__('Buy!'); ?>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </form>
+
+    <!-- clock -->
+    <div id="box-clock">
+        <h3>Tempo para Compra</h3>
+        <?php //if (($deal->isNotRunning() && $deal->getAvailableFrom()) || $deal->isRunning() && $deal->getAvailableTo()): ?>
+        <?php //if (!$deal->isClosed()): ?>
+        <div class="clock">
+            <?php if ($deal->isNotRunning() && $deal->getAvailableFrom()): ?>
+                <!-- <?php echo $this->__('Time Left To Run'); ?> -->
+                <div id="<?php echo $container; ?>">
+                    <?php echo $this->getTimeLeftToBuy($deal, $time = 'available_from'); ?>
+                </div>
+            <?php elseif ($deal->isRunning() && $deal->getAvailableTo()): ?>
+                <!-- <?php echo $this->__('Time Left To Buy'); ?> -->
+                <div id="<?php echo $container; ?>">
+                    <?php echo $this->getTimeLeftToBuy($deal); ?>
+                </div>
+            <?php else: ?>
+                <!-- Tempo restante para comprar -->
+                <div >
+                    <span class="horas">00</span>
+                    <span class="minutos">00</span>
+                    <span class="segundos">00</span>
+                </div>
+            <?php endif; ?>
+        </div>	
+        <?php //endif; ?>
+        <?php //endif; ?>
+
+        <?php //if ($deal->isRunning()): ?>
+        <?php if ($deal->getIsSuccess()): ?>
+            <!-- green check -->
+            <div class="awcp-deal awcp-deal-mark2">
+                <div class="awcp-mark-right">
+                    <div class="awcp-mark-center">
+                        <div class="content">
+                            <div class="awcp-bought"><?php echo $this->__('%s  vendidos', $this->getPurchasesCount($deal->getId())); ?></div>
+                            <!-- <div class="awcp-notice"><?php echo $this->__('Limited quantity available'); ?></div> -->
+                            <!-- <div class="awcp-status"><?php echo $this->__('The deal is arranged with %s bought!', $deal->getQtyToReachDeal()); ?></div> -->
+                            <div class="awcp-status"><?php echo $this->__('Mínimo %s unidades', $deal->getQtyToReachDeal()); ?></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- green check -->
+        <?php else: ?>
+            <!-- gray check -->
+            <div class="awcp-deal awcp-deal-mark3">
+                <div class="awcp-mark-right">
+                    <div class="awcp-mark-center">
+                        <div class="content">
+                            <div class="awcp-bought"><?php echo $this->__('%s  vendidos', $this->getPurchasesCount($deal->getId())); ?></div>
+                            <div class="awcp-status"><?php echo $this->__('Mínimo %s unidades', $deal->getQtyToReachDeal()); ?></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- gray check -->
+        <?php endif; ?>
+        <?php //endif; ?>
+    </div>
+
+    <?php echo $this->getChildHtml('awgd_addthis') ?>
+</div>
+
+
+<div id="detalhe-deal">
+    <div class="col-1">
+        <img class="awcp-product-img" src="<?php echo $this->getDealImage($deal->getDealImage()); ?>" alt="<?php echo $deal->getDealName(); ?>" />
+    </div>
+    <div class="col-2">
+        <strong>
+            <?php echo $deal->getDealName(); ?>
+        </strong><br />
+        <br />
+        <div class="awcp-short-description">
+            <?php echo $this->filter($deal->getDescription()); ?>
+        </div>
+
+
+        <div class="box-valores">
+            <div>
+                <span class="de">De: <?php echo Mage::helper('core')->currency($originalProduct->getFinalPrice(), true, false); ?></span>
+                <span class="por">Por: <strong><?php echo $dealInfo->getPrice(); ?></strong></span>
+                <span class="economia-de">Economia de <?php echo $dealInfo->getSaveAmount(); ?></span>
+            </div>
+            <?php if (!$deal->isClosed()) : ?>
+                <?php if ($deal->isRunning()): ?>
+                    <button class="button awcp-buy" <?php if (!$this->hasOptions()): ?>onclick = "$j('#product_addtocart_form').submit();return false;"<?php endif; ?> <?php if ($this->hasOptions()): ?>onclick = "Effect.toggle($('awcp-popup-options<?php echo $deal->getId(); ?>'),'appear');return false;"<?php endif; ?>>
+                        <span>
+                            <span>
+                                <img src="<?php echo $this->getSkinImage('awcp-arrow'); ?>" alt="" /><?php echo $this->__('Buy!'); ?>
+                            </span>
+                        </span>
+                    </button>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+
+
+        <?php
+        // Guilherme
+        $deal_price_number = preg_replace('/[^0-9]/', '', $dealInfo->getPrice());
+        $deal_price_cents = substr($deal_price_number, -2);
+        $deal_price_rest = substr($deal_price_number, 0, -2);
+        $deal_price = $deal_price_rest . ',' . $deal_price_cents;
+        ?>
+
+        <!-- Guilherme -->
+        <script type="text/javascript">
+            jQuery.noConflict();
+            jQuery(function(){
+                jQuery(".listCards a").last().css('margin', '0 0 0 8px')
+                jQuery(".listCards a").click(function(){
+                    var target = "#" + jQuery(this).attr("rel");
+                    jQuery("div.parcelas").fadeOut("normal");
+                    jQuery(target).slideDown("slow");
+
+                    jQuery("div.parcelas p > a").click(function(){
+                        jQuery(target).slideUp("fast");
+                    });
+                });
+            });
+        </script>
+
+        <div id="parcelamento">
+            <h3>Formas de pagamento</h3>
+            <!-- Boleto precisa ser tratado sozinho -->
+            <div id="parc_boleto">
+                <img src="<?php print $this->getSkinUrl('images/_cards/parcelamento/boleto.png'); ?>" alt="Boleto" />
+                <em><?= Mage::helper('core')->currency(($deal_price * 0.97), true, false); ?></em>
+                <strong>no Boleto Bancário (valor já c/ 3% de desconto)</strong>
+            </div>
+
+            <strong class="cartao-info">Clique sobre a bandeira do Cartão para informações de parcelamento</strong>
+
+            <?php $availableFlags = Mage::getModel('braspagcc/payment_gateway')->getEnabledFlags(); ?>
+            <div class="listCards">
+                <?php foreach ($availableFlags as $flag) { ?>
+                    <a rel="parc_<?php print $flag->getName(); ?>" href="javascript:void(0);" title="<?php echo ucfirst($flag->getName()); ?>">
+                        <img src="<?php print $this->getSkinUrl('images/_cards/parcelamento/' . $flag->getName() . '.png'); ?>" alt="<?php print $flag->getName(); ?>" />
+                    </a>
+                <?php } ?>
+            </div>
+
+            <?php
+            $_total = $deal_price;
+            $n = 0;
+            foreach ((array) $availableFlags as $flag):
+                $arrParcelamento = $flag->getParcelamento($_total);
+                ?>
+
+                <div class="parcelas c<?php echo $n; ?>" id="parc_<?php print $flag->getName(); ?>">
+                    <p>
+                        Parcelamento com o cartão <strong><?php echo ucfirst($flag->getName()); ?></strong>
+                        <a title="Fechar" class="fechar">Fechar</a>
+                    </p>
+                    <table cellspacing="2" cellpadding="2" border="0">
+                        <tbody>
+                            <tr class="thead">
+                                <td width="25%"><strong>Parcelas</strong></td>
+                                <td width="24%"><strong>Valor</strong></td>
+                                <td width="7%" rowspan="7" class="no-border">&nbsp;</td>
+                                <?php if (count($arrParcelamento) >= 7): ?>
+                                    <td width="24%"><strong>Parcelas</strong></td>
+                                    <td width="25%"><strong>Valor</strong></td>
+                                <?php endif; ?>
+                            </tr>
+                            <?php
+                            # Caso haja mais de 6 parcelas, são criadas 2 colunas:  nparcelas | valorparcela | nparcelas | valorparcela
+                            # Caso haja menos do que 6 parcelas, apenas 1 coluna: nparcelas | valorparcela
+
+                            $i = 1;
+                            foreach ($arrParcelamento as $parcelamento):
+                                $comSem1 = $parcelamento["temJuros"] ? "com" : "sem";
+                                $classe1 = $comSem1 . "juros";
+                                $labelNumeroParcelas1 = ($parcelamento["numeroParcelas"] === 1) ? "01 x sem juros" : str_pad($parcelamento["numeroParcelas"], 2, "0", STR_PAD_LEFT) . " x " . $comSem1 . " juros";
+
+                                if (count($arrParcelamento) >= ($parcelamento["numeroParcelas"] + 6)) {
+                                    $parcelamento2 = $arrParcelamento["parc" . ($parcelamento["numeroParcelas"] + 6 ) . "x"];
+                                    $comSem2 = $parcelamento2["temJuros"] ? "com" : "sem";
+                                    $classe2 = $comSem2 . "juros";
+                                    $labelNumeroParcelas2 = ($parcelamento2["numeroParcelas"] === 1) ? "À Vista" : str_pad($parcelamento2["numeroParcelas"], 2, "0", STR_PAD_LEFT) . " x " . $comSem2 . " juros";
+
+                                    if ((int) $parcelamento2["valorParcela"] != $parcelamento2["valorParcela"]) {
+                                        $explode = explode('.', (float) $parcelamento2["valorParcela"]);
+                                        $inteiro = array_key_exists(0, (array) $explode) ? $explode[0] : 0;
+                                        $decimal = array_key_exists(1, (array) $explode) ? $explode[1] : 0;
+                                        $parcelamento2["valorParcela"] = $inteiro . "," . str_pad(substr($decimal, 0, 2), 2, "0", STR_PAD_RIGHT);
+                                    } else {
+                                        $parcelamento2["valorParcela"] = number_format($parcelamento2["valorParcela"], 2, ',', '.');
+                                    }
+                                }
+
+                                if ((int) $parcelamento["valorParcela"] != $parcelamento["valorParcela"]) {
+                                    $explode = explode('.', (float) $parcelamento["valorParcela"]);
+                                    $inteiro = array_key_exists(0, (array) $explode) ? $explode[0] : 0;
+                                    $decimal = array_key_exists(1, (array) $explode) ? $explode[1] : 0;
+
+                                    /* list($inteiro, $decimal) = explode('.', (float) $parcelamento["valorParcela"]); */
+                                    $parcelamento["valorParcela"] = $inteiro . "," . str_pad(substr($decimal, 0, 2), 2, "0", STR_PAD_RIGHT);
+                                } else {
+                                    //$parcelamento["valorParcela"] = number_format($parcelamento["valorParcela"], 2, ',', '.');
+                                }
+                                ?>
+
+                                <tr>
+                                    <td><?php echo $labelNumeroParcelas1; ?></td>
+                                    <td class="<?php echo $classe1 ?>">R$ <?php echo $parcelamento["valorParcela"]; ?></td>
+
+                                    <?php if (count((array) $arrParcelamento) >= ($parcelamento["numeroParcelas"] + 6)): ?>
+                                        <td><?php echo $labelNumeroParcelas2; ?></td>
+                                        <td class="<?php echo $classe2 ?>">R$ <?php echo $parcelamento2["valorParcela"]; ?></td>
+                                    <?php endif; ?>
+                                </tr>
+
+                                <?php
+                                if ($i == 6)
+                                    break;
+                                else
+                                    $i++;
+                            endforeach;
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php $n++; ?>
+            <?php endforeach; ?>
+        </div>
+        <!-- Guilherme -->
+    </div>
+
+    <script type="text/javascript">
+        $j(document).ready(function(){
+            $j('.tabs2 a').click(function(){
+                var target = $j(this).attr('href');
+                $j('#abas-target > div').hide();
+                $j(target).show();
+
+                $j('.tabs2 li').removeClass('ativa');
+                $j(this).parent().addClass('ativa');
+
+                return false;
+            });
+        });
+    </script>
+
+    <ul class="tabs2 group">
+        <li class="ativa">
+            <a href="#deal-fulldesc">Descrição do produto</a>
+        </li>
+        <li>
+            <a href="#deal-regulamento">Regulamento</a>
+        </li>
+    </ul>
+
+    <div id="abas-target">
+        <div id="deal-fulldesc">
+            <?php echo $this->filter($deal->getFullDescription()); ?>
+        </div>
+        <div id="deal-regulamento" style="height:200px;overflow:auto;">
+			O “COMPRA COLETIVA” é um departamento do domínio www.farmadelivery.com.br, de
+			propriedade da FARMACLUB DROGARIAS LTDA, Rua das Hortênsias, 1204, Jardim do
+			Estádio, Santo André /SP, CEP 09175-500, CNPJ: 64.963.044/0001-08, Inscrição Estadual:
+			626.235.906.110, Alvará de Funcionamento: 488/2009, Autorização de Funcionamento
+			ANVISA: 0097497, Licença Sanitária SIVISA: 354780901-477-000188-1-3, Farmacêutico
+			Responsável: Dr. Rino Angelo Antonio Camillo - CRF/SP 29.428.<br />
+			<br />
+			DO SERVIÇO E ACEITE<br />
+			<br />
+			1 - O serviço oferecido pelo departamento “COMPRA COLETIVA” consiste em disponibilizar
+			aos usuários de internet cadastrados no site www.farmadelivery.com.br, ofertas periódicas de
+			produtos com preços de compra mais atrativos devido à manutenção de nosso estoque.<br />
+			<br />
+			2 - O internauta deverá ler, certificar-se de haver entendido e aceitar todas as
+			condições estabelecidas neste regulamento, antes de efetuar qualquer compra no
+			departamento “COMPRA COLETIVA”.<br />
+			<br />
+			2.1 – A Farma Delivery reserva-se o direito de fazer alterações periódicas neste regulamento,
+			seja por questões legais ou estratégicas, sem prévio aviso. Portanto, o internauta, antes
+			de acessar o departamento, reconhece que é de sua inteira responsabilidade, ler este
+			regulamento antes de adquirir qualquer produto utilizando o departamento “COMPRA
+			COLETIVA”.<br />
+			<br />
+			DA COMPRA E SUA VALIDAÇÃO<br />
+			<br />
+			1 - O produto ofertado será apresentado com todas as informações necessárias ao internauta
+			quanto aos requisitos para sua aquisição, período da oferta e quantidade mínima para
+			validação da compra.<br />
+			<br />
+			2 - A oferta do produto somente se efetivará quando o número de aquisições efetuadas através
+			do departamento “COMPRA COLETIVA” for igual ao número mínimo de aquisições pré-
+			estabelecido para cada oferta de produto;<br />
+			<br />
+			RESPONSABILIDADES<br />
+			<br />
+			1 - O internauta, após manifestar-se pela Aquisição da Oferta, obriga-se a adquirir a Oferta
+			no caso de sua Validação, bem como seu respectivo pagamento. A Oferta de Compra é
+			irrevogável, nos termos dos artigos 427 e 429 do Código Civil, ressalvadas circunstâncias
+			excepcionais.<br />
+			<br />
+			2 - Ao adquirir um produto através do departamento “COMPRA COLETIVA”, o internauta
+			declara conhecer as condições de uso, pagamento, recebimento e prazo de validade destes;<br />
+			<br />
+			CANCELAMENTOS<br />
+			<br />
+			1 – A Farma Delivery poderá, a seu critério, notificar, suspender e/ou cancelar o cadastro do
+			internauta, a qualquer tempo, definitiva ou temporariamente, nos seguintes casos:<br />
+			a) Descumprimento das normas contidas neste regulamento;<br />
+			b) Verificação de cadastro duplicado;<br />
+			c) Verificação de novo cadastro realizado por internauta que teve seu cadastro cancelado e/ou
+			suspenso;<br />
+			d) For constatada fraude ou tentativa de fraude; e/ou<br />
+			e) Fornecimento de informações solicitadas incorretas e/ou inverídicas ou ainda se negar a
+			prestar eventuais informações adicionais solicitadas pela Farma Delivery.<br />
+			<br />
+			LEGISLAÇÃO E FORO<br />
+			<br />
+			1 – Este regulamento está de acordo com as leis aplicadas no Brasil.<br />
+			<br />
+			2 - As partes elegem o Foro da Comarca da cidade de Santo André, São Paulo como sendo
+			o único competente para dirimir quaisquer litígios e/ou demandas que venham a envolver as
+			Partes em relação ao uso e acesso do departamento “COMPRA COLETIVA”.
+        </div>
+    </div>
+
+</div>
+
+<script type = "text/javascript">
+    document.observe("dom:loaded", function() {
+<?php if ($data = $this->getJsonConfig($deal->getId())): ?>
+            new AwcpCollpur(<?php echo $this->getJsonConfig($deal->getId()); ?>,"<?php echo $container; ?>");
+<?php endif; ?>
+    });
+
+    Event.observe(document.body, 'click', function(event) {
+        var element = Event.element(event);
+        if(!Object.isElement(element.up('#awcp-popup-options<?php echo $deal->getId(); ?>'))) {
+            if($('awcp-popup-options<?php echo $deal->getId(); ?>').getStyle('display') == 'block') {
+                Effect.toggle($('awcp-popup-options<?php echo $deal->getId(); ?>'),'appear');
+            }
+        }
+    });  
+
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+</script>

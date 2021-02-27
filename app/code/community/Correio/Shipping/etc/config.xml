@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Pedro Teixeira
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL).
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Correio
+ * @package    Correio_Shipping
+ * @copyright  Copyright (c) 2008 Pedro Teixeira [ teixeira.pedro@gmail.com ]
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Correio_Shipping>
+            <version>0.2.0</version>
+            <depends>
+                <Mage_Shipping />
+            </depends>
+        </Correio_Shipping>
+    </modules>
+    <global>
+    	<models>
+    		<tmshipping>
+	    		<class>Correio_Shipping</class>
+	    	</tmshipping>
+    	</models>
+        <resources>
+            <tmshipping_setup>
+                <setup>
+                    <module>Correio_Shipping</module>
+                </setup>
+                <connection>
+                    <use>directory_setup</use>
+                </connection>
+            </tmshipping_setup>
+            <tmshipping_read>
+                <connection>
+                    <use>local_read</use>
+                </connection>
+            </tmshipping_read>
+        </resources>
+        <sales>
+            <shipping>
+                <carriers>
+                    <correiopost>
+                        <class>Correio_Shipping_Model_Carrier_CorreioPost</class>
+                    </correiopost>
+                </carriers>
+            </shipping>
+        </sales>
+    </global>
+
+    <default>
+        <carriers>
+            <correiopost>
+                <active>1</active>
+				<model>Correio_Shipping_Model_Carrier_CorreioPost</model>
+                <title>Correios</title>
+				<name>Correios</name>
+				<postmethods>1</postmethods>
+				<prazo_entrega>0</prazo_entrega>
+				<min_order_value>0</min_order_value>
+                <max_order_value>500</max_order_value>
+				<urlmethod>1</urlmethod>
+				<maxweight>30</maxweight>
+                <handling_fee>0</handling_fee>
+				<msgprazo>%s - Em média %d dia(s)</msgprazo>
+				<free_method>40010</free_method>
+				<valueerror>Valor de compra a cima do permitido pelos Correios. Por favor entre em contato conosco.</valueerror>
+				<zipcodeerror>Por favor, corrija o CEP digitado, ele não está correto.</zipcodeerror>
+				<maxweighterror>Peso dos produtos a cima do permitido pelos Correios. Por favor entre em contato conosco.</maxweighterror>
+				<urlerror>Esse método de envio está fora do ar. Por favor entre em contato conosco.</urlerror>
+				<showmethod>0</showmethod>				
+            </correiopost>
+        </carriers>
+    </default>
+</config>

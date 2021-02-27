@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+            <complexType name="EstoqueItem">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="Quantidade" type="xsd:int" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="EstoqueItemArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:EstoqueItem[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="EstoqueItemRetorno">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="Status" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="EstoqueItemRetornoArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:EstoqueItemRetorno[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="ItemConsulta">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="Quantidade" type="xsd:int" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="ItemConsultaArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ItemConsulta[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="RequisicaoConsulta">
+                <all>
+                    <element name="CEP" type="xsd:string" minOccurs="0" />
+                    <element name="IdConsulta" type="xsd:string" minOccurs="0" />
+                    <element name="Itens" type="typens:ItemConsultaArray" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="ItemConsultaRetorno">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="PercentualDesconto" type="xsd:string" minOccurs="0" />
+                    <element name="Quantidade" type="xsd:string" minOccurs="0" />
+                    <element name="Status" type="xsd:string" minOccurs="0" />
+                    <element name="ValorUnitarioBruto" type="xsd:string" minOccurs="0" />
+                    <element name="ValorUnitarioLiquido" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="ItemConsultaRetornoArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ItemConsultaRetorno[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="ConsultaRetorno">
+                <all>
+                    <element name="CEP" type="xsd:string" minOccurs="0" />
+                    <element name="IdConsulta" type="xsd:string" minOccurs="0" />
+                    <element name="Itens" type="typens:ItemConsultaRetornoArray" minOccurs="0" />
+                    <element name="UFEnvio" type="xsd:string" minOccurs="0" />
+                    <element name="ValorFrete" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="Endereco">
+                <all>
+                    <element name="Apartamento" type="xsd:string" minOccurs="0" />
+                    <element name="Bairro" type="xsd:string" minOccurs="0" />
+                    <element name="CEP" type="xsd:string" minOccurs="0" />
+                    <element name="Cidade" type="xsd:string" minOccurs="0" />
+                    <element name="Complemento" type="xsd:string" minOccurs="0" />
+                    <element name="Logradouro" type="xsd:string" minOccurs="0" />
+                    <element name="Numero" type="xsd:string" minOccurs="0" />
+                    <element name="TipoLogradouro" type="xsd:string" minOccurs="0" />
+                    <element name="UF" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="Telefone">
+                <all>
+                    <element name="DDD" type="xsd:string" minOccurs="0" />
+                    <element name="Numero" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="Cliente">
+                <all>
+                    <element name="CPF_CNPJ" type="xsd:string" minOccurs="0" />
+                    <element name="DataNascimento" type="xsd:string" minOccurs="0" />
+                    <element name="Email" type="xsd:string" minOccurs="0" />
+                    <element name="Email2" type="xsd:string" minOccurs="0" />
+                    <element name="EnderecoEntrega" type="typens:Endereco" minOccurs="0" />
+                    <element name="EnderecoPrincipal" type="typens:Endereco" minOccurs="0" />
+                    <element name="InscricaoEstadual" type="xsd:string" minOccurs="0" />
+                    <element name="Nome" type="xsd:string" minOccurs="0" />
+                    <element name="RG" type="xsd:string" minOccurs="0" />
+                    <element name="Sexo" type="xsd:string" minOccurs="0" />
+                    <element name="TelefoneCelular" type="typens:Telefone" minOccurs="0" />
+                    <element name="TelefoneComercial" type="typens:Telefone" minOccurs="0" />
+                    <element name="TelefoneResidencial" type="typens:Telefone" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="EmpresaCliente">
+                <all>
+                    <element name="CNPJ" type="xsd:string" minOccurs="0" />
+                    <element name="NomeFantasia" type="xsd:string" minOccurs="0" />
+                    <element name="RazaoSocial" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="ItemPedido">
+                <all>
+                    <element name="DataReceita" type="xsd:string" minOccurs="0" />
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="NomeRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <element name="NumeroRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <element name="Percentual" type="xsd:double" minOccurs="0" />
+                    <element name="PrecoUnitario" type="xsd:double" minOccurs="0" />
+                    <element name="Quantidade" type="xsd:double" minOccurs="0" />
+                    <element name="TipoConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <element name="UFRegistroConselhoRegional" type="xsd:string" minOccurs="0" />
+                    <element name="ValorBruto" type="xsd:double" minOccurs="0" />
+                    <element name="ValorPagoPaciente" type="xsd:double" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="ItemPedidoArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ItemPedido[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="Pedido">
+                <all>
+                    <element name="AutorizacaoVidalink" type="xsd:string" minOccurs="0" />
+                    <element name="Cliente" type="typens:Cliente" minOccurs="0" />
+                    <element name="ClienteRemessa" type="typens:Cliente" minOccurs="0" />
+                    <element name="CPFAutorizacao" type="xsd:string" minOccurs="0" />
+                    <element name="Data" type="xsd:string" minOccurs="0" />
+                    <element name="Empresa" type="typens:EmpresaCliente" minOccurs="0" />
+                    <element name="EntregaProgramadaFinal" type="xsd:string" minOccurs="0" />
+                    <element name="EntregaProgramadaInicial" type="xsd:string" minOccurs="0" />
+                    <element name="ForcarFreteZero" type="xsd:string" minOccurs="0" />
+                    <element name="IdCotacao" type="xsd:string" minOccurs="0" />
+                    <element name="IdPedido" type="xsd:string" minOccurs="0" />
+                    <element name="Itens" type="typens:ItemPedidoArray" minOccurs="0" />
+                    <element name="Observacao" type="xsd:string" minOccurs="0" />
+                    <element name="Origem" type="xsd:string" minOccurs="0" />
+                    <element name="ReferenciaPedidoCliente" type="xsd:string" minOccurs="0" />
+                    <element name="ValorAReceber" type="xsd:double" minOccurs="0" />
+                    <element name="ValorFreteAReceber" type="xsd:double" minOccurs="0" />
+                    <element name="ValorFreteAVista" type="xsd:double" minOccurs="0" />
+                    <element name="ValorPagoAVista" type="xsd:double" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="PedidoRetorno">
+                <all>
+                    <element name="IdRetornoPedido" type="xsd:int" minOccurs="0" />
+                    <element name="StatusProcessamento" type="xsd:string" minOccurs="0" />
+                    <element name="Mensagem" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="ItemPedidoConfirmacao">
+                <all>
+                    <element name="EAN" type="xsd:string" minOccurs="0" />
+                    <element name="Quantidade" type="xsd:int" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="ItemPedidoConfirmacaoArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ItemPedidoConfirmacao[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="PedidoConfirmacao">
+                <all>
+                    <element name="AutorizacaoVidalink" type="xsd:string" minOccurs="0" />
+                    <element name="CNPJ" type="xsd:string" minOccurs="0" />
+                    <element name="DataVenda" type="xsd:string" minOccurs="0" />
+                    <element name="IdPedido" type="xsd:string" minOccurs="0" />
+                    <element name="Itens" type="typens:ItemPedidoConfirmacaoArray" minOccurs="0" />
+                    <element name="ChaveAcessoNFe" type="xsd:string" minOccurs="0" />
+                    <element name="NrPDV" type="xsd:string" minOccurs="0" />
+                    <element name="VendaRealizada" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="PedidoConfirmacaoArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:PedidoConfirmacao[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="PedidoConfirmacaoEntrega">
+                <all>
+                    <element name="AutorizacaoVidalink" type="xsd:string" minOccurs="0" />
+                    <element name="DataEntrega" type="xsd:string" minOccurs="0" />
+                    <element name="EntregaRealizada" type="xsd:string" minOccurs="0" />
+                    <element name="HoraEntrega" type="xsd:string" minOccurs="0" />
+                    <element name="IdPedido" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="PedidoConfirmacaoEntregaArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:PedidoConfirmacaoEntrega[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+        </schema>
+    </types>
+    <message name="vidalinkConsultarEstoqueProdutosRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="Itens" type="typens:EstoqueItemArray" />
+    </message>
+    <message name="vidalinkConsultarEstoqueProdutosResponse">
+        <part name="ConsultarEstoqueProdutosResult" type="typens:EstoqueItemRetornoArray" />
+    </message>
+    <message name="vidalinkConsultarProdutosRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="Requisicao" type="typens:RequisicaoConsulta" />
+    </message>
+    <message name="vidalinkConsultarProdutosResponse">
+        <part name="ConsultarProdutosResult" type="typens:ConsultaRetorno" />
+    </message>
+    <message name="vidalinkEnviarPedidoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="Pedido" type="typens:Pedido" />
+    </message>
+    <message name="vidalinkEnviarPedidoResponse">
+        <part name="EnviarPedidoResult" type="typens:PedidoRetorno" />
+    </message>
+    <message name="vidalinkConsultarConfirmacaoPedidoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="IdPedido" type="xsd:string" />
+    </message>
+    <message name="vidalinkConsultarConfirmacaoPedidoResponse">
+        <part name="ConsultarConfirmacaoPedidoResult" type="typens:PedidoConfirmacao" />
+    </message>
+    <message name="vidalinkConsultarConfirmacaoEntregaPedidoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="IdPedido" type="xsd:string" />
+    </message>
+    <message name="vidalinkConsultarConfirmacaoEntregaPedidoResponse">
+        <part name="ConsultarConfirmacaoEntregaPedidoResult" type="typens:PedidoConfirmacaoEntrega" />
+    </message>
+    <message name="vidalinkConsultarConfirmacaoPedidosPorDataRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="DataInicio" type="xsd:string" />
+        <part name="DataFinal" type="xsd:string" />
+    </message>
+    <message name="vidalinkConsultarConfirmacaoPedidosPorDataResponse">
+        <part name="ConsultarConfirmacaoPedidoResults" type="typens:PedidoConfirmacaoArray" />
+    </message>
+    <message name="vidalinkConsultarEntregaPedidosPorDataRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="DataInicio" type="xsd:string" />
+        <part name="DataFinal" type="xsd:string" />
+    </message>
+    <message name="vidalinkConsultarEntregaPedidosPorDataResponse">
+        <part name="ConsultarConfirmacaoEntregaPedidoResults" type="typens:PedidoConfirmacaoEntregaArray" />
+    </message>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="vidalinkConsultarEstoqueProdutos">
+            <documentation>Consulta Estoque dos Produtos</documentation>
+            <input message="typens:vidalinkConsultarEstoqueProdutosRequest" />
+            <output message="typens:vidalinkConsultarEstoqueProdutosResponse" />
+        </operation>
+        <operation name="vidalinkConsultarProdutos">
+            <documentation>Consulta Produtos</documentation>
+            <input message="typens:vidalinkConsultarProdutosRequest" />
+            <output message="typens:vidalinkConsultarProdutosResponse" />
+        </operation>
+        <operation name="vidalinkEnviarPedido">
+            <documentation>Envia Pedido</documentation>
+            <input message="typens:vidalinkEnviarPedidoRequest" />
+            <output message="typens:vidalinkEnviarPedidoResponse" />
+        </operation>
+        <operation name="vidalinkConsultarConfirmacaoPedido">
+            <documentation>Consulta Confirmação de Pedido</documentation>
+            <input message="typens:vidalinkConsultarConfirmacaoPedidoRequest" />
+            <output message="typens:vidalinkConsultarConfirmacaoPedidoResponse" />
+        </operation>
+        <operation name="vidalinkConsultarConfirmacaoEntregaPedido">
+            <documentation>Consulta Confirmação de Entrega de Pedido</documentation>
+            <input message="typens:vidalinkConsultarConfirmacaoEntregaPedidoRequest" />
+            <output message="typens:vidalinkConsultarConfirmacaoEntregaPedidoResponse" />
+        </operation>
+        <operation name="vidalinkConsultarConfirmacaoPedidosPorData">
+            <documentation>Consulta Confirmação de Pedidos por Data</documentation>
+            <input message="typens:vidalinkConsultarConfirmacaoPedidosPorDataRequest" />
+            <output message="typens:vidalinkConsultarConfirmacaoPedidosPorDataResponse" />
+        </operation>
+        <operation name="vidalinkConsultarEntregaPedidosPorData">
+            <documentation>Consulta Entrega de Pedidos por Data</documentation>
+            <input message="typens:vidalinkConsultarEntregaPedidosPorDataRequest" />
+            <output message="typens:vidalinkConsultarEntregaPedidosPorDataResponse" />
+        </operation>
+    </portType>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="vidalinkConsultarEstoqueProdutos">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="vidalinkConsultarProdutos">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="vidalinkEnviarPedido">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="vidalinkConsultarConfirmacaoPedido">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="vidalinkConsultarConfirmacaoEntregaPedido">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="vidalinkConsultarConfirmacaoPedidosPorData">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="vidalinkConsultarEntregaPedidosPorData">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+    <service name="{{var wsdl.name}}Service">
+        <port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </port>
+    </service>
+</definitions>

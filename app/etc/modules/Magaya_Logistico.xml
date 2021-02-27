@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<config>
+    <modules>
+        <Magaya_Logistico>
+            <active>true</active>
+            <codePool>community</codePool>
+             
+        </Magaya_Logistico>
+    </modules>
+</config>	

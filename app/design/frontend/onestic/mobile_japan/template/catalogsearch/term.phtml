@@ -1,0 +1,139 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_blank
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Popular Search Terms') ?></h1>
+</div>
+<?php if( sizeof($this->getTerms()) > 0 ): ?>
+	<!--
+    <ul class="tags-list">
+        <?php foreach ($this->getTerms() as $_term): ?>
+            <li><a href="<?php echo $this->getSearchUrl($_term) ?>" style="font-size:<?php echo $_term->getRatio()*70+75 ?>%;"><?php echo $this->htmlEscape($_term->getName()) ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+	-->
+	
+	<ul class="tags-list">
+		<li><a href="http://www.farmadelivery.com.br/diabetes/tiras-para-teste" style="font-size:<?php echo rand(100, 200); ?>%;">tiras para teste</a></li>
+		<li><a href="http://www.farmadelivery.com.br/aparelhos-e-testes/aparelhos-de-pressao" style="font-size:<?php echo rand(100, 200); ?>%;">aparelho de pressao</a></li>
+		<li><a href="http://www.accuchekdelivery.com.br/coaguchek-xs-kit-monitor-com-estojo-lancetador-softclix-20-lancetas-e-manual.html" style="font-size:<?php echo rand(100, 200); ?>%;">CoaguChek</a></li>
+		<li><a href="http://www.farmadelivery.com.br/diabetes/accu-chek" style="font-size:<?php echo rand(100, 200); ?>%;">	accu chek</a></li>
+		<li><a href="http://www.farmadelivery.com.br/diabetes/accu-chek" style="font-size:<?php echo rand(100, 200); ?>%;">accuchek</a></li>
+		<li><a href="http://www.farmadelivery.com.br/viatop-am-gel-intimo-10g-viatop-am.html" style="font-size:<?php echo rand(100, 200); ?>%;">via top am</a></li>
+		<li><a href="http://www.farmadelivery.com.br/catalogsearch/result/?q=tiras+glicemia&x=0&y=0" style="font-size:<?php echo rand(100, 200); ?>%;">tiras para medir glicemia</a></li>
+		<li><a href="http://www.farmadelivery.com.br/catalogsearch/result/?q=tiras+glicemia&x=0&y=0" style="font-size:<?php echo rand(100, 200); ?>%;">TIRAS PARA MEDIR GLICOSE</a></li>
+		<li><a href="http://www.accuchekdelivery.com.br/" style="font-size:<?php echo rand(100, 200); ?>%;">tiras breeze</a></li>
+		<li><a href="http://www.farmadelivery.com.br/suplementos" style="font-size:<?php echo rand(100, 200); ?>%;">suplementos</a></li>
+		<li><a href="http://www.farmadelivery.com.br/acessorios/dr-scholls" style="font-size:<?php echo rand(100, 200); ?>%;">dr scholls</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/monitor-cardiaco" style="font-size:<?php echo rand(100, 200); ?>%;">monitor cardiaco</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/monitor-cardiaco" style="font-size:<?php echo rand(100, 200); ?>%;">monitor cardiaco polar</a></li>
+		<li><a href="http://www.accuchekdelivery.com.br/" style="font-size:<?php echo rand(100, 200); ?>%;">accu-chek</a></li>
+		<li><a href="http://www.accuchekdelivery.com.br/" style="font-size:<?php echo rand(100, 200); ?>%;">tiras accu-chek</a></li>
+		<li><a href="http://www.farmadelivery.com.br/aparelhos-e-testes/teste-de-gravidez" style="font-size:<?php echo rand(100, 200); ?>%;">teste de gravidez</a></li>
+		<li><a href="http://www.farmadelivery.com.br/perfumaria/maquiagem-e-beleza" style="font-size:<?php echo rand(100, 200); ?>%;">maquiagem</a></li>
+		<li><a href="http://www.farmadelivery.com.br/aparelhos-e-testes/aparelhos-de-pressao" style="font-size:<?php echo rand(100, 200); ?>%;">Aparelho de Pressão</a></li>
+		<li><a href="http://www.farmadelivery.com.br/diabetes/aparelhos-para-glicemia" style="font-size:<?php echo rand(100, 200); ?>%;">Aparelho para glicemia</a></li>
+		<li><a href="http://www.farmadelivery.com.br/asepxia-sabonete-natural-extra-secante-facial-e-corporal-c-85g-para-peles-com-imperfeicoes-causadas-por-cravos-e-espinhas-remove-a-oleosidade-desobstrui-os-poros.html" style="font-size:<?php echo rand(100, 200); ?>%;">Asepxia</a></li>
+		<li><a href="http://www.farmadelivery.com.br/catalogsearch/result/?q=centrum" style="font-size:<?php echo rand(100, 200); ?>%;">centrum</a></li>
+		<li><a href="http://www.farmadelivery.com.br/cicatricure-gel-hidratante-e-umectante-30g-formulado-para-hidratar-e-melhorar-a-pele-com-cicatrizes.html" style="font-size:<?php echo rand(100, 200); ?>%;">cicatricure</a></li>
+		<li><a href="http://www.farmadelivery.com.br" style="font-size:<?php echo rand(100, 200); ?>%;">drogaria</a></li>
+		<li><a href="http://www.farmadelivery.com.br" style="font-size:<?php echo rand(100, 200); ?>%;">drogaria online</a></li>
+		<li><a href="http://www.farmadelivery.com.br" style="font-size:<?php echo rand(100, 200); ?>%;">drogarias</a></li>
+		<li><a href="http://www.farmadelivery.com.br" style="font-size:<?php echo rand(100, 200); ?>%;">drogarias online</a></li>
+		<li><a href="http://www.farmadelivery.com.br" style="font-size:<?php echo rand(100, 200); ?>%;">pharma delivery</a></li>
+		<li><a href="http://www.farmadelivery.com.br/perfumaria/higiene-bucal/escova-dental/" style="font-size:<?php echo rand(100, 200); ?>%;">escova dental</a></li>
+		<li><a href="http://www.farmadelivery.com.br/eurofarma/" style="font-size:<?php echo rand(100, 200); ?>%;">eurofarma</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medley" style="font-size:<?php echo rand(100, 200); ?>%;">medley</a></li>
+		<li><a href="http://www.farmadelivery.com.br/produtos-g-tech" style="font-size:<?php echo rand(100, 200); ?>%;">g-tech</a></li>
+		<li><a href="http://www.farmadelivery.com.br/nestle" style="font-size:<?php echo rand(100, 200); ?>%;">nutrition</a></li>
+		<li><a href="http://www.farmadelivery.com.br/bayer" style="font-size:<?php echo rand(100, 200); ?>%;">bayer</a></li>
+		<li><a href="http://www.farmadelivery.com.br/germed" style="font-size:<?php echo rand(100, 200); ?>%;">germed</a></li>
+		<li><a href="http://www.farmadelivery.com.br/mantecorp" style="font-size:<?php echo rand(100, 200); ?>%;">mantecorp</a></li>
+		<li><a href="http://www.farmadelivery.com.br/germed" style="font-size:<?php echo rand(100, 200); ?>%;">germed</a></li>
+		<li><a href="http://www.farmadelivery.com.br/pfizer" style="font-size:<?php echo rand(100, 200); ?>%;">pfizer</a></li>
+		<li><a href="http://www.farmadelivery.com.br/roche" style="font-size:<?php echo rand(100, 200); ?>%;">roche</a></li>
+		<li><a href="http://www.farmadelivery.com.br/lipomax-c-60-capsulas-nutrilipo-c-40-capsulas-gratis-controla-o-apetite-e-auxilia-na-reduc-o-da-absorc-o-de-gordura-e-colesterol.html" style="font-size:<?php echo rand(100, 200); ?>%;">lipomax</a></li>
+		<li><a href="http://www.farmadelivery.com.br/hipoglos-pomada-45g-retinol-colecalciferol-oxido-de-zinco.html" style="font-size:<?php echo rand(100, 200); ?>%;">Hipoglós</a></li>
+		<li><a href="http://www.farmadelivery.com.br/mucilon-frutas-sortidas-235ml.html" style="font-size:<?php echo rand(100, 200); ?>%;">Mucilon</a></li>
+		<li><a href="http://www.farmadelivery.com.br/sonrisal-efervescente-2cpr.html" style="font-size:<?php echo rand(100, 200); ?>%;">sonrisal</a></li>
+		<li><a href="http://www.farmadelivery.com.br/accu-chek-active-50-tiras-controle-dia-betes.html" style="font-size:<?php echo rand(100, 200); ?>%;">tiras accu-chek</a></li>
+		<li><a href="http://www.farmadelivery.com.br/kit-pilexil-locao-capilar-125ml-pilexil-shampoo-150ml-pilexyl-pylexil.html" style="font-size:<?php echo rand(100, 200); ?>%;">pilexil</a></li>
+		<li><a href="http://www.farmadelivery.com.br/derma-nail-base-fortalecedor-de-unhas-10ml-30ml-de-removedor-dermanail.html" style="font-size:<?php echo rand(100, 200); ?>%;">derma nail</a></li>
+		<!-- -->
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos" style="font-size:<?php echo rand(100, 200); ?>%;">remedios genéricos</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos" style="font-size:<?php echo rand(100, 200); ?>%;">preços genericos</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos" style="font-size:<?php echo rand(100, 200); ?>%;">genericos</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos" style="font-size:<?php echo rand(100, 200); ?>%;">remedios</a></li>
+		<li><a href="http://www.farmadelivery.com.br/" style="font-size:<?php echo rand(100, 200); ?>%;">farmácia</a></li>
+		<li><a href="http://www.farmadelivery.com.br/" style="font-size:<?php echo rand(100, 200); ?>%;">drogaria</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-alcon" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Alcon</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-biosintetica" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Biosintética</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-ems" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos EMS</a></li>
+		<li><a href="http://www.farmadelivery.com.br/catalogsearch/result/?q=Nicorette&x=0&y=0" style="font-size:<?php echo rand(100, 200); ?>%;">Nicorette</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/respire-melhor" style="font-size:<?php echo rand(100, 200); ?>%;">respire melhor</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/respire-melhor" style="font-size:<?php echo rand(100, 200); ?>%;">dilatadores nasais</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-eurofarma" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Eurofarma</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-germed" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Germed</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-medley" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Medley</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-merck" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Merck</a></li>
+		<li><a href="http://www.farmadelivery.com.br/aparelhos-e-testes/inaladores-e-nebulizadores" style="font-size:<?php echo rand(100, 200); ?>%;">nebulizadores</a></li>
+		<li><a href="http://www.farmadelivery.com.br/catalogsearch/result/?q=Niquitin&x=20&y=10" style="font-size:<?php echo rand(100, 200); ?>%;">Niquitin</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-neoquimica" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Neoquímica</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-ranbaxy" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Ranbaxy</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/genericos/genericos-sandoz" style="font-size:<?php echo rand(100, 200); ?>%;">Genéricos Sandoz</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/pare-de-fumar" style="font-size:<?php echo rand(100, 200); ?>%;">pare de fumar</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/pare-de-fumar" style="font-size:<?php echo rand(100, 200); ?>%;">como parar fumar</a></li>
+		<li><a href="http://www.farmadelivery.com.br/medicamentos/pare-de-fumar" style="font-size:<?php echo rand(100, 200); ?>%;">deixar fumar</a></li>
+		<li><a href="http://www.farmadelivery.com.br/aparelhos-e-testes/inaladores-e-nebulizadores" style="font-size:<?php echo rand(100, 200); ?>%;">inaladores</a></li>
+		<li><a href="http://www.farmadelivery.com.br/suplementos/emagrecimento" style="font-size:<?php echo rand(100, 200); ?>%;">alimentos para dieta</a></li>
+		<li><a href="http://www.farmadelivery.com.br/suplementos/emagrecimento" style="font-size:<?php echo rand(100, 200); ?>%;">alimentação para dieta</a></li>
+		<li><a href="http://www.farmadelivery.com.br/suplementos/emagrecimento" style="font-size:<?php echo rand(100, 200); ?>%;">dieta emagrecimento</a></li>
+		<li><a href="http://www.farmadelivery.com.br/suplementos/emagrecimento" style="font-size:<?php echo rand(100, 200); ?>%;">emagrecimento rápido</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/monitor-cardiaco" style="font-size:<?php echo rand(100, 200); ?>%;">monitor beurer</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/monitor-cardiaco" style="font-size:<?php echo rand(100, 200); ?>%;">monitor cardíaco beurer</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/monitor-cardiaco" style="font-size:<?php echo rand(100, 200); ?>%;">beurer monitor cardiaco</a></li>
+		<li><a href="http://www.farmadelivery.com.br/infantil/chupetas-mamadeiras-e-mordedores/chupetas" style="font-size:<?php echo rand(100, 200); ?>%;">chupetas</a></li>
+		<li><a href="http://www.farmadelivery.com.br/infantil/chupetas-mamadeiras-e-mordedores/mamadeiras" style="font-size:<?php echo rand(100, 200); ?>%;">mamadeiras</a></li>
+		<li><a href="http://www.farmadelivery.com.br/infantil/chupetas-mamadeiras-e-mordedores/mordedores" style="font-size:<?php echo rand(100, 200); ?>%;">mordedores</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/pilates" style="font-size:<?php echo rand(100, 200); ?>%;">Bola Suiça</a></li>
+		<li><a href="http://www.farmadelivery.com.br/fitness/monitor-cardiaco/monitor-cardiaco-de-pulso-preto-e-prata-pm25-beurer-monitora-o-volume-diario-de-exercicio-o-ritmo-cardiaco-medio-e-maximo-durante-o-periodo-alem-de-verificar-o-gasto-de-calorias-e-gorduras.html" style="font-size:<?php echo rand(100, 200); ?>%;">beurer pm25</a></li>
+        <?/*
+        $qtd_permitida = 70;
+        $i = 0;
+        ?>
+        <?php foreach ($this->getTerms() as $_term): ?>
+        <?php if ($i < $qtd_permitida) { ?>
+                <li><a href="<?php echo $this->getSearchUrl($_term) ?>" style="font-size:<?php echo $_term->getRatio() * 70 + 100 ?>%;"><?php echo $this->htmlEscape($_term->getName()) ?></a></li>
+        <?php
+                $i++;
+            }?>
+<?php endforeach; */?>
+    </ul>
+	
+	
+<?php else: ?>
+    <p class="note-msg"><?php echo $this->__('There are no search terms available.'); ?></p>
+<?php endif; ?>

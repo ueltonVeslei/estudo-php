@@ -1,0 +1,58 @@
+<style>
+	.grid table td {
+		vertical-align:middle;
+		text-align: center;
+	}
+	.aefeaf{
+		padding: 3px 0px;
+	}
+	.rutyeg{
+		width: 200px;
+		padding: 0px 5px;
+		border-color: #AAAAAA #C8C8C8 #C8C8C8 #AAAAAA;
+		border-style: solid;
+		border-width: 1px;
+		display: block;
+	}
+	.grid tr:hover {
+		background-color: #d9edf7 !important;
+	}
+	
+</style>
+<div class="entry-edit">
+	<div class="entry-edit-head">
+    	<h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Fields Mapping')?></h4>
+	</div>
+	<div id="content_fieldset" class="fieldset ">
+		<?php echo Mage::app()->getLayout()->createBlock('adminhtml/system_config_switcher')->setTemplate('netreviews/pla/switcher.phtml')->toHtml() ?>
+		<div class="grid" style="clear:both">
+			<table cellspacing="0" cellpadding="0" class="data" style="width:100%;">
+				<thead>
+					<tr class="headings">
+						<th style="width:160px;"><?php echo $this->__('Field Name')?></th>
+						<th width="40%"><?php echo $this->__('Value')?></th>
+					</tr>
+				</thead>
+				<tbody id="mapping-table-body">
+					<?php 			    
+						echo $this->getLayout()->createBlock('adminhtml/template')
+							->setTemplate('netreviews/pla/mapping.phtml')->toHtml(); 
+					?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

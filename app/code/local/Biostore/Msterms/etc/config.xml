@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+ 
+    <modules>  
+       <Biostore_Msterms>  
+         <version>0.0.1</version>  
+       </Biostore_Msterms>  
+     </modules>
+  
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Biostore_Msterms before="Mage_Adminhtml">Biostore_Msterms</Biostore_Msterms>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+   <global>
+   <blocks>
+    	    <adminhtml>
+        	<rewrite>
+            	    <catalog_search_edit_form>Biostore_Msterms_Block_Catalog_Search_Edit_Form</catalog_search_edit_form>
+                </rewrite>
+            </adminhtml>
+        </blocks> 
+    </global>
+</config>
+

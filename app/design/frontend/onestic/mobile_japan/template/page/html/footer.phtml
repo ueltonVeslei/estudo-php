@@ -1,0 +1,98 @@
+<div class="footer">
+    <div class="menu-inferior">
+        <div class="formas-pagamento">
+            <h5>Formas de pagamento</h5>
+            <ul class="selo-seguro">
+                <li class="itemRight">
+                    <img alt="boleto" src="<?php echo $this->getSkinUrl('images/_cards/parcelamento/boleto.png'); ?>"/>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-menu">
+            <div class="menu-footer">
+                <h4>Institucional <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+                <ul class="institucional">
+                    <li><a href="<?php echo $this->getUrl() ?>">Home</a></li>
+                    <li><a href="<?php echo $this->getUrl('quemsomos') ?>" rel="nofollow">Quem Somos</a></li>
+                    <li><a href="<?php echo $this->getUrl('institucional_localizacao') ?>">Localiza&ccedil;&atilde;o</a></li>
+                </ul>
+            </div>
+            <div class="menu-footer">
+                <h4>Políticas <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+                <ul class="politicas">
+                    <li><a href="/politica_de_troca_devolucao_arrependimento">Política de Troca, Devolução e Arrependimento 交換、返済および悔恨の方針 Kōkan, hensai oyobi kaikon no hōshin</a></li>
+                    <li><a href="/politica_de_envio">Política de Envio 配送ポリシー Haisō porishī</a></li>
+                    <li><a href="/politica_de_pagamento">Política de Pagamento 支払いポリシー Shiharai porishī</a></li>
+                    <li><a href="/politica_de_privacidade">Política de Privacidade プライバシーポリシー Puraibashīporishī</a></li>
+                    <li><a href="/politica_de_seguranca">Política de Segurança セキュリティポリシー Sekyuritiporishī</a></li>
+                    <li><a href="/como_comprar">Como Comprar 購入方法 Kōnyū hōhō</a></li>
+                    <li><a href="/garantias">Garantias 保証 Hoshō </a></li>
+                </ul>
+            </div>
+            <div class="menu-footer">
+                <h4>Navegaçao <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+                <ul class="navegacao">
+                    <li><a href="<?php echo $this->getUrl('catalog/seo_sitemap/category') ?>">Mapa do site</a></li>
+                </ul>
+            </div>
+            <div class="menu-footer">
+                <h4>Redes Sociais <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('redes-mobile')->toHtml(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer-store-info">
+    <div class="store-contact">
+        <p><strong class="titulo">CENTRAL DE ATENDIMENTO NO JAPÃO</strong></p>
+        <p><strong>〒440-0853 - Aichi-ken Toyohashi-shi Sato 1-9-1</strong></p>
+        <p><strong>(0532) 65-9322 SoftBank: 090-9920-0062 farmadelivery@solbrasil.co.jp</strong></p>
+        <p>De segunda a sábado das 9:00 às 20:00h (horário do Japão)</p>
+        <p><strong class="titulo">CENTRAL DE ATENDIMENTO NO BRASIL</strong></p>
+        <p><strong>sac@farmadelivery.com.br</strong></p>
+        <p><i class="icon-font icon-ic_shopping_cart_black_24px"></i> <a href="<?php echo Mage::getUrl('customer/account/') ?>"><?php echo $this->__('My Orders') ?></a></p>
+        <p><i class="icon-font icon-ic_home_black_24px"></i> <a href="<?php echo Mage::getUrl('sales/order/history/') ?>"><?php echo $this->__('Registered Customers') ?></a></p>
+    </div>
+    <div class="copyright">
+        <p>© Copyright 2018 - Farma Delivery - Todos os Direitos Reservados.</p>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function trocarImagemAlgolia() {
+
+        var category = jQuery("[class^=result], [class^=algoliasearch-autocomplete-hit]").each(function(index) {
+            var _ids = jQuery(this).attr("category-ids");
+            if (_ids) {
+                var split_str = _ids.split(',');
+                if (split_str.indexOf("26") !== -1) {
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/produto-sem-imagem-controle-especial-farmadelivery-277.jpg");
+                }else if(split_str.indexOf("295") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/produto-sem-imagem-antimicrobiano-farmadelivery-277.jpg");
+                }else if(split_str.indexOf("14") !== -1 && split_str.indexOf("28") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/caixa-genericos-tarjados-farmadelivery-277_1.jpg");
+                }else if(split_str.indexOf("28") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/caixa-tarjados-farmadelivery.jpg");
+                }
+            }
+        });
+
+    }
+
+    jQuery(window).load(function() {
+        setTimeout(function() { trocarImagemAlgolia(); }, 300);
+    });
+
+    jQuery(document).bind('keypress, keydown', function(e){
+        if(e.which) {
+            setTimeout(function() { trocarImagemAlgolia(); }, 300);
+        }
+    });
+
+    jQuery(document).click(function() {
+        setTimeout(function() { trocarImagemAlgolia(); }, 300);
+    });
+
+</script>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	
+	<modules>
+		<MageMigrator_Migcustomer>
+			<version>1.0</version>
+		</MageMigrator_Migcustomer>
+	</modules>
+	
+	<global> 
+		
+		<models>
+			<migcustomer>
+				<class>MageMigrator_Migcustomer_Model</class>
+			</migcustomer>
+		</models>
+		
+	</global>
+	
+</config>

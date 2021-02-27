@@ -1,0 +1,47 @@
+Box Total weight,Peso total da caixa (peso máximo que definirá a separação das caixas)
+Box Total length,Comprimento total da caixa
+Box Total height,Altura total da caixa
+Box Total width,Largura total da caixa
+Box Default weight,Peso da caixa
+Box Default length,Comprimento da caixa
+Box Default height,Altura da caixa
+Box Default width,Largura da caixa
+Quote by Volume,Configuração Multi-volume
+Default width,Largura do produto (contingencia)
+Settings,Configuraç&otildees
+"Basic","Básico"
+"%s module - version %s","Módulo %s - versão %s"
+API URL,URL da API
+"API key","Chave da API"
+"Zipcode","CEP"
+Product's nature,Classificação dos produtos
+"ICMS tax exempt","Isento de taxa de ICMS"
+Advanced volume calculation,Calcular volume em caixas separadas
+"Product attributes","Atributos do produto"
+"Width","Largura"
+"Height","Altura"
+"Length","Comprimento"
+"Box","Caixa"
+Average weight. Use '.' to separate decimals,Peso médio. Usar '.' para separar as casas decimais
+Average Weight,Peso (contingencia)
+Default height,Altura do produto (contingencia)
+Default length,Comprimento do produto (contingencia)
+"Default weight","Peso padrão"
+"When not configured in the product will be used default value of 11 cm.","Quando não configurado no produto será utilizado o valor padrão de 11 cm."
+"When not configured in the product will be used default value of 2 cm.","Quando não configurado no produto será utilizado o valor padrão de 2 cm."
+"When not configured in the product will be used default value of 16 cm.","Quando não configurado no produto será utilizado o valor padrão de 16 cm."
+Dimensions values attributes can't be the same,Valores dos atributos de dimensães não podem ser duplicados.
+Weigth,Peso
+Dimensions,Dimensoes
+No,Não
+box weigth added to final products weigth,Esse peso será adicionado no peso dos produtos para compensar o peso da caixa.
+Default categories for products.,Categorias padrão para produtos.
+Additional Box Weigth,Peso Adicional da caixa
+Use main NCM or a generic description. eg: Eletronics,Use o NCM principal ou uma descrição genérica. Ex: Eletronicos
+Quote Method,Método da Cotação
+Use volume attribute?,Usar atributo de volume?
+Volume attribute,Atributo de volume
+Volume Contingency Value,Valor do Volume (contingencia)
+Unit of Volume / Dimensions,Unidade do volume / dimensç&otildees
+"Unit, in which product volume is set",Unidade do volume do produto.
+Meters,Metros

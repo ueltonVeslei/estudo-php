@@ -1,0 +1,264 @@
+<?php 
+$helper = Mage::helper("av5_correiospro");
+?>
+<div id="registros">
+	<div class="content-header">
+	    <table class="grid-header">
+	        <tr>
+	            <td><h3>Atualiza&ccedil;&otilde;es Correios</h3></td>
+	            <td class="form-buttons a-right">
+					<button onclick="top.location.href='<?php echo $this->getUrl('*/*/clean')?>';" class="scalable delete" type="button"><span>Limpar Base</span></button>
+					<button onclick="populate();" class="scalable save" type="button"><span>Popular Base</span></button>
+					<button onclick="startUpdate('');" class="scalable save" type="button"><span>Atualizar Todas</span></button>
+	            </td>
+	        </tr>
+	    </table>
+	</div>
+	<div class="entry-edit">
+		<div class="grid">
+			<table class="data" cellspacing="0" cellpadding="0">
+				<colgroup>
+		            <col>
+	                <col width="120" class="a-center">
+	                <col width="180" class="a-center">
+	                <col width="180" class="a-center">
+	                <col width="180" class="a-center">
+	            	<col width="180" class="a-center">
+	            </colgroup>
+				<thead>
+		            <tr class="headings">
+			            <th>Estado</th>
+			            <th class="a-center">Status</th>
+			            <th class="a-center">Total de regi&otilde;es</th>
+			            <th class="a-center">Regi&otilde;es Atualizadas</th>
+			            <th class="a-center">Regi&otilde;es para atualizar</th>
+			        	<th class="a-center">A&ccedil;&otilde;es</th>
+		        	</tr>
+		        </thead>
+		        <tbody>
+		        <?php 
+	            $even = true;
+	            foreach(Mage::getModel('av5_correiospro/location')->getRegionsByState() as $region):
+	            	$outdated = Mage::getModel('av5_correiospro/price')->getOutdated($region->getState());
+	            	$updated = Mage::getModel('av5_correiospro/price')->getUpdated($region->getState());
+	            ?>
+				<tr class="<?php echo ($even) ? "even" : ""; $even = !$even;?>">
+	                <td><?php echo $region->getState(); ?></td>
+	                <td align="center"><?php 
+		                    	if ($outdated > 0 || $updated == 0) {
+									$class = "critical";
+									if ($updated == 0) {
+										$text = "Popular";
+									} else {
+										$text = "Atualizar";
+									}
+	    						} else {
+									$class = "notice";
+									$text = "Atualizado";
+	            				}
+		            	?><span class="grid-severity-<?php echo $class; ?>"><span><?php echo $text; ?></span></span></td>
+	                <td align="center"><b><?php echo $region->getRegions(); ?></b></td>
+	                <td align="center"><b><?php echo $updated; ?></b></td>
+	                <td align="center"><b><?php echo $outdated; ?></b></td>
+	            	<td align="center">
+	            	<?php if ($outdated > 0): ?>
+	            		<a href="javascript: startUpdate('<?php echo $region->getState(); ?>',<?php echo $outdated; ?>);">Atualizar</a>
+	            	<?php endif; ?>
+	            	</td>
+	            </tr>
+	        	<?php endforeach; ?>
+	        	</tbody>
+	    	</table>
+		</div>
+	</div>
+</div>
+<div id="atualizacao" style="display: none">
+	<div class="content-header">
+	    <table class="grid-header">
+	        <tr>
+	            <td><h3>Atualização de Valores</h3></td>
+	            <td class="a-right">
+					<button onclick="showRegisters();" class="scalable save" type="button" id="btnViewUpdate" style="display: none"><span>Visualizar Regiões</span></button>
+	            </td>
+	        </tr>
+	    </table>
+	</div>
+	<div class="entry-edit">
+	    <ul id="andamento">
+	    	<li id="init" style="display: none;"><img src="<?php echo $this->getSkinUrl('images/note_msg_icon.gif')?>" class="v-middle" style="margin-right:5px"/>Atualizando valores, por favor aguarde... </li>
+	    	<li id="success" style="display: none; background-color:#DDF;">
+	    		<img src="<?php echo $this->getSkinUrl('images/fam_bullet_success.gif');?>" class="v-middle" style="margin-right:5px"/>
+	    		Regi&otilde;es atualizadas: <span id="sucesso"></span>
+	    	</li>
+	    	<li id="errors" style="display: none;">
+	    		<img src="<?php echo $this->getSkinUrl('images/fam_bullet_error.gif');?>" class="v-middle" style="margin-right:5px"/>
+	    		Erros de atualiza&ccedil;&atilde;o: <span id="erros"></span>
+	    	</li>
+	    	<li id="finish" style="display: none"><img src="<?php echo $this->getSkinUrl('images/note_msg_icon.gif')?>" class="v-middle" style="margin-right:5px"/>Processo Finalizado</li>
+	    </ul>
+	    <div id="loader"><img src="<?php echo $this->getSkinUrl('images/rule-ajax-loader.gif');?>" class="v-middle" style="margin-right:5px"/> Processando atualiza&ccedil;&atilde;o...</div>
+	</div>
+</div>
+<div id="populate" style="display: none">
+	<div class="content-header">
+	    <table class="grid-header">
+	        <tr>
+	            <td><h3>Populando base de dados</h3></td>
+	            <td class="a-right">
+					<button onclick="showRegisters();" class="scalable save" type="button" id="btnViewPopulate" style="display: none"><span>Visualizar Regiões</span></button>
+	            </td>
+	        </tr>
+	    </table>
+	</div>
+	<div class="entry-edit">
+		<div class="conteiner">
+			<div id="barra"></div>
+		</div>
+		<div id="finishPopulate" style="display: none"><img src="<?php echo $this->getSkinUrl('images/note_msg_icon.gif')?>" class="v-middle" style="margin-right:5px"/>Processo Finalizado</div>
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var editForm = new varienForm('edit_form');
+    var totalService = 0;
+	var updatedTotal = 0;
+	var current_page = 0;
+	var totalSucesso = 0;
+	var totalErro = 0;
+	var totalUpdates = <?php echo $helper->getConfigData('cycles_limit'); ?>;
+	var countUpdates = 0;
+	var currentState = '';
+
+	function runTimer() {
+		setTimeout(function(){
+			countUpdates++;
+			if (countUpdates < totalUpdates) {
+				updateProgress(currentState);
+				runTimer();
+			}
+		},<?php echo $helper->getConfigData('cycles_timeout'); ?>000);
+	}
+	
+	function startUpdate(state) {
+		currentState = state;
+		totalService = 0;
+	    updatedTotal = 0;
+	    current_page = 0;
+	    totalSucesso = 0;
+	    totalErro = 0;
+	    $('registros').hide();
+	    $('atualizacao').show();
+		$('init').show();
+		$('success').hide();
+		$('errors').hide();
+		$('finish').hide();
+		updateProgress(state);
+		runTimer();
+	}
+	function updateProgress(state) {
+    	new Ajax.Request( '<?php echo $this->getUrl("*/*/post"); ?>state/' + state, {
+			method: 'GET',
+			evalScripts: true,
+			onLoading: function(transport) {
+				$('loader').show();
+				$('finish').hide();
+				$('btnViewUpdate').hide();
+			},
+			onComplete: function(transport) {
+				$('loader').hide();
+				$('finish').show();
+				$('btnViewUpdate').show();
+			},
+			onSuccess: function(transport) {
+				if (200 == transport.status) {
+					response = transport.responseText.evalJSON();
+					if(response.total != 0) {
+						totalSucesso = totalSucesso + parseInt(response.success);
+						totalErro = totalErro + parseInt(response.errors);
+						if (totalSucesso > 0) {
+							$('success').show();
+							$('sucesso').innerHTML = totalSucesso;
+						}
+
+						if (totalErro > 0) {
+							$('errors').show();
+							$('erros').innerHTML = totalErro;
+						}
+						totalService = parseInt(response.total);
+						$('loader').innerHTML = '<img src="<?php echo $this->getSkinUrl('images/rule-ajax-loader.gif');?>" class="v-middle" style="margin-right:5px"/> Restam ' + totalService + ' regi&otilde;es para atualizar. Processando atualização...'; 
+						updateProgress(state);
+					} else if(response.success == 0 && response.errors == 0 && response.total == 0) {
+						$('finish').show();
+						$('btnViewUpdate').show();
+					} else {
+						$('loader').innerHTML = '<img src="<?php echo $this->getSkinUrl('images/fam_bullet_error.gif');?>" class="v-middle" style="margin-right:5px"/> Ocorreu um erro, verifique o log do sistema.';
+					}
+				}
+			},
+			onFailure: function() {
+				$('loader').innerHTML = '<img src="<?php echo $this->getSkinUrl('images/fam_bullet_error.gif');?>" class="v-middle" style="margin-right:5px"/> Ocorreu um erro, repita o processo.';
+			}
+		});
+    }
+
+
+	var totalPopulate = 0;
+	var lastPopulate = 0;
+    function populate() {
+		lastPopulate = 0;
+		$('registros').hide();
+		$('populate').show();
+		populateProgress();
+    }
+    function populateProgress() {
+    	new Ajax.Request( '<?php echo $this->getUrl("*/*/populate"); ?>last/' + lastPopulate, {
+			method: 'GET',
+			evalScripts: true,
+			onLoading: function(transport) {
+				$('populate').show();
+				$('btnViewPopulate').hide();
+			},
+			onComplete: function(transport) {
+				$('finishPopulate').innerHTML = '<img src="<?php echo $this->getSkinUrl('images/note_msg_icon.gif')?>" class="v-middle" style="margin-right:5px"/>Processo Finalizado';
+				$('btnViewPopulate').show();
+			},
+			onSuccess: function(transport) {
+				if (200 == transport.status) {
+					response = transport.responseText.evalJSON();
+					if(response.last < response.locations) {
+						lastPopulate = response.last;
+						totalPopulate = response.locations;
+						percent = ((lastPopulate / totalPopulate)*100) + '%';
+						$('barra').setStyle({width: percent}); 
+						populateProgress();
+					} else {
+						$('finishPopulate').show();		
+						$('btnViewPopulate').show();				
+					}
+				}
+			},
+			onFailure: function() {
+				$('finishPopulate').setStyle({background: '#e41101'});
+				$('finishPopulate').innerHTML = 'Houve um problema com o procedimento, por favor verifique os logs do sistema.';
+				$('finishPopulate').show();
+			}
+		});
+    }
+
+    function showRegisters() {
+    	$('registros').show();
+    	$('populate').hide();
+    	$('atualizacao').hide();
+    }
+//]]>
+</script>
+<style type="text/css" >
+	td.label {
+		text-align: right;
+		padding-right: 10px;
+	}
+    ul#andamento { list-style-type:none; padding:0; margin:0; }
+    ul#andamento li, #loading, .conteiner, #finishPopulate { margin-left:0; border:1px solid #ccc; margin:2px; padding:2px 2px 2px 2px; font:normal 12px sans-serif; }
+    ul#andamento li img, #loading img { margin-right:5px; }
+	#barra { height: 16px; width: 0%; background: #5abe37; }
+</style>

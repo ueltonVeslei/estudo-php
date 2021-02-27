@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ShopInDev
+ *
+ * @category    ShopInDev
+ * @package     ShopInDev_SuperXmlFeed
+ * @copyright   Copyright (c) 2016 ShopInDev
+ * @license     http://opensource.org/licenses/GPL-3.0 GNU General Public License (GPL)
+ */
+-->
+<config>
+	<menu>
+		<catalog>
+			<children>
+				<superxmlfeed translate="title" module="superxmlfeed">
+					<title>XML Feeds</title>
+					<sort_order>190</sort_order>
+					<action>adminhtml/superxmlfeed/index</action>
+				</superxmlfeed>
+			</children>
+		</catalog>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<catalog>
+						<children>
+							<superxmlfeed translate="title" module="superxmlfeed">
+								<title>XML Feeds</title>
+							</superxmlfeed>
+						</children>
+					</catalog>
+					<system>
+						<children>
+							<config>
+								<children>
+									<superxmlfeed translate="title" module="superxmlfeed">
+										<title>XML Feeds Section</title>
+									</superxmlfeed>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

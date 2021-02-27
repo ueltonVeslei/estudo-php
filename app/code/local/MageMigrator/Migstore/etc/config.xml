@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	
+	<modules>
+		<MageMigrator_Migstore>
+			<version>1.0</version>
+		</MageMigrator_Migstore>
+	</modules>
+	
+	<global> 
+		
+		<models>
+			<migstore>
+				<class>MageMigrator_Migstore_Model</class>
+			</migstore>
+		</models>
+		
+		<resources>
+            <mistore_setup>
+                <setup>
+                    <module>MageMigrator_Migstore</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </mistore_setup>
+            <mistore_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </mistore_write>
+            <mistore_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </mistore_read>
+        </resources>
+        
+	</global>
+	
+</config>

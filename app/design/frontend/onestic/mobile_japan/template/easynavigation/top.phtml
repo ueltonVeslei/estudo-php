@@ -1,0 +1,19 @@
+<?php $block = $this->getParentBlock()->getNameInLayout(); ?>
+<?php if (Mage::getStoreConfig("easy_navigation/{$block}/visibility")): ?>
+<?php $type = Mage::getStoreConfig("easy_navigation/{$block}/type") ?>
+<div class="header-nav-container">
+    <div class="header-nav">
+        <h4 class="no-display"><?php echo $this->__('Category Navigation:') ?></h4>
+        <ul id="nav-top" class="easynavigation nav-<?php echo Mage::getStoreConfig("easy_navigation/{$block}/type") ?>">
+        <?php foreach ($this->getStoreCategories() as $_category): ?>
+            <?php echo $this->drawItem($_category) ?>
+        <?php endforeach ?>
+        </ul>
+    </div>
+</div>
+<?php if ($type == 'accordionjs'): ?>
+<script type="text/javascript">
+	new accordion('nav-top');
+</script>
+<?php endif ?>
+<?php endif ?>

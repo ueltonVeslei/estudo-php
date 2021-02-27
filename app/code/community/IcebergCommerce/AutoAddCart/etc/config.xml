@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<IcebergCommerce_AutoAddCart>
+			<version>1.0.1</version>
+		</IcebergCommerce_AutoAddCart>
+	</modules>
+
+	<global>
+		<models>
+			<icebergcommerce_autoaddcart>
+				<class>IcebergCommerce_AutoAddCart_Model</class>
+				<resourceModel>icebergcommerce_autoaddcart_mysql4</resourceModel>
+			</icebergcommerce_autoaddcart>
+		</models>
+		
+		<resources>
+			<icebergcommerce_autoaddcart_setup>
+				<setup>
+					<module>IcebergCommerce_AutoAddCart</module>
+					<class>IcebergCommerce_AutoAddCart_Model_Mysql4_Setup</class>
+				</setup>
+				<connection><use>core_setup</use></connection>
+			</icebergcommerce_autoaddcart_setup>
+			<icebergcommerce_autoaddcart_write>
+				<connection><use>core_write</use></connection>
+			</icebergcommerce_autoaddcart_write>
+			<icebergcommerce_autoaddcart_read>
+				<connection><use>core_read</use></connection>
+			</icebergcommerce_autoaddcart_read>
+		</resources>		
+	</global>
+
+	<frontend>
+		<events>
+			<checkout_cart_product_add_after>
+				<observers>
+					<icebergcommerce_autoaddcart_observor>
+						<type>singleton</type>
+						<class>icebergcommerce_autoaddcart/observer</class>
+						<method>checkout_cart_product_add_after</method>
+					</icebergcommerce_autoaddcart_observor>
+				</observers>
+			</checkout_cart_product_add_after>
+			
+			<checkout_cart_update_items_before>
+				<observers>
+					<icebergcommerce_autoaddcart_observor>
+						<type>singleton</type>
+						<class>icebergcommerce_autoaddcart/observer</class>
+						<method>checkout_cart_update_items_before</method>
+					</icebergcommerce_autoaddcart_observor>
+				</observers>
+			</checkout_cart_update_items_before>
+			
+			<checkout_cart_update_items_after>
+				<observers>
+					<icebergcommerce_autoaddcart_observor>
+						<type>singleton</type>
+						<class>icebergcommerce_autoaddcart/observer</class>
+						<method>checkout_cart_update_items_after</method>
+					</icebergcommerce_autoaddcart_observor>
+				</observers>
+			</checkout_cart_update_items_after>
+			
+			<sales_quote_remove_item>
+				<observers>
+					<icebergcommerce_autoaddcart_observor>
+						<type>singleton</type>
+						<class>icebergcommerce_autoaddcart/observer</class>
+						<method>sales_quote_remove_item</method>
+					</icebergcommerce_autoaddcart_observor>
+				</observers>
+			</sales_quote_remove_item>
+		</events>
+	</frontend>
+
+</config>

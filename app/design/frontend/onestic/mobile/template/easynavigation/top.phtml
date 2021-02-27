@@ -1,0 +1,33 @@
+<?php $block = $this->getParentBlock()->getNameInLayout(); ?>
+<?php if (Mage::getStoreConfig("easy_navigation/{$block}/visibility")): ?>
+<?php $type = Mage::getStoreConfig("easy_navigation/{$block}/type") ?>
+<div class="header-nav-container">
+    <div class="header-nav">
+        <h4 class="no-display"><?php echo $this->__('Category Navigation:') ?></h4>
+        <ul id="nav-top" class="easynavigation nav-<?php echo Mage::getStoreConfig("easy_navigation/{$block}/type") ?>">
+            <?php
+            $helper = Mage::helper('fd_menucache');
+
+            if (!$_menu = $helper->getCacheMenu()) {
+                $_menu = '';
+
+                foreach ($this->getStoreCategories() as $_category):
+                    $_menu .= $this->drawItem($_category);
+                endforeach;
+
+                $helper->saveMobileMenu($_menu);
+            }
+
+            if ($_menu):
+                echo $_menu;
+            endif;
+            ?>
+        </ul>
+    </div>
+</div>
+<?php if ($type == 'accordionjs'): ?>
+<script type="text/javascript">
+	new accordion('nav-top');
+</script>
+<?php endif ?>
+<?php endif ?>

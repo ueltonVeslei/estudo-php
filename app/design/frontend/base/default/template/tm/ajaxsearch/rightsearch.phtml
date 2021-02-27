@@ -1,0 +1,54 @@
+<?php if (Mage::getStoreConfig('tm_ajaxsearch/general/enabled')) :?>
+<?php if (Mage::getStoreConfig('tm_ajaxsearch/general/enableright')) :?>
+<div class="block mini-search-right">
+    <div class="block-title">
+        <strong><?php echo $this->__('Search') ?></strong>
+    </div>
+    <div class="block-content">
+        <form id="search_mini_form-right" action="<?php echo $this->helper('catalogSearch')->getResultUrl() ?>" method="get">
+            <fieldset>
+                <legend><?php echo $this->__('Search Site') ?></legend>
+                <div class="mini-search-right">
+                    <label for="newsletter"><?php echo $this->__('Search entire store here') ?></label>
+                    <?php
+                        $searchFieldText = Mage::getStoreConfig('tm_ajaxsearch/general/searchfieldtext');
+
+                        $queryText = Mage::helper('catalogsearch')->getEscapedQueryText();
+                        if (!empty($queryText)) {
+                            $searchFieldText = $queryText;
+                        }
+                    ?>
+                    <input id="search-right" type="text" class="input-text" name="<?php echo $this->helper('catalogSearch')->getQueryParamName() ?>" value="<?php echo $searchFieldText; ?>" />
+                    <div id="search-rightajaxico" class=""></div>
+                    <button type="button" class="button">
+                        <span><?php echo $this->__('Search') ?></span>
+                    </button>
+                    <a href="<?php echo $this->getUrl('catalogsearch/advanced/'); ?>"><?php echo $this->__('Advanced search') ?></a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    <?php $_isSecure = $this->getRequest()->isSecure(); ?>
+    function initAjaxsearchAutocomplete(){
+        new AjaxsearchAutocomplete('search-right', {
+            serviceUrl   : '<?php echo $this->getUrl('ajaxsearch', array('_secure' => $_isSecure)); ?>',
+            enableloader : '<?php echo (int)Mage::getStoreConfig('tm_ajaxsearch/general/enableloader'); ?>',
+            minChars     : '<?php echo Mage::getStoreConfig('tm_ajaxsearch/general/minchars'); ?>',
+            maxHeight    : '<?php echo Mage::getStoreConfig('tm_ajaxsearch/general/maxheight'); ?>',
+            width        : '<?php echo Mage::getStoreConfig('tm_ajaxsearch/general/width'); ?>',
+            searchtext   : '<?php echo Mage::getStoreConfig('tm_ajaxsearch/general/searchfieldtext'); ?>',
+            onSelect     : function (value, data) {setLocation(value.url);}
+        });
+    }
+    if (Prototype.Browser.IE) {
+        Event.observe(window, 'load', initAjaxsearchAutocomplete);
+    } else {
+        document.observe("dom:loaded", initAjaxsearchAutocomplete);
+    }
+//]]>
+</script>
+<?php endif; ?>
+<?php endif; ?>

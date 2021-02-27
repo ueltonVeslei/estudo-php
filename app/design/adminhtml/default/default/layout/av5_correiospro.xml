@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<layout>
+    <av5_correiospro_adminhtml_update_index>
+        <update handle="av5_correios_update_index"/>
+        <reference name="content">
+            <block type="adminhtml/template" name="updaterForm" template="av5_correiospro/index.phtml"/>
+        </reference>
+    </av5_correiospro_adminhtml_update_index>
+    <av5_correiospro_adminhtml_promotion_index>
+        <reference name="content">
+            <block type="av5_correiospro/adminhtml_promotion" name="promotions.list" />
+        </reference>
+    </av5_correiospro_adminhtml_promotion_index>
+    <av5_correiospro_adminhtml_promotion_edit>
+    	<reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadRulesJs"><flag>1</flag></action>
+        </reference>
+        <reference name="content">
+            <block type="av5_correiospro/adminhtml_promotion_edit" name="promotion.edit" />
+        </reference>
+        <reference name="js">
+            <block type="adminhtml/promo_catalog_edit_js" template="promo/js.phtml" />
+        </reference>
+    </av5_correiospro_adminhtml_promotion_edit>
+</layout>

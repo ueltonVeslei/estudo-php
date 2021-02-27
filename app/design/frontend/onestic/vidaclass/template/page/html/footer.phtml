@@ -1,0 +1,237 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="footer-container">
+    <div class="footer-session1">
+        <div class="wrapper">
+        <div class="need-help-session">
+            <div class="content">
+            <div class="vidaclass">
+                    <img src="https://vcdelivery.com.br/skin/frontend/onestic/vidaclass/images/logo-branco.png" class="logo-branco-footer" alt="Logo branco do rodapé.">
+
+                    <h2> A Farmácia Online da VidaClass </h2>
+                </div>
+                <h2>Precisa de Ajuda?</h2>
+                <div class="vantagens">
+                    <a href="mailto:sac@vcdelivery.com.br"><div class="send-mail"><span>Envie<br>um E-mail</span></div></a>
+                    <a href="<?php echo Mage::getBaseUrl()?>principaisduvidas/"><div class="main-question"><span>Principais<br>Dúvidas</span></div></a>
+                </div>
+            
+                
+
+            </div>
+        </div>
+        <div class="mascote"></div>
+        <div class="social-share-session">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('vidaclass-icones')->toHtml(); ?>
+        </div>
+    </div>
+    </div>
+    <div class="principais-pesquisas">
+        <div class="categorias">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('principais-pesquisas-categorias')->toHtml(); ?>
+        </div>
+        <div class="produtos">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('principais-pesquisas-produtos')->toHtml(); ?>
+        </div>
+    </div>
+    <div class="footer-session2">
+        <div class="coluna1">
+            <h2>VC Delivery</h2>
+            <ul>
+                <li><a href="<?php echo Mage::getBaseUrl()?>">Home</a></li>
+                <li><a href="<?php echo Mage::getBaseUrl()?>quemsomos/" target="_blank" rel="nofollow">Quem Somos</a></li>
+                <li><a href="<?php echo Mage::getBaseUrl()?>institucional_localizacao/" target="_blank">Localização</a></li>
+            </ul>
+        </div>
+        <div class="coluna2">
+            <h2>Políticas</h2>
+            <ul>
+                <li><a href="<?php echo Mage::getBaseUrl()?>politica_de_troca_devolucao_arrependimento/" target="_blank">Política de Troca, Devolução e Arrependimento</a></li>
+                <li><a href="<?php echo Mage::getBaseUrl()?>politica_de_envio/" target="_blank">Política de Envio</a></li>
+                <li><a href="<?php echo Mage::getBaseUrl()?>politica_de_pagamento/" target="_blank">Política de Pagamento</a></li>
+            </ul>
+        </div>
+        <h2>&nbsp</h2>
+        <div class="coluna3">
+            <ul>
+                <li><a href="<?php echo Mage::getBaseUrl()?>politica_de_privacidade" target="_blank">Política de Privacidade</a></li>
+                <li><a href="<?php echo Mage::getBaseUrl()?>politica_de_seguranca" target="_blank">Política de Segurança</a></li>
+            </ul>
+        </div>
+        <div class="coluna4">
+            <h2>Fale Conosco</h2>
+            <ul>
+                <li><b style="font-size: 14px; color: #333;">Ligue (11) 4972-8277</b></li>
+                <li><span style="color:#666;">
+                    Segunda a Sexta: 8:15 às 19:45<br />
+                    Sábado: 8:15 às 15:45
+                </span></li>
+            </ul>
+        </div>
+        <div class="coluna5">
+            <h2>&nbsp</h2>
+            <ul>
+                <li class="open-chat" style="cursor:pointer"><a><b style="font-size: 14px; color: #333;">Whatsapp: (11) 99333-0810</b></a></li>
+                <li><span style="color:#666;">
+                    Segunda a Sexta: 8:15 às 19:45<br />
+                    Sábado: 8:15 às 15:45
+                </span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="seguranca-info" style="padding-bottom: 25px;width: 80%;float: left;text-align: left;">
+            <h2 style="margin: 25px 0 40px;color:#333; font-weight: bold;">Segurança e Credibilidade</h2>
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('farmadelivery-seguranca-info')->toHtml(); ?>
+        </div>
+        <div class="pagamento-info" style="width: 20%;float: left; text-align: left;">
+            <h2 style="margin: 11% 0 13%;color: #333;font-weight: bold;">Formas de Pagamento</h2>
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('farmadelivery-pagamento-info-checkout')->toHtml(); ?>
+        </div>
+        <div class="telefone-info" style="width: 20%;float: left; text-align: left;">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('farmadelivery-telefone')->toHtml(); ?>
+        </div>
+        <div class="info" style="margin: 212px 0 0;text-align: left;color: #666;font-size: 13px;">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('farmadelivery-info')->toHtml(); ?>
+        </div>
+        <?php // echo $this->getChildHtml() ?>
+        <p class="bugs"><?php // echo $this->__('Help Us to Keep Magento Healthy') ?> - <a href="http://www.magentocommerce.com/bug-tracking" onclick="this.target='_blank'"><strong><?php // echo $this->__('Report All Bugs') ?></strong></a> <?php // echo $this->__('(ver. %s)', Mage::getVersion()) ?></p>
+        <address><?php // echo $this->getCopyright() ?></address>
+
+    </div>
+</div>
+
+<div id="frete-gratis-condicoes" class="frete-gratis-condicoes">
+    <div class="frete-gratis-condicoes-modal">
+        <a href="#frete-gratis-condicoes" class="close-modal">Fechar</a>
+        <div class="frete-gratis-condicoes-content">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('frete-gratis-condicoes')->toHtml(); ?>
+        </div>
+    </div>
+</div>
+
+<div class="japan-modal">
+    <div class="modal">
+        <div class="modal-overlay modal-toggle"></div>
+        <div class="modal-wrapper modal-transition">
+            <button class="modal-close modal-toggle">X</button>
+            <div class="modal-body">
+                <div class="modal-content">
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('banner-japao')->toHtml(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">jQuery('.open-chat').click(function(){jQuery('#omnizeWidget').addClass('is-maximized');});jQuery('.open-modal').click(function(){var target=jQuery(this).attr('href');jQuery(target).show();return false;});jQuery('.close-modal').click(function(){var target=jQuery(this).attr('href');jQuery(target).hide();return false;});</script>
+
+
+<script type="text/javascript">
+
+    function trocarImagemAlgolia() {
+
+        jQuery("[class^=result], [class^=algoliasearch-autocomplete-hit]").each(function(index) {
+            var _ids = jQuery(this).attr("category-ids");
+            var pague_leve = jQuery(this).attr("pague-leve");
+            var frete_gratis = jQuery(this).attr("frete-gratis");
+            var before_special = Number(String(jQuery(this).attr("before-special")).replace(/[^0-9.-]+/g,""));
+            var after_special = Number(String(jQuery(this).attr("after-special")).replace(/[^0-9.-]+/g,""));
+
+            if (_ids) {
+                var split_str = _ids.split(',');
+                if (split_str.indexOf("26") !== -1) {
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/produto-sem-imagem-controle-especial-farmadelivery-277.jpg");
+                }else if(split_str.indexOf("295") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/produto-sem-imagem-antimicrobiano-farmadelivery-277.jpg");
+                }else if(split_str.indexOf("14") !== -1 && split_str.indexOf("28") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/Imagens/caixa-genericos-tarjados-farmadelivery-277_1.jpg");
+                }else if(split_str.indexOf("28") !== -1){
+                    jQuery(this).find("img").attr("src", "/media/wysiwyg/caixa-tarjados-farmadelivery.jpg");
+                }
+            }
+
+            if (pague_leve) {
+                if(pague_leve == "Não") {
+                    jQuery(this).find("#algolia_pague_leve").css("display", "none");
+                }else{
+                    jQuery(this).find("#algolia_pague_leve").css("background-color", "#F25300");
+                    jQuery(this).find("#algolia_pague_leve").html(jQuery(this).find("#algolia_pague_leve").html().split("&lt;br /&gt;").join("<br />"));
+                }
+            }
+
+            if (frete_gratis) {
+                if(frete_gratis == "Não"){
+                    jQuery(this).find("#algolia_frete_gratis").css("display", "none");
+                }else{
+                    jQuery(this).find("#algolia_frete_gratis").css("background-color", "#F25300");
+                    jQuery(this).find("#algolia_frete_gratis").html(jQuery(this).find("#algolia_frete_gratis").html().split("&lt;br /&gt;").join("<br />"));
+                }
+            }
+
+            if (before_special > 0) {
+                var percent = 100 - (after_special * 100 / before_special);
+
+                if(jQuery(this).find("#algolia_percent_discount").html() == 0) {
+                    jQuery(this).find("#algolia_percent_discount").html(jQuery(this).find("#algolia_percent_discount").html().split("0").join("-" + Math.round(percent) + "%"));
+                    jQuery(this).find("#algolia_percent_discount").css("background-color", "#ff7f0b");
+                }
+            }
+
+
+        });
+
+    }
+
+    jQuery(window).load(function() {
+        setTimeout(function() { trocarImagemAlgolia(); }, 300);
+    });
+
+    jQuery(document).bind('keypress, keydown', function(e){
+        if(e.which) {
+            setTimeout(function() { trocarImagemAlgolia(); }, 300);
+        }
+    });
+
+    jQuery(document).click(function() {
+        setTimeout(function() { trocarImagemAlgolia(); }, 300);
+    });
+
+</script>
+
+
+<!--CF IPCOUNTRY: <?php if($_SERVER["HTTP_CF_IPCOUNTRY"]){echo $_SERVER["HTTP_CF_IPCOUNTRY"];} ?> -->
+<?php
+
+$checkjapan = Mage::getModel('core/cookie')->get('bannerjapan');
+
+if ($_SERVER["HTTP_CF_IPCOUNTRY"] == 'JP' && $checkjapan != "show") {
+    echo "<script type='text/javascript'> jQuery('.japan-modal .modal').css('display' , 'block'); jQuery('.modal').toggleClass('is-visible'); jQuery('.modal-toggle').on('click', function(e) { e.preventDefault(); jQuery('.modal').toggleClass('is-visible'); }); </script>";
+    Mage::getModel('core/cookie')->set('bannerjapan', 'show', 60 * 60 * 60);
+}
+
+?>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config>
+	<modules>
+		<Briel_ReviewPlus>
+			<version>1.0.0</version>
+		</Briel_ReviewPlus>
+	</modules>
+	<admin>
+		<routers> <!--ADMIN-CONTROLLER-->
+			<adminhtml>
+				<args>
+					<modules>
+						<reviewplus before="Mage_Adminhtml">Briel_ReviewPlus_Adminhtml</reviewplus>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	<adminhtml>
+		<menu> <!--ADMIN-MENU-->
+	
+			<children>
+            <reviews_ratings>
+               <disabled>1</disabled>
+            </reviews_ratings>
+         </children>
+		</menu>
+		<layout> <!--ADMIN-LAYOUT-XML-->
+			<updates>
+				<reviewplus>
+					<file>briel_reviewplus.xml</file>
+				</reviewplus>
+			</updates>
+		</layout>
+		<acl> <!--ACL-->
+			<resources>
+				<admin>
+					<children>
+						<reviewplus_menu translate="title" module="reviewplus"> <!--ACL-FOR-MENU-ITEMS-->
+							<title>Briel ReviewPlus</title>
+							<sort_order>33</sort_order>
+							<children>
+								<reviewplus_submenu1>
+									<title>Manage Customer Log</title>
+									<sort_order>10</sort_order>
+								</reviewplus_submenu1>
+								<reviewplus_submenu2>
+									<title>Product Reviews</title>
+									<sort_order>20</sort_order>
+								</reviewplus_submenu2>
+								<reviewplus_options>
+									<title>Settings</title>
+									<sort_order>30</sort_order>
+								</reviewplus_options>
+							</children>
+						</reviewplus_menu>
+						<system> <!-- ACL-FOR-SYSTEM-CONFIG-XML-->
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <reviewplus_options translate="title" module="reviewplus">
+	                                        <title>Briel ReviewPlus</title>
+	                                        <sort_order>33</sort_order>
+	                                    </reviewplus_options>
+	                                </children>
+	                            </config>
+	                        </children>
+                    	</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+	<frontend>
+		<routers> <!--FRONTEND-CONTROLLERS-->
+			<reviewplus>
+				<use>standard</use>
+				<args>
+					<module>Briel_ReviewPlus</module>
+					<frontName>reviewplus</frontName>
+				</args>
+			</reviewplus>
+		</routers>
+		<layout> <!--FRONTEND-LAYOUT-XML-->
+            <updates>
+                <reviewplus>
+                    <file>briel_reviewplus.xml</file>
+                </reviewplus>
+            </updates>
+        </layout>
+	</frontend>
+	<global>
+		<resources> <!--SETUP-SQL-->
+	        <briel_reviewplus_setup>
+	            <setup>
+	                <module>Briel_ReviewPlus</module>
+	                <class>Briel_ReviewPlus_Model_Mysql4_Setup</class>
+	            </setup>
+	            <connection>
+	          		<use>core_setup</use>
+	        	</connection>
+	        </briel_reviewplus_setup>
+			<briel_reviewplus_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</briel_reviewplus_write>
+			<briel_reviewplus_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</briel_reviewplus_read>
+    	</resources>
+    	<models> <!--MODELS-and-RESOURCE-MODELS-->
+    		<reviewplus>
+    			<class>Briel_ReviewPlus_Model</class>
+    			<resourceModel>reviewplus_resource</resourceModel>
+    		</reviewplus>
+    		<reviewplus_resource>
+    			<class>Briel_ReviewPlus_Model_Resource</class>
+    			<entities>
+    				<clientlog>
+    					<table>reviewplus_clientlog</table>
+    				</clientlog>
+    				<reviews>
+    					<table>reviewplus_reviews</table>
+    				</reviews>
+    			</entities>
+    		</reviewplus_resource>
+    	</models>
+    	<helpers> <!--HELPER-->
+    		<reviewplus>
+    			<class>Briel_ReviewPlus_Helper</class>
+    		</reviewplus>
+    	</helpers>
+    	<blocks> <!--BLOCKS-->
+    		<reviewplus>
+    			<class>Briel_ReviewPlus_Block</class>
+    		</reviewplus>
+    	</blocks>
+    	<events> <!--EVENT-OBSERVER-->
+			<sales_order_save_after>
+			    <observers>
+					<reviewplus>
+				        <class>reviewplus/observer</class>
+				        <method>logClients</method>
+					</reviewplus>
+			    </observers>
+			</sales_order_save_after>    
+		</events>
+	</global>
+	<crontab> <!--EMAIL-CRONJOB-->
+        <jobs>
+            <briel_reviewplus>
+                <schedule>
+                	<cron_expr>0,5,10,15,20,25,30,35,40,45,50,55 * * * *</cron_expr>
+                </schedule>
+                <run>
+                	<model>reviewplus/observer::sendFollowupEmail</model>
+                </run>
+            </briel_reviewplus>
+        </jobs>
+	</crontab>
+</config>

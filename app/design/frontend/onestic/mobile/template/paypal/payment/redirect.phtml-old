@@ -1,0 +1,16 @@
+<fieldset class="form-list">
+        <ul class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
+                <li class="form-alt">
+                        <a href="#" onclick="javascript:window.open('https://www.paypal.com/br/cgi-bin/webscr?cmd=xpt/Marketing/popup/OLCWhatIsPayPal-outside','olcwhatispaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=400, height=350');"><img  src="https://www.paypal-brasil.com.br/logocenter/util/img/banners/btprotecaopaypal.jpg" border="0" alt="Imagens de solução"></a>
+                        <?php echo $this->__('Você será redirecionado para o pagamento após a conclusão do pedido.') ?><?php //echo $this->getRedirectMessage() ?>
+                </li>
+                <?php if ($code = $this->getCreateBACode()): ?>
+                        <li class="form-alt">
+                                <label for="<?php echo $code ?>"><input type="checkbox" id="<?php echo $code ?>" value="1" name="payment[<?php echo $code ?>]" class="checkbox" />
+                                <?php //echo $this->__('Sign a billing agreement to streamline further purchases with PayPal.') ?>
+                                                        <?php echo $this->__('Suas informações de cobrança serão ignoradas e você será redirecionado para o PayPal.') ?>
+                                                        </label>
+                        </li>
+                <?php endif; ?>
+        </ul>
+</fieldset>

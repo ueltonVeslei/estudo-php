@@ -1,0 +1,23 @@
+<?
+if ($_SERVER['SERVER_PORT'] == 443)
+	$baseURL = "https://" . $_SERVER["HTTP_HOST"];
+else
+	$baseURL = "http://" . $_SERVER["HTTP_HOST"];
+?>
+
+<?php $_code = $this->getMethodCode(); ?>
+<div id="payment_form_<?php echo $_code ?>">
+	<?php
+	$quote = Mage::getSingleton('checkout/session')->getQuote();
+	$shipping_price = $quote->getShippingAddress()->getShippingAmount();
+	$total = $quote->getSubtotal();
+	$boleto = ($total*0.97) + $shipping_price;
+	?>
+	<span class="totalboleto">Total com desconto: <strong><?php echo Mage::app()->getStore()->getBaseCurrency()->format($boleto, array(), true); ?></strong></span>
+
+	<span id="link_pag_boleto">
+		<img src="<?php print $this->getSkinUrl('images/_cards/parcelamento/boleto.png'); ?>" alt="Boleto" />
+		<strong>3% de desconto</strong>
+	</span>
+	<div class="clearer"></div>
+</div>

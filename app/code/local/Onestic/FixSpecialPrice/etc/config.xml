@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Onestic_FixSpecialPrice>
+            <version>0.1.0</version>
+        </Onestic_FixSpecialPrice>
+    </modules>
+    <global>
+        <models>
+            <fixspecialprice>
+                <class>Onestic_FixSpecialPrice_Model</class>
+            </fixspecialprice>
+        </models>
+        <helpers>
+            <fixspecialprice>
+                <class>Av5_Affiliates_Helper</class>
+            </fixspecialprice>
+        </helpers>
+        <events>
+            <catalog_product_save_before>
+                <observers>
+                    <fixspecialprice_catalog_product_save_before>
+                        <class>Onestic_FixSpecialPrice_Model_Observer</class>
+                        <method>checkSpecialPrice</method>
+                    </fixspecialprice_catalog_product_save_before>
+                </observers>
+            </catalog_product_save_before>
+        </events>
+    </global>
+</config>

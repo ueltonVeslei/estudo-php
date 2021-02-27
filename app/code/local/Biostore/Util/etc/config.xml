@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Biostore_Util>
+			<version>0.0.1</version>
+		</Biostore_Util>
+	</modules>
+	<frontend>
+		<routers>
+			<util>
+				<use>standard</use>
+				<args>
+					<module>Biostore_Util</module>
+					<frontName>util</frontName>
+				</args>
+			</util>
+		</routers>
+	</frontend>
+    <global>
+        <models>
+            <util>
+                <class>Biostore_util_Model</class>
+            </util>
+        </models>
+    </global>
+</config>

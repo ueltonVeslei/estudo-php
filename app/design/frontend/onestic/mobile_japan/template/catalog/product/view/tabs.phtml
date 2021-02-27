@@ -1,0 +1,12 @@
+<?php foreach ($this->getTabs() as $_index => $_tab): ?>
+    <div class="collateral-box">
+        <?php if ($this->getChildHtml($_tab['alias'])): ?>
+            <h4><?php echo $_tab['title']  ?> <i class="icon-font icon-ic_more_horiz_black_24px"></i></h4>
+        <?php endif; ?>
+        <div class="padder">
+            <?php if ($this->getChildHtml($_tab['alias'])): ?>
+                <div id="product_tabs_<?php echo $_tab['alias'] ?>_contents"><?php echo $this->getChildHtml($_tab['alias']) ?></div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endforeach; ?>

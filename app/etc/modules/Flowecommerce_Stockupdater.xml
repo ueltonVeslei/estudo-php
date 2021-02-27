@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Flowecommerce_Stockupdater>
+            <active>false</active>
+            <codePool>local</codePool>
+			<version>0.1.0</version>
+		</Flowecommerce_Stockupdater>
+	</modules>
+</config>

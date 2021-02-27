@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Dmg_Guru>
+        <version>1.0.0</version>
+        </Dmg_Guru>
+    </modules>
+ 
+    <global>
+        <models>
+            <dmg_guru>
+                <class>Dmg_Guru_Model</class>
+            </dmg_guru>
+        </models>
+        <helpers>
+            <dmg_guru>
+                <class>Dmg_Guru_Helper</class>
+            </dmg_guru>
+        </helpers>
+        <blocks>
+            <dmg_guru>
+                <class>Dmg_Guru_Block</class>
+            </dmg_guru>
+        </blocks>
+    </global>
+    
+    <default>
+        <payment>
+            <guru_payment>
+                <model>dmg_guru/payment</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+            </guru_payment>
+        </payment>
+        <carriers>
+            <guru_carrier>
+                <model>dmg_guru/carrier</model>
+                <active>1</active>
+            </guru_carrier>
+        </carriers>
+    </default>
+</config>

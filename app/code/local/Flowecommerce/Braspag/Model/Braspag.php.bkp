@@ -1,0 +1,477 @@
+<?php 
+/**
+ * Magento Pagador Payment Module
+ *
+ * @category   Mage
+ * @package    Mage_Cartao
+ * @copyright  Author Flow-ecommerce (gabriel@flowecommerce.com)
+ * @copyright  Copyright (c) 2008
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+class Flowecommerce_Braspag_Model_Braspag extends Mage_Core_Model_Abstract {
+	
+  protected $_urlGetDadosPedido = "https://query.pagador.com.br/webservices/pagador/pedido.asmx?WSDL";
+  
+  protected function _getDate(){
+  	return Mage::getModel('core/date')->date('Y-m-d H:i:s');
+  }
+	
+	public function enviaLembreteBoleto() {
+	
+		$report = $this->_getDate().' - Entrou na Rotina enviaLembreteBoleto<br/>';
+		$diasLembrete = $this->_getConfigData('DiasParaLembrete','braspagboleto');
+		$mensagemLembrete = $this->_getConfigData('MensagemDeLembrete','braspagboleto');
+		$idLoja = $this->_getConfigData('LojaID','braspagboleto');
+		
+		$fuso = 2; // horas - GMT - adaptar qdo acabar o horario de verao
+		
+		$dataFim = date('Y-m-d') . ' 0' . ($fuso-1) . ':59:59';
+		$dataIni = date('Y-m-d', strtotime("-$diasLembrete day")) . ' 0' . $fuso . ':00:00';
+    	
+  	$res = Mage::getResourceModel("sales/order_payment");
+    $paymentWhere = array("entity_type_id" => $res->getTypeId());
+ 		$attributes =$res->loadAllAttributes()->getAttributesByCode();
+		foreach ($attributes as $attrCode=>$attr) {
+		  if ($attr->getAttributeCode()=="method"){
+		      $attId = $attr->getAttributeId();
+		  }
+		}
+    $paymentMethodWhere = "{{table}}.attribute_id = '$attId'";    	  	
+	    	               
+    $collection = Mage::getResourceModel('sales/order_collection')
+      ->addAttributeToSelect('*')
+      ->addAttributeToFilter('status', 'pending')
+      //->addAttributeToFilter('increment_id', 100106976) //--> Para testes
+  		->addAttributeToFilter('created_at', array( 'from' => $dataIni, 'to' => $dataFim))
+      ->joinTable('sales_order_entity', 'parent_id=entity_id', array( 'quote_payment_id_for_join' => 'entity_id' ) , $paymentWhere, 'left' )
+      ->joinTable('sales_order_entity_varchar', 'entity_id=quote_payment_id_for_join', array( 'payment' => 'value' ) , $paymentMethodWhere, 'left' )
+      ->addFieldToFilter('payment','braspagboleto')
+      ->load();
+		
+		$report .= $this->_getDate().' - Leu todos os registros pendentes<br/>';
+		
+    foreach( $collection->getItems() as $order ) {
+    	
+				try{
+					$report .= $this->_getDate().' - Preparando email do pedido '.$order->getIncrementId().'<br/>';
+				
+					$url = $order->getUrlBoleto();
+					$link = "<a href=\"$url\">clique aqui</a>";
+					$mensagemLembrete2 = str_replace("{{clique aqui}}", $link, $mensagemLembrete);
+					$order->sendOrderUpdateEmail(true,$mensagemLembrete2);
+					
+					$report .= $this->_getDate().' - Email enviado para o pedido '.$order->getIncrementId().'<br/>';
+				}	
+				catch(Exception $e){
+					$report .= $this->_getDate().' - Erro ao enviar o email do pedido '.$order->getIncrementId().'<br/>';
+				}					
+    }
+    
+    $report .= $this->_getDate().' - Final da Rotina enviaLembreteBoleto<br/>';
+        
+		$to = $this->_getConfigData('EmailDeProcessamento','braspagboleto');
+		$subject = $this->_getDate().' - Detalhe Processamento Função atualizaStatusBoleto';
+		$body = '<html>
+					<head>
+						<title>' . $subject . '</title>
+					</head>
+					<body>
+						<p>' . $report . '</p>
+					</body>
+				</html>';
+								
+		if ( strlen($to) > 0 ){
+
+			// To send HTML mail, the Content-type header must be set
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: Módulo Braspag <braspag@biostore.com.br>' . "\r\n";
+			mail($to, $subject, $body, $headers);
+		}
+
+		print $body;   
+	}
+
+		public function atualizaStatusBoleto() {
+			
+				$report = $this->_getDate().' - Entrou na Rotina atualizaStatusBoleto<br/>';
+				
+				$DiasCancelar = $this->_getConfigData('DiasParaCancelar','braspagboleto');
+				
+				$MesagemCanclamento = $this->_getConfigData('MensagemDeCancelamento','braspagboleto');
+    	
+    	  $res = Mage::getResourceModel("sales/order_payment");
+        $paymentWhere = array("entity_type_id" => $res->getTypeId());
+     		$attributes =$res->loadAllAttributes()->getAttributesByCode();
+				foreach ($attributes as $attrCode=>$attr) {
+				  if ($attr->getAttributeCode()=="method"){
+				      $attId = $attr->getAttributeId();
+				  }
+				}
+        $paymentMethodWhere = "{{table}}.attribute_id = '$attId'";    	  	
+    	    	               
+        $collection = Mage::getResourceModel('sales/order_collection')
+          ->addAttributeToSelect('*')
+          ->addAttributeToFilter('status', 'pending')
+          //->addAttributeToFilter('increment_id', array('gt' => '100164000'))
+          ->joinTable('sales_order_entity', 'parent_id=entity_id', array( 'quote_payment_id_for_join' => 'entity_id' ) , $paymentWhere, 'left' )
+          ->joinTable('sales_order_entity_varchar', 'entity_id=quote_payment_id_for_join', array( 'payment' => 'value' ) , $paymentMethodWhere, 'left' )
+          ->addAttributeToSort('created_at', 'ASC')
+          ->addFieldToFilter('payment','braspagboleto')
+          ->load();
+				
+				$qtdInicial = count($collection->getItems());
+				$qtdPagos = 0;
+				$qtdCancelados = 0;
+				$qtdIgnorados = 0;
+				$qtdProcessados = 0;
+				
+				$report .= $this->_getDate().' - Leu '.$qtdInicial.' pedidos(s) pendentes<br/>';
+				
+        foreach( $collection->getItems() as $orders ) {
+        				
+					$NumPedido = $orders->getIncrementId();
+					
+					$order = Mage::getModel('sales/order')->loadByIncrementId($NumPedido);
+					
+					$DtPedido = substr($order->getCreatedAt(),0,10);
+										
+					if ( ($DtPedido != '2011-09-13') && (substr($NumPedido,0,1) != "4") ){
+						
+		        	$report .= $this->_getDate().' - Pegando Dados do Pedido '.$NumPedido.'<br/>';
+		        	
+							$order = $this->getDadosPedido($order,'braspagboleto');
+							
+							$report .= $this->_getDate().' - Status do Pedido '.$NumPedido.' = '.$order->getBraspagStatus().'<br/>';
+		
+							if ( $order->getBraspagStatus() == 3 )
+							{
+							    $report .= $this->_getDate().' - Faturando o Pedido '.$NumPedido."<br />";
+							    $qtdPagos +=1;
+					        $this->_processarPagamento( $order );
+							} else 	{
+								$diferenca = $this->date_diff(date('Y-m-d'), $order->getCreatedAt(), 'd');
+								if ( $diferenca > $DiasCancelar) 
+								{
+									$report .= $this->_getDate().' - Cancelando o Pedido '.$order->getIncrementId()."<br />";
+									$qtdCancelados += 1;
+									$this->_cancelarPedido($order, $MesagemCanclamento, false, true);
+								}
+								else
+								{
+									$report .= $this->_getDate().' - Tempo de Vida do Pedido '.$order->getIncrementId().' = '.$diferenca."<br />";
+									$qtdIgnorados += 1;	
+								}
+							}
+
+				  } else {
+						$report .= $this->_getDate().' - Pedido do dia 13/09/2011 ou da Loja Sol Brasil <br />';
+						$qtdIgnorados += 1;					  
+			    }
+       }
+
+				$qtdProcessados = $qtdCancelados + $qtdIgnorados + $qtdPagos;
+        $report .= $this->_getDate().' - Final da Rotina atualizaStatusBoleto<br/><br/>';
+        $report .= 'Pedidos Cancelados: '.$qtdCancelados.'<br/>';
+        $report .= 'Pedidos Ignorados: '.$qtdIgnorados.'<br/>';
+        $report .= 'Pedidos Pagos: '.$qtdPagos.'<br/>';
+        $report .= 'Pedidos Processados: '.$qtdProcessados.'<br/>';
+        $report .= 'Quantidade Inicial: '.$qtdInicial.'<br/>';
+        
+				$to = $this->_getConfigData('EmailDeProcessamento','braspagboleto');
+				$subject = $this->_getDate().' - Detalhe Processamento Função atualizaStatusBoleto';
+				$body = '<html>
+							<head>
+								<title>' . $subject . '</title>
+							</head>
+							<body>
+								<p>' . $report . '</p>
+							</body>
+						</html>';
+										
+				if ( strlen($to) > 0 ){
+
+					// To send HTML mail, the Content-type header must be set
+					$headers  = 'MIME-Version: 1.0' . "\r\n";
+					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					$headers .= 'From: Módulo Braspag <braspag@biostore.com.br>' . "\r\n";
+					mail($to, $subject, $body, $headers);
+				}
+
+				print $body; 
+   
+    }
+	
+		private function date_diff($date1, $date2, $tipo) {
+			
+			$datainicio=strtotime($date2);
+			$datafim  =strtotime($date1);
+			
+			if ($tipo == 'd')
+				$intervalo=($datafim-$datainicio)/86400;
+			else
+				$intervalo=($datafim-$datainicio)/3600;
+			
+			return $intervalo;
+		}
+
+    public function atualizaStatusCcEDebito() {
+    	
+    		$report = $this->_getDate().' - Entrou na Rotina atualizaStatusCcEDebito<br/>';
+    		
+    		$HorasCancelar = $this->_getConfigData('HorasParaCancelar','braspagcc');
+    		
+    		$MesagemCanclamento = $this->_getConfigData('MensagemDeCancelamento','braspagcc');
+    	
+    	  $res = Mage::getResourceModel("sales/order_payment");
+        $paymentWhere = array("entity_type_id" => $res->getTypeId());
+     		$attributes =$res->loadAllAttributes()->getAttributesByCode();
+				foreach ($attributes as $attrCode=>$attr) {
+				  if ($attr->getAttributeCode()=="method"){
+				      $attId = $attr->getAttributeId();
+				  }
+				}
+        $paymentMethodWhere = "{{table}}.attribute_id = '$attId'";    	  	
+    	    	               
+        $collection = Mage::getResourceModel('sales/order_collection')
+          ->addAttributeToSelect('*')
+          ->addAttributeToFilter('status', 'pending')
+          ->joinTable('sales_order_entity', 'parent_id=entity_id', array( 'quote_payment_id_for_join' => 'entity_id' ) , $paymentWhere, 'left' )
+          ->joinTable('sales_order_entity_varchar', 'entity_id=quote_payment_id_for_join', array( 'payment' => 'value' ) , $paymentMethodWhere, 'left' )
+          ->addFieldToFilter('payment',array("in"=>array('braspagcc','braspagdeb')))
+          ->load();
+
+				$report .= $this->_getDate().' - Leu '.count($collection->getItems()).' pedidos(s) pendentes<br/>';
+				
+        foreach( $collection->getItems() as $orders ) {
+        	
+        		$NumPedido = $orders->getIncrementId();
+        	      	
+						$report .= $this->_getDate().' - Pegando Dados do Pedido '.$NumPedido.'<br/>';
+						
+						$order = Mage::getModel('sales/order')->loadByIncrementId($NumPedido);
+						
+						$order = $this->getDadosPedido($order, 'braspagcc');
+						
+						$report .= $this->_getDate().' - Status do Pedido '.$NumPedido.' = '.$order->getBraspagStatus().'<br/>';
+						
+						if ( $order->getBraspagStatus() == 3 )
+						{
+						    $report .= $this->_getDate().' - Faturando o Pedido '.$NumPedido."<br />";
+
+								$this->_processarPagamento( $order );
+								
+						} else {
+							
+							$diferenca = $this->date_diff(date('Y-m-d H:i:s'), $order->getCreatedAt(), 'h');
+							
+							if ( ((trim($order->getBraspagCodigoErro()) <> "") && 
+									 (trim($order->getBraspagMensagemErro()) <> "")) || 
+									 ( $diferenca > $HorasCancelar ) ) 
+						  {
+						  		$report .= $this->_getDate().' - Cancelando o Pedido '.$NumPedido."<br />";
+									$this->_cancelarPedido($order, $MesagemCanclamento, false, true);
+							}
+							else
+								{
+									$report .= $this->_getDate().' - Tempo de Vida do Pedido '.$NumPedido.' = '.$diferenca."<br />";	
+								}
+							}
+        }
+        
+        $report .= $this->_getDate().' - Final da Rotina atualizaStatusCcEDebito<br/>';
+        
+				$to = $this->_getConfigData('EmailDeProcessamento','braspagcc');
+				$subject = $this->_getDate().' - Detalhe Processamento Função atualizaStatusCcEDebito';
+				$body = '<html>
+							<head>
+								<title>' . $subject . '</title>
+							</head>
+							<body>
+								<p>' . $report . '</p>
+							</body>
+						</html>';
+										
+				if ( strlen($to) > 0 ){
+
+					// To send HTML mail, the Content-type header must be set
+					$headers  = 'MIME-Version: 1.0' . "\r\n";
+					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					$headers .= 'From: Módulo Braspag <braspag@biostore.com.br>' . "\r\n";
+					mail($to, $subject, $body, $headers);
+				}
+
+				print $body;
+				      
+    }
+    
+    public function checarStatusPedido($order) {
+
+        if ( $order->getStatus() == 'canceled' ) {
+            $order->setStatus('pending')
+                  ->setState('new')
+                  ->addStatusToHistory('pending','Pedido reativado com sucesso.', false)
+                  ->save();
+                  
+						foreach ($order->getAllItems() as $item) {
+						    $item->setQtyCanceled(0);
+						    $item->save();
+						}
+						
+        }
+				
+        return $order;
+    }
+
+    public function getDadosPedido($order, $modulo) {
+
+        try {
+            $objSoap = new SoapClient
+                    (
+                    $this->_urlGetDadosPedido,
+                    array
+                    (
+                            'trace' => true,
+                            'encoding' => 'ISO-8859-1'
+                    )
+            );
+
+            $objSoapResult = $objSoap->GetDadosPedido
+                    (
+                    array
+                    (
+                    'loja' => $this->_getConfigData('LojaID', $modulo),
+                    'numeroPedido' => $order->getIncrementId()
+                    )
+            );
+            
+            $retorno = $objSoapResult->GetDadosPedidoResult;
+            
+            $BraspagMensagemErro = $order->getBraspagMensagemErro();
+            $BraspagDataPagamento = $order->getBraspagDataPagamento();
+            $BraspagStatus = $order->getBraspagStatus();
+            
+            if (($BraspagMensagemErro <> $this->_formatarRetorno($retorno, 'MensagemErro')) ||
+            	 ($BraspagDataPagamento <> $this->_formatarRetorno($retorno, 'DataPagamento')) ||
+            	 ($BraspagStatus <> $this->_formatarRetorno($retorno, 'Status')))
+            {
+                       
+		            $order
+		                ->setBraspagCodigoAutorizacao($this->_formatarRetorno($retorno, 'CodigoAutorizacao'))
+		                ->setBraspagCodigoErro($this->_formatarRetorno($retorno, 'CodigoErro'))
+		                ->setBraspagMensagemErro($this->_formatarRetorno($retorno, 'MensagemErro'))
+		                ->setBraspagCodigoPagamento($this->_formatarRetorno($retorno, 'CodigoPagamento'))
+		                ->setBraspagFormaPagamento($this->_formatarRetorno($retorno, 'FormaPagamento'))
+		                ->setBraspagNumeroParcelas($this->_formatarRetorno($retorno, 'NumeroParcelas'))
+		                ->setBraspagStatus($this->_formatarRetorno($retorno, 'Status'))
+		                ->setBraspagValor($this->_formatarRetorno($retorno, 'Valor'))
+		                ->setBraspagDataCancelamento($this->_formatarRetorno($retorno, 'DataCancelamento'))
+		                ->setBraspagDataPagamento($this->_formatarRetorno($retorno, 'DataPagamento'))
+		                ->setBraspagDataPedido($this->_formatarRetorno($retorno, 'DataPedido'))
+		                ->setBraspagTransId($this->_formatarRetorno($retorno, 'TransId'))
+		                ->setBraspagTid($this->_formatarRetorno($retorno, 'BraspagTid'));
+		                //->save();
+		         }
+		                  
+        }
+        catch (Exception $e) {
+        		print $this->_getDate().' - Erro ao Pegar o Status do Pedido '.$order->getIncrementId().'<br/>';
+        		//$this->_cancelarPedido($order, "Erro de comunicação com o Gateway de Pagamento",true, false);
+        		$order->addStatusToHistory('pending',"Erro ao atualizar o status de pagamento", false)
+        					->save();
+        }
+        
+        return $order;
+    }
+
+    protected function _getConfigData($field, $modulo , $storeId = null) {
+        if (null === $storeId) {
+            $storeId = $this->getStore();
+        }
+        $path = 'payment/'.$modulo.'/'.$field;
+        return Mage::getStoreConfig($path, $storeId);
+    }
+
+    protected function _formatarRetorno( $retorno, $chave ) {
+        if (isset($retorno->$chave)) {
+            $valor = utf8_encode($retorno->$chave);
+        }
+        else {
+            $valor = '';
+        }
+        return $valor;
+    }
+
+		protected function _cancelarPedido ($order, $mensagem, $history = false, $email = false){
+
+			$order->cancel();
+			
+			if ($history)
+				$order->addStatusToHistory('canceled',$mensagem,false);
+			
+			if ($email)
+				$order->sendOrderUpdateEmail(true,$mensagem);
+						
+			$order->save();
+			
+		}
+
+    protected function _processarPagamento( $order ) {
+                
+        if (!$order->hasInvoices()) {
+        	
+	        $convertor = Mage::getModel('sales/convert_order');
+	        $invoice   = $convertor->toInvoice($order);
+	        foreach ($order->getAllItems() as $orderItem) {
+	            if (!$orderItem->getQtyToInvoice()) {
+	                continue;
+	            }
+	            $item = $convertor->itemToInvoiceItem($orderItem);
+	            $item->setQty($orderItem->getQtyToInvoice());
+	            $invoice->addItem($item);
+	        }
+	        $invoice->collectTotals();
+	        $invoice->register()->capture();
+	        $invoice->save();
+	
+	        switch ($order->getPayment()->getMethod()) {
+	            case 'braspagcc': {
+	                    $order->addStatusToHistory
+	                            (
+	                            'processing',
+	                            "Cartão de Crédito Autorizado pela Administradora.",
+	                            true
+	                    );
+	                    break;
+	                }
+	            case 'braspagdeb': {
+	                    $order->addStatusToHistory
+	                            (
+	                            'processing',
+	                            "Transação Autorizada Pelo Banco.",
+	                            true
+	                    );
+	                    break;
+	                }
+	            case 'braspagboleto': {
+	                    $order->addStatusToHistory
+	                            (
+	                            'processing',
+	                            "Confirmado Pagamento do Boleto Bancário.",
+	                            true
+	                    );
+	                    break;
+	                }
+	        }
+	
+	        $order->hold();
+	        $order->save();
+
+        }
+        
+	      $arrParams = array('order'=>$order);
+        Mage::dispatchEvent('braspag_payment_received', $arrParams);
+        
+    }
+}

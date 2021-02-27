@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Importação de Numeros de Rastreamento - Desenvolvido para ALMQ Consultoria
+ *
+ * @category   Flowecommerce
+ * @package    Flowecommerce_Importcsv
+ * @copyright  Author Flow-ecommerce (gabriel@flowecommerce.com)
+ * @copyright  Copyright (c) 2008
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Flowecommerce_Importcsv>
+            <version>0.1.0</version>
+        </Flowecommerce_Importcsv>
+    </modules>
+    <global>
+        <models>
+            <importcsv>
+                <class>Flowecommerce_Importcsv_Model</class>
+            </importcsv>
+        </models>
+		<blocks>
+            <importcsv>
+                <class>Flowecommerce_Importcsv_Block</class>
+            </importcsv>
+            <adminhtml>
+                <rewrite>
+                    <sales_shipment>Flowecommerce_Importcsv_Block_Shipmentbutton</sales_shipment>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <importcsv>
+                <class>Flowecommerce_Importcsv_Helper</class>
+            </importcsv>
+        </helpers>
+    </global>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <importcsv module="Flowecommerce_Importcsv">
+                    <file>importcsv.xml</file>
+                </importcsv>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <admin>
+        <routers>
+            <importcsv>
+                <use>admin</use>
+                <args>
+                    <module>Flowecommerce_Importcsv</module>
+                    <frontName>importcsv</frontName>
+                </args>
+            </importcsv>
+        </routers>
+    </admin>
+</config>
+

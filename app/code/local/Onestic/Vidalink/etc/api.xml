@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <api>
+        <resources>
+        	<vidalink translate="title" module="onestic_vidalink">
+        		<title>Vidalink</title>
+        		<model>onestic_vidalink/api</model>
+        		<acl>vidalink</acl>
+        		<methods>
+        			<consultarEstoqueProdutos translate="title" module="onestic_vidalink">
+        				<title>Consulta estoque dos produtos</title>
+        				<acl>vidalink/consultarEstoqueProdutos</acl>
+        			</consultarEstoqueProdutos>
+        			<consultarProdutos translate="title" module="onestic_vidalink">
+        				<title>Consulta produtos</title>
+        				<acl>vidalink/consultarProdutos</acl>
+        			</consultarProdutos>
+        			<enviarPedido translate="title" module="onestic_vidalink">
+        				<title>Envia pedido para registro</title>
+        				<acl>vidalink/enviarPedido</acl>
+        			</enviarPedido>
+        			<consultarConfirmacaoPedido translate="title" module="onestic_vidalink">
+        				<title>Consulta confirmação de pedido</title>
+        				<acl>vidalink/consultarConfirmacaoPedido</acl>
+        			</consultarConfirmacaoPedido>
+        			<consultarConfirmacaoEntregaPedido translate="title" module="onestic_vidalink">
+        				<title>Consulta confirmação de entrega de pedido</title>
+        				<acl>vidalink/consultarConfirmacaoEntregaPedido</acl>
+        			</consultarConfirmacaoEntregaPedido>
+        			<consultarConfirmacaoPedidosPorData translate="title" module="onestic_vidalink">
+        				<title>Consulta confirmação de pedidos por data</title>
+        				<acl>vidalink/consultarConfirmacaoPedidosPorData</acl>
+        			</consultarConfirmacaoPedidosPorData>
+        			<consultarEntregaPedidosPorData translate="title" module="onestic_vidalink">
+        				<title>Consulta entrega de pedidos por data</title>
+        				<acl>vidalink/consultarEntregaPedidosPorData</acl>
+        			</consultarEntregaPedidosPorData>
+        		</methods>
+        	</vidalink>
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <vidalink>vidalink</vidalink>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <vidalink translate="title" module="onestic_vidalink">
+	        		<title>Vidalink</title>
+        			<consultarEstoqueProdutos translate="title" module="onestic_vidalink">
+        				<title>Consulta estoque dos produtos</title>
+        			</consultarEstoqueProdutos>
+        			<consultarProdutos translate="title" module="onestic_vidalink">
+        				<title>Consulta produtos</title>
+        			</consultarProdutos>
+        			<enviarPedido translate="title" module="onestic_vidalink">
+        				<title>Envia pedido para registro</title>
+        			</enviarPedido>
+        			<consultarConfirmacaoPedido translate="title" module="onestic_vidalink">
+        				<title>Consulta confirmação de pedido</title>
+        			</consultarConfirmacaoPedido>
+        			<consultarConfirmacaoEntregaPedido translate="title" module="onestic_vidalink">
+        				<title>Consulta confirmação de entrega de pedido</title>
+        			</consultarConfirmacaoEntregaPedido>
+        			<consultarConfirmacaoPedidosPorData translate="title" module="onestic_vidalink">
+        				<title>Consulta confirmação de pedidos por data</title>
+        			</consultarConfirmacaoPedidosPorData>
+        			<consultarEntregaPedidosPorData translate="title" module="onestic_vidalink">
+        				<title>Consulta entrega de pedidos por data</title>
+        			</consultarEntregaPedidosPorData>
+	        	</vidalink>
+            </resources>
+        </acl>
+    </api>
+</config>

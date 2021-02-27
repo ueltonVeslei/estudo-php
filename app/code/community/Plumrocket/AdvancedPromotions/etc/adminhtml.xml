@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_AdvancedPromotions
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <promo>
+                        <children>
+                            <quote>
+                                <children>
+                                    <view_all_price_rules>
+                                        <title>View Price Rules</title>
+                                        <sort_order>10</sort_order>
+                                    </view_all_price_rules>
+                                    <shopping_cart_coupons>
+                                        <title>View Orders &amp; Coupons</title>
+                                        <sort_order>20</sort_order>
+                                    </shopping_cart_coupons>
+                                </children>
+                            </quote>
+                        </children>
+                    </promo>
+                    <plumrocket>
+                        <title>Plumrocket</title>
+                        <sort_order>80</sort_order>
+                        <children>
+                            <pradvancedpromotions translate="title" module="pradvancedpromotions">
+                                <title>Advanced Promotions</title>
+                                <sort_order>4734957</sort_order>
+                                <children>
+                                    <view_all_price_rules>
+                                        <title>Shopping Cart Price Rules</title>
+                                        <sort_order>10</sort_order>
+                                    </view_all_price_rules>
+                                    <shopping_cart_coupons>
+                                        <title>View Orders &amp; Coupons</title>
+                                        <sort_order>20</sort_order>
+                                    </shopping_cart_coupons>
+                                    <info>
+                                        <title>About Advanced Promotions</title>
+                                        <sort_order>30</sort_order>
+                                    </info>
+                                </children>
+                             </pradvancedpromotions>
+                        </children>
+                    </plumrocket>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <pradvancedpromotions translate="title" module="pradvancedpromotions">
+                                        <title>Advanced Promotions</title>
+                                    </pradvancedpromotions>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

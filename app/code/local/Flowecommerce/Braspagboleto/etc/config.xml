@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Mage
+ * @package    Flowecommerce_Braspagboleto
+ * @copyright  Copyright (c) 2008 Igor
+ * @author	   Igor Pfeilsticker (igorsop@gmail.com)
+ */
+-->
+<config>
+    <modules>
+        <Flowecommerce_Braspagboleto>
+            <version>0.9.0</version>          
+        </Flowecommerce_Braspagboleto>
+    </modules>
+    <global>
+        <models>
+            <braspagboleto>
+                <class>Flowecommerce_Braspagboleto_Model</class>
+                <resourceModel>braspagboleto_mysql4</resourceModel>
+            </braspagboleto>
+            <braspagboleto_mysql4>
+                <class>Flowecommerce_Braspagboleto_Model_Mysql4</class>
+                <entities>
+                    <api_debug><table>braspagboleto_api_debug</table></api_debug>
+                </entities>
+            </braspagboleto_mysql4>
+						<braspagboleto_mysql4>
+                <class>Flowecommerce_Braspagboleto_Model_Mysql4</class>
+                <entities>
+                    <braspagboleto_return><table>braspagboleto</table></braspagboleto_return>
+                </entities>
+            </braspagboleto_mysql4>
+        </models>
+        <resources>
+            <braspagboleto_setup>
+                <setup>
+                    <module>Flowecommerce_Braspagboleto</module>
+                    <class>Flowecommerce_Braspagboleto_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </braspagboleto_setup>asdf
+            <braspagboleto_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </braspagboleto_write>
+            <braspagboleto_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </braspagboleto_read>
+        </resources>
+        <blocks>
+            <braspagboleto><class>Flowecommerce_Braspagboleto_Block</class></braspagboleto>
+        </blocks>
+    </global>
+    <frontend>
+        <routers>
+            <braspagboleto>
+                <use>standard</use>
+                <args>
+                    <module>Flowecommerce_Braspagboleto</module>
+                    <frontName>braspagboleto</frontName>
+                </args>
+            </braspagboleto>
+        </routers>
+        <translate>
+            <modules>
+                <Flowecommerce_Braspagboleto>
+                    <files>
+                        <default>Flowecommerce_Braspagboleto.csv</default>
+                    </files>
+                </Flowecommerce_Braspagboleto>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <braspagboleto>
+                    <file>braspagboleto.xml</file>
+                </braspagboleto>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Flowecommerce_Braspagboleto>
+                    <files>
+                        <default>Flowecommerce_Braspagboleto.csv</default>
+                    </files>
+                </Flowecommerce_Braspagboleto>
+            </modules>
+        </translate>        
+    </adminhtml>
+    <default>
+         <payment>
+             <braspagboleto>
+                  <model>braspagboleto/payment_gateway</model>
+                  <title>Boleto Bancario</title>
+                  <allowspecific>0</allowspecific>
+                  <DiasParaCancelar>10</DiasParaCancelar>
+                  <DiasParaLembrete>2</DiasParaLembrete>
+                  <MensagemDeCancelamento><![CDATA[Pedido Cancelado por nao ter sido reconhecido o pagamento junto ao Banco depois de 10 dias de efetuado o pedido.]]></MensagemDeCancelamento>
+                  <MensagemDeLembrete><![CDATA[Pagamento ainda não confirmado. Caso precise imprimir novamente o boleto, {{clique aqui}}.]]></MensagemDeLembrete>
+            </braspagboleto>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,19 @@
+<?
+if ($_SERVER['SERVER_PORT'] == 443)
+	$baseURL = "https://".$_SERVER["HTTP_HOST"];
+else 
+    $baseURL = "http://".$_SERVER["HTTP_HOST"];
+
+?>
+
+<fieldset class="form-list">
+    <?php $_code=$this->getMethodCode();  ?>
+    <ul id="payment_form_<?php echo $_code ?>" style="display:none">
+        <!-- <li>
+        	<img src="<?php echo $this->getSkinUrl('images/braspag/pgto_cdcpanamericano.png') ?>" border="0"/>
+        </li> -->
+        <li style="clear:both">
+         <?php echo $this->__("<i>Você será redirecionado para o pagamento após a conclusão do pedido.</i>") ?>
+        </li>
+    </ul>
+</fieldset>
