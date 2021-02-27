@@ -1,1 +1,0 @@
-$MW_Onestepcheckout=jQuery.noConflict();

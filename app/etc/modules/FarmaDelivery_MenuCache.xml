@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <FarmaDelivery_MenuCache>
-            <active>true</active>
-            <codePool>local</codePool>
-        </FarmaDelivery_MenuCache>
-    </modules>
-</config>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<layout version="0.1.0">
-    <adminhtml_sales_order_view>
-        <reference name="sales_order_tabs" >
-            <block type="braspag/sales_order_braspag" name="order_braspag" template="braspag/orderBraspagInfo.phtml"></block>
-            <action method="addTab"><name>order_braspag</name><block>braspag/sales_order_view_tab_braspag</block></action>
-        </reference>
-    </adminhtml_sales_order_view>
-</layout>

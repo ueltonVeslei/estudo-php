@@ -1,8 +1,0 @@
-<config>
-    <modules>
-        <Biostore_Relatorioformaspgto>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Biostore_Relatorioformaspgto>
-    </modules>
-</config>

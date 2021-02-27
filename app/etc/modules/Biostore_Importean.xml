@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <Biostore_Importean>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Biostore_Importean>
-    </modules>
-</config>

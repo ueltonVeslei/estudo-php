@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <FarmaDelivery_LinkMarca>
-            <active>true</active>
-            <codePool>local</codePool>
-        </FarmaDelivery_LinkMarca>
-    </modules>
-</config>

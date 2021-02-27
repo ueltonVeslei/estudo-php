@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<layout>
-	<smartpbm_adminhtml_report_index>
-        <reference name="content">
-            <block type="smartpbm/adminhtml_report" name="report.list" />
-        </reference>
-    </smartpbm_adminhtml_report_index>
-</layout>

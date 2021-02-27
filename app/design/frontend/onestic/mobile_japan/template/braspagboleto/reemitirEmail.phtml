@@ -1,6 +1,0 @@
-<?php $order = $this->getOrder(); ?>
-<?php if ($order->getPayment()->getMethod() == 'braspagboleto'):?>
-<br/><br/>
-<strong>Clique <a href="<?php print $this->getUrlReemissao($order->getIncrementId());?>" target="#blank">aqui</a> caso deseje reimprimir o boleto bancário.</strong>
-<br/><br/>
-<?php endif;?>

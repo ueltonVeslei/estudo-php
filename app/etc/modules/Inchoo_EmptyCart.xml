@@ -1,8 +1,0 @@
-<config>
-    <modules>
-        <Inchoo_EmptyCart>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Inchoo_EmptyCart>
-    </modules>
-</config>

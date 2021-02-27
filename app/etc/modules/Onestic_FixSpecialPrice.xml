@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <Onestic_FixSpecialPrice>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Onestic_FixSpecialPrice>
-    </modules>
-</config>

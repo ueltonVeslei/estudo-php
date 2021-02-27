@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <Rjs_Checkout>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Rjs_Checkout>
-    </modules>
-</config>

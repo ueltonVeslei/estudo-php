@@ -1,8 +1,0 @@
-<?php $_product = $this->getProduct() ?>
-
-<?php if($_product->isSaleable()): ?>
-    <!--p class="availability"><?/*php echo $this->__('Disponibilidade') */?>: <span class="in-stock"><?/*php echo $this->__('In stock') */?></span></p-->
-<?php else: ?>
-<!--p class="availability"><?/*php echo $this->__('Disponibilidade') */?>: <span class="out-of-stock"><a  href="<?php echo $this->getUrl('faleconosco'); ?>">Consulte</a></span></p-->
-<?php endif; ?>
-<?php echo $this->getPriceHtml($_product) ?>
