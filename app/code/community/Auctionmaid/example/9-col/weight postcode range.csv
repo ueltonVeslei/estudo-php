@@ -1,9 +1,0 @@
-Country,Region/State,City,Zip/Postal Code,Zip to,Weight from,Weight to,Shipping Price,Delivery Type
-GBR,*,LONDON,2000,3000,0,5,4.99,AllRate
-GBR,*,LONDON,2000,3000,7,20,4.99,Big All Rate
-GBR,*,LONDON,2000,3000,0,5,6.99,1st Class Recorded
-GBR,*,LONDON,*,*,0,5,2.99,1st Class Recorded
-GBR,*,*,*,*,0,5,2.99,GBR Rate inclusive
-GBR,*,*,2551,3200,0,5,12.99,GBR Postcode Range only
-GBR,*,BIRMINGHAM,*,*,0,32,7.99,ParcelForce 24-48
-*,*,*,*,*,0,10,50,Worldwide

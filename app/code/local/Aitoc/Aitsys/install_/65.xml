@@ -1,2 +1,0 @@
-<?xml version="1.0"?>
-<install><product id="65" key="Aitoc_Aitpermissions" version="2.3.11" license_id="12313" link_id="370675"><![CDATA[Advanced Permissions]]></product><serial>O5ZL8CWb0tcKjILyP9IWZaAGWN8456REB9XZsTJqaT</serial><checkid>47dd9e170ff95db5ac92c50596f249ae</checkid><store_url><![CDATA[http://www.aitoc.com/en/]]></store_url><service><![CDATA[https://www.aitoc.com/api/xmlrpc/]]></service><constraint><admin label="Number of users">2</admin></constraint></install>
